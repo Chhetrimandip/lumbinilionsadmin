@@ -16,10 +16,10 @@ const Thirdpage = () => {
         <div className="absolute top-[236px] left-1/2 transform -translate-x-1/2 text-5xl font-['Bebas_Neue'] text-amber-500 text-center">
           1st Place
         </div>
-        <img src="https://placehold.co/119x61" alt="Trophy" className="absolute left-[660px] top-[137px] w-28 h-16" />
-        <img src="https://placehold.co/117x117" alt="Medal Left" className="absolute left-[165px] top-[99px] size-28" />
+        <img src="npllogo.png" alt="Trophy" className="absolute left-[660px] top-[137px] w-28 h-16" />
+        <img src="crickleague.png" alt="Medal Left" className="absolute left-[165px] top-[99px] size-28" />
         <div className="absolute left-[49px] top-[236px] text-4xl text-amber-500 font-['Bebas_Neue'] w-80 text-center">Best team of the year</div>
-        <img src="https://placehold.co/202x128" alt="Medal Right" className="absolute left-[1073px] top-[80px] w-52 h-32" />
+        <img src="can.png" alt="Medal Right" className="absolute left-[1073px] top-[80px] w-52 h-32" />
         <div className="absolute left-[1101px] top-[239px] text-4xl text-amber-500 font-['Bebas_Neue'] text-center">Best fanbase</div>
 
         {/* Instagram and Shop Cards */}
@@ -29,15 +29,15 @@ const Thirdpage = () => {
             handle: "@/lumbinilions",
             icon: true,
             top: 396,
-            contentTop: 424,
-            handleTop: 461,
+            contentTop: 420,
+            handleTop: 420,
           },
           {
             label: "Shop our apparel now",
             handle: null,
             icon: false,
             top: 532,
-            contentTop: 552,
+            contentTop: 540,
             handleTop: null,
           },
           {
@@ -82,7 +82,7 @@ const Thirdpage = () => {
           <span className="text-white"> NEWS</span>
         </div>
         <div className="absolute left-[542px] top-[449px] w-[706px] h-80 bg-zinc-300" />
-        <img src="https://placehold.co/482x321" alt="News Image" className="absolute left-[657px] top-[449px] w-[482px] h-80" />
+        <img src="news.jpg" alt="News Image" className="absolute left-[657px] top-[449px] w-[482px] h-80" />
         <div className="absolute left-[466px] top-[783px] text-amber-500 text-4xl uppercase font-['Bebas_Neue'] text-center leading-10">
           Lumbini Lions restrict Janakpur Bolts to 136 with impressive bowling
         </div>
@@ -101,7 +101,7 @@ const Thirdpage = () => {
         </div>
       
         {/* Our Story Section */}
-        <img src="https://placehold.co/253x169" alt="Story" className="absolute left-[29px] top-[826px] w-64 h-44" />
+        <img src="logo.png" alt="Story" className="absolute left-[29px] top-[826px] w-64 h-44" />
         <div className="absolute left-[248px] top-[853px] text-6xl text-white font-['Bebas_Neue']">Our story</div>
         <div className="absolute left-[248px] top-[853px] text-7xl text-amber-500 font-['Bebas_Neue']">___</div>
         <p className="absolute left-[248px] top-[898px] w-60 text-white text-xl font-bold font-['Beiruti'] leading-9">

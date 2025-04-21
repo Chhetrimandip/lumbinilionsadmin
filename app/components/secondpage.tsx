@@ -23,42 +23,18 @@ const Secondpage = () => {
         {/* Squad cards */}
         <div className="flex flex-wrap justify-center gap-8">
           {/* Player 1 */}
-          <div className="relative w-60 h-96">
-            <img className="absolute top-8 w-full h-80 " src="raymond.png" alt="" />
-            <img className="absolute -top-8 w-full h-80" src="raymond.png" alt="" />
-            <img className="absolute top-8 w-full h-80" src="raymond.png" alt="" />
-            <div className="absolute bottom-20 w-full text-center uppercase text-xl font-['Inter']">
-              Andries Gous
-            </div>
-            <div className="absolute bottom-8 w-full text-center text-amber-500 text-base font-['Arial'] uppercase">
-              Wicketkeeper
-            </div>
-          </div>
+        <div className="relative w-60 h-96 hover:scale-110 transition-transform duration-400">
+            <img className="absolute top-8 w-full h-80" src="playercardexe.png" alt="" />
+        </div>
 
           {/* Player 2 */}
-          <div className="relative w-64 h-96">
-            <img className="absolute top-8 w-full h-96 rotate-90" src="rohit.png" alt="" />
-            <img className="absolute -top-8 w-full h-80 rotate-90" src="rohit.png" alt="" />
-            <img className="absolute top-8 w-full h-96 rotate-90" src="rohit.png" alt="" />
-            <div className="absolute bottom-20 w-full text-center uppercase text-xl font-['Inter']">
-              Bas De Leede
-            </div>
-            <div className="absolute bottom-8 w-full text-center text-amber-500 text-base font-['Arial'] uppercase">
-              All Rounder
-            </div>
+          <div className="relative w-60 h-96 hover:scale-110 transition-transform duration-400">
+            <img className="absolute top-8 w-full h-80" src="middlecard.png" alt="" />
           </div>
 
           {/* Player 3 */}
-          <div className="relative w-60 h-96">
-            <img className="absolute top-8 w-full h-80 rotate-90" src="durgesh.png" alt="" />
-            <img className="absolute -top-8 w-full h-80 rotate-90" src="durgesh.png" alt="" />
-            <img className="absolute top-8 w-full h-80 rotate-90" src="durgesh.png" alt="" />
-            <div className="absolute bottom-20 w-full text-center uppercase text-xl font-['Inter'] leading-tight">
-              Kiran Kumar<br />Thagunna
-            </div>
-            <div className="absolute bottom-8 w-full text-center text-amber-500 text-base font-['Arial'] uppercase">
-              Batsman
-            </div>
+          <div className="relative w-60 h-96 hover:scale-110 transition-transform duration-400">
+            <img className="absolute top-8 w-full h-80" src="playercardexe.png" alt="" />
           </div>
         </div>
 
