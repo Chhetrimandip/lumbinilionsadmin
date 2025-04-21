@@ -1,13 +1,61 @@
-import React from 'react'
-import './rootpage.css'
-import Thirdpage from '../components/thirdpage';
-import Secondpage from '../components/secondpage';
+"use client";
+
+import React, { useEffect, useRef, useState } from "react";
+import "./rootpage.css";
+import Secondpage from "../components/secondpage";
+import Resultcard from "../components/resultcard";
 
 const Homepage = () => {
+  const [showNavbar, setShowNavbar] = useState(false);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const img = document.querySelector(".fade-in-on-scroll");
+
+    const handleScroll = () => {
+      // Trigger fade-in if image is in view
+      if (img) {
+        const rect = img.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) {
+          img.classList.add("show");
+        }
+      }
+
+      const currentScrollY = window.scrollY;
+
+      // Navbar visibility logic
+      setShowNavbar(
+        currentScrollY < 100 || currentScrollY < lastScrollY.current
+      );
+
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    handleScroll(); // Run once on mount
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
 <>
   <div className="relative w-full min-h-screen bg-neutral-800 overflow-hidden">
     {/* Background Image and Overlays */}
+    <section className='hero-section'>
+    <img 
+      src="team.png" 
+      className='absolute left-1/2 top-3/4 fade-in-on-scroll transform -translate-x-1/2 -translate-y-1/2 w-[80%] max-w-[2000px] object-contain z-10'
+    />
+    </section>
+    <h1 className="absolute left-1/2 top-2/7 transform -translate-x-1/2 -translate-y-1/2 w-[60%] max-w-[700px] text-center text-5xl md:text-6xl lg:text-7xl font-bold z-10 text-amber-500">
+      Lineup
+    </h1>
+    <img 
+      src="heart.png" 
+      alt="Hearts" 
+      className="absolute left-1/2 top-2/7 transform -translate-x-1/2 -translate-y-1/2 w-[60%] max-w-[700px] object-contain z-10"
+    />
     <div className="absolute inset-0 z-10">
 
       <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black z-20"></div>
@@ -18,63 +66,100 @@ const Homepage = () => {
       <div className="absolute bottom-0 left-0 right-0 h-1/4 bg-gradient-to-t from-black to-transparent z-21"></div>
     </div>
 
-    {/* Title */}
-    <div className="relative z-30 flex flex-col items-center pt-24 px-4 md:px-8">
-      <div className="relative text-center">
-        <h1 className="absolute text-zinc-100 text-4xl top-20 sm:text-5xl md:text-6xl font-['Bebas_Neue'] tracking-wide uppercase"
-          style={{
-            textShadow: 
-            "-1px -1px 0 #71717a, 1px -1px 0 #71717a, -1px 1px 0 #71717a, 1px 1px 0 #71717a",
-          }}>
-          LUMBINI LIONS LINEUP
-        </h1>
-      </div>
-    </div>
-
-    {/* Match Section */}
-    <div className="relative z-30 flex flex-col items-center justify-center mt-24 px-4 md:px-0">
-      <div className="flex items-center justify-center gap-6 flex-wrap text-center">
-        <button className="hover:scale-110 transition-transform">
-          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-            <path d="M30 36L18 24L30 12" stroke="#BF6A02" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </button>
-
-        <img src="logo.png" alt="Lumbini Lions Logo" className="w-40 sm:w-56 md:w-80 h-auto" />
-
-        <div className="text-amber-500 text-4xl sm:text-5xl md:text-6xl font-['Bebas_Neue']">
-          VS
-          <div className="text-white text-base md:text-xl mt-2">
-            2025/12/7 12PM @Dashrath Stadium
-          </div>
-        </div>
-
-        <img src="sudur.png" alt="Opponent Logo" className="w-32 sm:w-40 md:w-48 h-auto" />
-
-        <button className="hover:scale-110 transition-transform">
-          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-            <path d="M18 36L30 24L18 12" stroke="#BF6A02" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </button>
-      </div>
-    </div>
-
-    {/* Schedule Title */}
-    <div className="relative z-30 mt-12 text-center text-white text-4xl md:text-[5rem] font-['Bebas_Neue'] uppercase tracking-wider">
-      Schedule |
-    </div>
-
+ 
     {/* Roaring Lion */}
     <img
-      src="lionroar.png"
+      src="lionroar.png "
       alt="Roaring Lion"
-      className="absolute left-0 top-[196px] w-64 sm:w-[400px] md:w-[633px] h-auto z-0 opacity-80"
+      className="absolute left-0 max-w-full top-[1px] w-64 sm:w-[400px] object-contain overflow-hidden md:w-[500px] h-auto z-0 opacity-80"
     />
   </div>
+  {/* Results Section */}
+  <div className="relative z-30 pt-10">
+    {/* Results array */}
+    {(() => {
+      // Import or define the ResultType type to match what Resultcard expects
+      type ResultType = { winner: string; margin: Number; }; // Adjust this to match your actual ResultType
+      
+      const resultarray = [
+        {
+          id: 1,
+          team2: "Sudur Paschim Royals",
+          margin: 45,
+          victory: false,
+          teamLogo: "sudur.png"
+        },
+        {
+          id: 2,
+          team2: "Janakpur Bolts",
+          margin: 1,
+          victory: false,
+          teamLogo: "janakpur.png"
+        },
+        {
+          id: 3,
+          team2: "Chitwan Rhinos",
+          margin: 33,
+          victory: true,
+          teamLogo: "chitwan.png"
+        },
+        {
+          id: 4,
+          team2: "Kathmandu Gurkhas",
+          margin: 18,
+          victory: false,
+          teamLogo: "kathmandu.png"
+        },
+        {
+          id: 5,
+          team2: "Pokhara Avengers",
+          margin: 10,
+          victory: false,
+          teamLogo: "pokhara.png"
+        },
+        {
+          id: 6,
+          team2: "Biratnagar Kings",
+          margin: 0, // Not explicitly mentioned in results
+          victory: false, // No win recorded against them
+          teamLogo: "biratnagar.png"
+        },
+        {
+          id: 7,
+          team2: "Karnali Yaks",
+          margin: 0, // No direct match details found
+          victory: false, // No win recorded against them
+          teamLogo: "karnali.png"
+        }
+      ];
+      
+      
+      return (
+        <div className="w-full max-w-6xl mx-auto px-4">
+          <div className="bg-black/40 rounded-3xl border-[1.5px] border-amber-500 p-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {resultarray.map(element => (
+                <Resultcard key={element.id} result={element} />
+              ))}
+            </div>
+          </div>
+        </div>
+      );
+    })()}
+  </div>
+
+  <div className="relative pb-48">
+    <img 
+      data-layer="Sponsers" 
+      className="absolute left-1/2 transform -translate-x-1/2 w-[1096px] h-48 z-30" 
+      src="sponsors.png" 
+      alt="Sponsors"
+    />
+  </div>
+  
   {/*2nd page */}
   <Secondpage/>
-    {/*3rd page */}
-
+  {/*3rd page */}
 </>
 
 

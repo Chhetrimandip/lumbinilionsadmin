@@ -24,3 +24,19 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.fade-in-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s ease, transform 1.5s ease;
+}
+
+.fade-in-on-scroll.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* globals.css */
+html, body {
+  overflow-x: hidden;
+}
