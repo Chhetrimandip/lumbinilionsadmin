@@ -1,11 +1,20 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono , Bebas_Neue} from "next/font/google";
 import "./globals.css";
+import Navbar from "./components/navbar";
+
+
+const bebasNeue = Bebas_Neue({
+  weight: '400',
+  subsets: ["latin"],
+  variable: '--font-bebas-neue', // This makes the font available as a CSS variable
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
+
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -24,10 +33,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body         className={`${geistSans.variable} ${geistMono.variable} antialiased`}      >
+      <div className="scale-90 md:scale-95 lg:scale-100 origin-top-left">
+        <Navbar />
+        {children}    </div>
       </body>
     </html>
   );

@@ -1,0 +1,8 @@
+@import "../globals.css";
+
+
+.background {
+    background: url('/darkbg.avif') center center/cover no-repeat;
+    background-color: #000000; /* Fallback color if image fails to load */
+    min-height: 100vh; /* full height */
+}
