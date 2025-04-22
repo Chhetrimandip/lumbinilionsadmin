@@ -8,7 +8,9 @@ import Footer from "./components/footer";
 const bebasNeue = Bebas_Neue({
   weight: '400',
   subsets: ["latin"],
-  variable: '--font-bebas-neue', // This makes the font available as a CSS variable
+  variable: '--font-bebas-neue',
+  display: 'swap',   // Add this line
+  preload: false    // Add this line
 });
 
 const geistSans = Geist({
@@ -33,14 +35,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-<div className="origin-top-left overflow-hidden">
-      <html lang="en">
-      <body         className={`${geistSans.variable} ${geistMono.variable} `}      >
+    <html lang="en" className="scroll-smooth">
+      <body className={`${geistSans.variable} ${geistMono.variable} ${bebasNeue.variable} overflow-x-hidden`}>
         <Navbar />
-        {children}  
+        <main className="overflow-x-hidden overflow-y-auto">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>
-    </div>
   );
 }
