@@ -1,11 +1,12 @@
 import React, { FC } from 'react';
+import Image from 'next/image';
 
 interface ResultProp {
   result: {
     teamLogo: string;
     team2: string;
     victory: boolean;
-    margin: Number;
+    margin: number;
   };
 }
 
@@ -14,9 +15,11 @@ const Resultcard: FC<{ result: ResultProp['result'] }> = ({ result }) => {
     <div className="overflow-hidden bg-white/10 hover:bg-white/20 transition-colors duration-300 px-4 py-3 sm:px-6 sm:py-4 rounded-lg shadow-md flex flex-col sm:flex-row justify-between items-center w-full gap-3 sm:gap-0">
       {/* Left Side: Logo and Match */}
       <div className="flex items-center gap-3 max-w-[65%] sm:max-w-[70%] mb-2 sm:mb-0">
-        <img
+        <Image
           src={result.teamLogo}
           alt="Team Logo"
+          width={48}  // 12 * 4 = 48px for the largest size
+          height={48}
           className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-white shadow-md flex-shrink-0"
         />
         <div className="text-white overflow-hidden">

@@ -1,6 +1,7 @@
 "use client"
 import React, { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 // Define the Quiz Question Type
 interface QuizQuestion {
@@ -134,9 +135,11 @@ const QuizCard: React.FC<QuizCardProps> = ({ questions }) => {
         {!quizStarted ? (
           // Quiz start screen
           <div className="bg-neutral-800/80 backdrop-blur-sm rounded-lg shadow-lg p-6 md:p-10 text-center animate-fade-in">
-            <img 
-              src="/crickettrophy.png" // Replace with your trophy image
+            <Image 
+              src="/crickettrophy.png" 
               alt="Cricket Trophy" 
+              width={128}
+              height={128}
               className="w-32 h-32 mx-auto mb-6 object-contain"
             />
             <h2 className="text-2xl md:text-3xl font-['Bebas_Neue'] text-white mb-4">
@@ -146,8 +149,8 @@ const QuizCard: React.FC<QuizCardProps> = ({ questions }) => {
               10 questions • 2 minute time limit • How well do you know the game?
             </p>
             <p className="text-gray-300 text-base mb-8">
-            Play the quiz and fill the form to get a premium signed merchandise!
-              </p>
+              Play the quiz and fill the form to get a premium signed merchandise!
+            </p>
             <button
               onClick={startQuiz}
               className="px-8 py-3 rounded-lg bg-amber-500 hover:bg-amber-600 text-black text-xl font-['Bebas_Neue'] transition-transform hover:scale-105"
@@ -195,9 +198,11 @@ const QuizCard: React.FC<QuizCardProps> = ({ questions }) => {
               {answerChecked && (
                 <div className={`absolute inset-0 transition-all duration-500 flex justify-center
                   ${showAnswer ? 'opacity-100 transform scale-100' : 'opacity-0 scale-95'}`}>
-                  <img 
+                  <Image 
                     src={`/${questions[currentQuestion].answerimage}`} 
                     alt="Answer visual" 
+                    width={400}
+                    height={200}
                     className="h-full object-contain max-h-[200px] rounded-lg"
                   />
                 </div>

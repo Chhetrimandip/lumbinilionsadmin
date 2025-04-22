@@ -1,7 +1,6 @@
 "use client"
 import React from 'react'
-import Link from 'next/link'
-import QuizCard from '../components/quizcard';
+import QuizCard from '../components/quizcard'
 
 // Define the Quiz Question Type
 interface QuizQuestion {

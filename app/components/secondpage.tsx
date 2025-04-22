@@ -1,14 +1,18 @@
 import React from 'react'
+import Image from 'next/image'
 
 const Secondpage = () => {
     return (    
         <div className="w-full min-h-screen relative overflow-hidden text-white px-4 py-20">
             {/* Background Image with Overlay */}
             <div className="absolute inset-0 z-0">
-                <img
+                <Image
                     className="w-full h-full object-cover"
-                    src="buddha.jpg"
+                    src="/buddha.jpg"
                     alt="Buddha Background"
+                    width={1920}
+                    height={1080}
+                    priority
                 />
                 {/* Dark overlay for better text readability */}
                 <div className="absolute inset-0 bg-black/70"></div>
@@ -21,15 +25,19 @@ const Secondpage = () => {
             </div>
 
             {/* Side decorative images */}
-            <img
+            <Image
                 className="hidden object-contain lg:block absolute top-[200px] overflow-hidden left-0 w-44 rotate-0 z-10"
-                src="lionroar.png"
-                alt=""
+                src="/lionroar.png"
+                alt="Left lion decoration"
+                width={176}
+                height={176}
             />
-            <img
+            <Image
                 className="hidden lg:block object-contain absolute top-[200px] overflow-hidden right-0 w-44 rotate-0 z-10"
-                src="lionroarinverted.png"
-                alt=""
+                src="/lionroarinverted.png"
+                alt="Right lion decoration"
+                width={176}
+                height={176}
             />
 
             {/* Content container with proper z-index */}
@@ -43,17 +51,35 @@ const Secondpage = () => {
                 <div className="flex flex-wrap justify-center gap-8">
                     {/* Player 1 */}
                     <div className="relative w-60 h-96 hover:scale-110 transition-transform duration-400">
-                        <img className="absolute top-8 w-full h-80" src="playercardexe.png" alt="" />
+                        <Image 
+                            className="absolute top-8 w-full h-80" 
+                            src="/playercardexe.png" 
+                            alt="Player card 1"
+                            width={240}
+                            height={320}
+                        />
                     </div>
 
                     {/* Player 2 */}
                     <div className="relative w-60 h-96 scale-120 hover:scale-125 transition-transform duration-400">
-                        <img className="absolute top-9 w-full h-80" src="middlecard.png" alt="" />
+                        <Image 
+                            className="absolute top-9 w-full h-80" 
+                            src="/middlecard.png" 
+                            alt="Player card 2"
+                            width={240}
+                            height={320}
+                        />
                     </div>
 
                     {/* Player 3 */}
                     <div className="relative w-60 h-96 hover:scale-110 transition-transform duration-400">
-                        <img className="absolute top-8 w-full h-80" src="playercardexe.png" alt="" />
+                        <Image 
+                            className="absolute top-8 w-full h-80" 
+                            src="/playercardexe.png" 
+                            alt="Player card 3"
+                            width={240}
+                            height={320}
+                        />
                     </div>
                 </div>
 

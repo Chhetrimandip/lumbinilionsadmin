@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const Footer = () => {
     return (
@@ -8,9 +9,11 @@ const Footer = () => {
                 {/* Top section with logo and title */}
                 <div className="flex flex-col md:flex-row justify-between items-center mb-10">
                     <div className="flex items-center mb-6 md:mb-0">
-                        <img 
+                        <Image 
                             src="/logo.png" 
                             alt="Lumbini Lions Logo" 
+                            width={80}
+                            height={80}
                             className="w-20 h-20 object-contain"
                         />
                         <h2 className="text-4xl font-['Bebas_Neue'] text-amber-500 ml-4">LUMBINI LIONS</h2>
