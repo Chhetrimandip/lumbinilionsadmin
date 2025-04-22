@@ -33,13 +33,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body         className={`${geistSans.variable} ${geistMono.variable} antialiased`}      >
-      <div className="scale-90 md:scale-95 lg:scale-100 origin-top-left overflow-hidden">
+<div className="origin-top-left overflow-hidden">
+      <html lang="en">
+      <body         className={`${geistSans.variable} ${geistMono.variable} `}      >
         <Navbar />
-        {children}    </div>
+        {children}  
         <Footer />
       </body>
     </html>
+    </div>
   );
 }

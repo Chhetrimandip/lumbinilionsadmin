@@ -21,7 +21,7 @@ const QuizPage = () => {
       question: "Which country won the ICC Men's Cricket World Cup 2023?",
       options: ["India", "Australia", "England", "New Zealand"],
       correctAnswer: 1, // Australia
-      answerimage: "qa1.jpg",
+      answerimage: "qa1.webp",
       answertext: "Australia defeated India in the final to win their 6th World Cup title, making them the most successful team in World Cup history."
     },
     {
@@ -29,7 +29,7 @@ const QuizPage = () => {
       question: "What is the highest individual score in a One Day International (ODI) cricket match?",
       options: ["264", "275", "219", "237"],
       correctAnswer: 0, // 264 by Rohit Sharma
-      answerimage: "qa2.jpg",
+      answerimage: "qa2.jpeg",
       answertext: "Rohit Sharma scored 264 against Sri Lanka in 2014, including 33 fours and 9 sixes. He was dropped on 4 runs and went on to make history!"
     },
     {

@@ -110,21 +110,8 @@ const Thirdpage = () => {
                     </div>
                 </div>
             </div>
-            
-            {/* Navigation Controls - could be reused across sections */}
-            <div className="hidden md:flex justify-between items-center absolute top-1/2 transform -translate-y-1/2 w-full px-4 pointer-events-none">
-                <button className="bg-transparent border-none cursor-pointer pointer-events-auto">
-                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M30 36L18 24L30 12" stroke="#BF6A02" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                </button>
-                <button className="bg-transparent border-none cursor-pointer pointer-events-auto">
-                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M18 36L30 24L18 12" stroke="#BF6A02" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                </button>
-            </div>
         </div>
+    
     );
 }
 
