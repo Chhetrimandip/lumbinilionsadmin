@@ -8,7 +8,7 @@ import Resultcard from "../components/resultcard";
 import Thirdpage from "../components/thirdpage";
 import QuizPage from "../test/page";
 
-const temp = () => {
+const RootPage = () => {
   // Using the state for navbar visibility to avoid the unused variable error
   const [, setShowNavbar] = useState(false);
   const lastScrollY = useRef(0);
@@ -176,4 +176,4 @@ const temp = () => {
 </>
 );
 }
-export default temp;
+export default RootPage;

@@ -89,13 +89,13 @@ const Secondpage = () => {
                         Word from our Chairman
                     </h3>
                     <div className="bg-black/50 backdrop-blur-sm p-6 -mt-2 rounded-lg max-w-4xl mx-auto">
-                        <p className="text-amber-500 text-lg sm:text-xl font-['Bebas_Neue'] uppercase leading-8">
-                            "Our strategy was clear from the beginning: to bring together a group of top-notch talents who
-                            can represent the Lumbini Lions with pride, passion, and skill. I am confident that with the
-                            dedication of our players and the support of our fans, we will lead this season and take home
-                            the championship trophy. The Lions are ready to roar louder than ever before."
-                        </p>
-                    </div>
+                       <p className="text-amber-500 text-lg sm:text-xl font-['Bebas_Neue'] uppercase leading-8">
+                           &ldquo;Our strategy was clear from the beginning: to bring together a group of top-notch talents who
+                           can represent the Lumbini Lions with pride, passion, and skill. I am confident that with the
+                           dedication of our players and the support of our fans, we will lead this season and take home
+                           the championship trophy. The Lions are ready to roar louder than ever before.&rdquo;
+                       </p>
+                  </div>
                 </div>
             </div>
         </div>
