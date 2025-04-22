@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./rootpage.css";
 import Secondpage from "../components/secondpage";
 import Resultcard from "../components/resultcard";
+import Thirdpage from "../components/thirdpage";
 
 const Homepage = () => {
   const [showNavbar, setShowNavbar] = useState(false);
@@ -160,6 +161,7 @@ const Homepage = () => {
   {/*2nd page */}
   <Secondpage/>
   {/*3rd page */}
+  <Thirdpage />
 </>
 
 

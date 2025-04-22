@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono , Bebas_Neue} from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/navbar";
+import Footer from "./components/footer";
 
 
 const bebasNeue = Bebas_Neue({
@@ -37,6 +38,7 @@ export default function RootLayout({
       <div className="scale-90 md:scale-95 lg:scale-100 origin-top-left overflow-hidden">
         <Navbar />
         {children}    </div>
+        <Footer />
       </body>
     </html>
   );
