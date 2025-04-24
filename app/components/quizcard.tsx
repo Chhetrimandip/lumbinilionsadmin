@@ -2,22 +2,25 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-
-// Define the Quiz Question Type
-interface QuizQuestion {
-  id: number;
-  question: string;
-  options: string[];
-  correctAnswer: number; // Index of the correct option
-  answerimage: string;
-  answertext: string; // Additional interesting fact
-}
-
-interface QuizCardProps {
-  questions: QuizQuestion[];
-}
+import { QuizCardProps } from '@/lib/types'
+import { createFan } from '../actions/action'
 
 const QuizCard: React.FC<QuizCardProps> = ({ questions }) => {
+    // Ensure questions array is not empty
+    if (!questions || questions.length === 0) {
+      return (
+        <div className="min-h-screen bg-neutral-900 pt-40 pb-16 px-4 flex justify-center items-center">
+          <div className="bg-neutral-800/80 backdrop-blur-sm rounded-lg shadow-lg p-6 md:p-10 text-center">
+            <h2 className="text-2xl md:text-3xl font-['Bebas_Neue'] text-white mb-4">
+              Quiz questions are loading...
+            </h2>
+            <p className="text-gray-300 text-base mb-8">
+              Please try again in a moment
+            </p>
+          </div>
+        </div>
+      );
+    }
   // State to track if quiz has started
   const [quizStarted, setQuizStarted] = useState(false);
   // State to track current question index
@@ -72,7 +75,7 @@ const QuizCard: React.FC<QuizCardProps> = ({ questions }) => {
     
     setAnswerChecked(true);
     
-    if (selectedOption === questions[currentQuestion].correctAnswer) {
+    if (selectedOption === questions[currentQuestion].correctanswer) {
       setScore(score + 1);
     }
     
@@ -196,15 +199,32 @@ const QuizCard: React.FC<QuizCardProps> = ({ questions }) => {
               
               {/* Image - Fades in when answered */}
               {answerChecked && (
-                <div className={`absolute inset-0 transition-all duration-500 flex justify-center
+                <div className={`absolute inset-0 transition-all duration-500 flex flex-col items-center justify-center
                   ${showAnswer ? 'opacity-100 transform scale-100' : 'opacity-0 scale-95'}`}>
-                  <Image 
-                    src={`/${questions[currentQuestion].answerimage}`} 
-                    alt="Answer visual" 
-                    width={400}
-                    height={200}
-                    className="h-full object-contain max-h-[200px] rounded-lg"
-                  />
+                  {/* Fallback text in case image fails to load */}
+                  <div className="text-amber-300 text-xl font-['Bebas_Neue'] mb-4">
+                    Correct Answer: {questions[currentQuestion].options[questions[currentQuestion].correctanswer]}
+                  </div>
+                  
+                  <div className="relative w-full max-w-[400px] max-h-[200px]">
+                    <Image 
+                      src={`/${questions[currentQuestion].answerimage}`} 
+                      alt="Answer visual" 
+                      width={400}
+                      height={200}
+                      className="object-contain max-h-[200px] rounded-lg"
+                      onError={(e) => {
+                        // Hide the broken image completely
+                        (e.target as HTMLImageElement).style.display = 'none';
+                        
+                        // Optionally log the error for debugging
+                        console.log(`Failed to load image: ${questions[currentQuestion].answerimage}`);
+                        
+                        // Could set a state to track failed images if needed
+                        // setImageFailed(true);
+                      }}
+                    />
+                  </div>
                 </div>
               )}
             </div>
@@ -217,7 +237,7 @@ const QuizCard: React.FC<QuizCardProps> = ({ questions }) => {
                   onClick={() => handleOptionSelect(index)}
                   className={`p-3 rounded-lg cursor-pointer transition-all duration-300 flex items-center
                     ${answerChecked 
-                      ? index === questions[currentQuestion].correctAnswer
+                      ? index === questions[currentQuestion].correctanswer
                         ? 'bg-green-500/20 border-2 border-green-500'
                         : selectedOption === index 
                           ? 'bg-red-500/20 border-2 border-red-500 opacity-70'
@@ -229,7 +249,7 @@ const QuizCard: React.FC<QuizCardProps> = ({ questions }) => {
                 >
                   <p className="text-white text-base flex-grow">{option}</p>
                   {answerChecked && (
-                    index === questions[currentQuestion].correctAnswer ? (
+                    index === questions[currentQuestion].correctanswer ? (
                       <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
@@ -296,7 +316,37 @@ const QuizCard: React.FC<QuizCardProps> = ({ questions }) => {
                     : "Nice try! Keep learning about cricket!"}
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-3 mb-4">
-              <button
+              <form action={createFan} className="w-full max-w-md mx-auto mb-6 space-y-3">
+                <div className="space-y-3">
+                  <input 
+                    name="name" 
+                    placeholder="Your Name" 
+                    className="w-full px-4 py-2 bg-neutral-700 text-white placeholder-neutral-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    required
+                  />
+                  <input 
+                    name="phone" 
+                    placeholder="Phone Number" 
+                    className="w-full px-4 py-2 bg-neutral-700 text-white placeholder-neutral-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    required
+                  />
+                  <input 
+                    name="email" 
+                    placeholder="Email Address" 
+                    type="email"
+                    className="w-full px-4 py-2 bg-neutral-700 text-white placeholder-neutral-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    required
+                  />
+                </div>
+                <button 
+                  type="submit"
+                  className="w-full px-5 py-3 rounded-lg bg-amber-500 hover:bg-amber-600 text-black text-base font-['Bebas_Neue'] transition-transform hover:scale-105"
+                >
+                  GET YOUR PREMIUM MERCHANDISE
+                </button>
+              </form>
+            </div>
+            <button
                 onClick={resetQuiz}
                 className="px-5 py-2 rounded-lg bg-amber-500 hover:bg-amber-600 text-black text-base font-['Bebas_Neue'] transition-transform hover:scale-105"
               >
@@ -307,7 +357,6 @@ const QuizCard: React.FC<QuizCardProps> = ({ questions }) => {
                   BACK TO HOME
                 </button>
               </Link>
-            </div>
           </div>
         )}
       </div>
