@@ -8,21 +8,22 @@ datasource db {
 }
 
 model Quiz {
-  id           String   @id @default(cuid())
-  question     String
-  options      String[]
-  correctanswer Int      // lowercase to match DbQuizQuestion
-  answerimage  String    // lowercase to match DbQuizQuestion
-  answertext   String    // lowercase to match DbQuizQuestion
-  points       Int      @default(1)
+  id            String   @id @default(cuid())
+  question      String
+  options       String[]
+  correctanswer Int
+  answerimage   String
+  answertext    String
+  points        Int      @default(1)
 }
 
-// Other models as needed
 model Fan {
   id    String @id @default(cuid())
   name  String
   email String
   phone String
+  score Int @default(0)
+  time  Int @default(0)
 }
 
 model Asset {
@@ -40,11 +41,21 @@ model Post {
 }
 
 model Quizzy {
-  id           String   @id @default(cuid())
-  question     String
-  options      String[]
-  correctanswer Int      // lowercase to match DbQuizQuestion
-  answerimage  String    // lowercase to match DbQuizQuestion
-  answertext   String    // lowercase to match DbQuizQuestion
-  points       Int      @default(1)
+  id            String   @id @default(cuid())
+  question      String
+  options       String[]
+  correctanswer Int
+  answerimage   String
+  answertext    String
+  points        Int      @default(1)
+}
+
+model BlogPost {
+  id          String   @id
+  title       String
+  slug        String   @unique
+  content     String
+  imageUrl    String?
+  author      String
+  publishedAt DateTime @default(now())
 }

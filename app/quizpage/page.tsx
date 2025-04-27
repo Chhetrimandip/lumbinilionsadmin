@@ -4,6 +4,12 @@ import { prisma } from '@/lib/db'  // Use the singleton import
 import { QuizQuestion } from '@/lib/types';
 
 const QuizPage = async () => {
+    const leaderboard = await prisma.fan.findMany({
+            orderBy: {
+                score: 'desc',
+            },
+            take: 10,
+        });
   let quizQuestions: QuizQuestion[] = [];
   
   // Define fallback data - put this at the beginning so we have it no matter what
@@ -55,7 +61,7 @@ const QuizPage = async () => {
   }
   
   return (
-    <QuizCard questions={quizQuestions} />
+    <QuizCard questions={quizQuestions} leaderboard = {leaderboard} />
   );
 };
 

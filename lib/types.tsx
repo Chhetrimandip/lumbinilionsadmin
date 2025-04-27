@@ -10,6 +10,13 @@ export interface QuizQuestion {
     
   export interface QuizCardProps {
     questions: QuizQuestion[];
+    leaderboard?: Array<{
+      score: number;
+      time: number;
+      id: string;
+      name: string;
+      phone: string;
+      email: string;}>;
   }
     
   

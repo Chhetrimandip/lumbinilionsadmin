@@ -1,165 +1,236 @@
 "use client"
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
 const Navbar = () => {
-    const [visible, setVisible] = useState(true);
-    const [lastScrollY, setLastScrollY] = useState(0);
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const scrollThreshold = 40; // Increased threshold to reduce sensitivity
-    const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
-
-    useEffect(() => {
-        const handleScroll = () => {
-            // Clear any existing timeout to prevent rapid changes
-            if (scrollTimeout.current) {
-                clearTimeout(scrollTimeout.current);
-            }
-
-            // Only update if we've scrolled past the threshold
-            if (Math.abs(window.scrollY - lastScrollY) > scrollThreshold) {
-                if (window.scrollY > lastScrollY && window.scrollY > 100) {
-                    // Scrolling down - hide the navbar
-                    setVisible(false);
-                    // Close mobile menu when scrolling down
-                    setMobileMenuOpen(false);
-                } else if (window.scrollY < lastScrollY) {
-                    // Scrolling up - show the navbar
-                    setVisible(true);
-                }
-                
-                // Add a delay before updating lastScrollY to prevent flickering
-                scrollTimeout.current = setTimeout(() => {
-                    setLastScrollY(window.scrollY);
-                }, 100); // Increased timeout for better debouncing
-            }
-        };
-
-        window.addEventListener('scroll', handleScroll);
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-            if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
-        };
-    }, [lastScrollY]);
-
-    // Close mobile menu when escape key is pressed
-    useEffect(() => {
-        const handleEscape = (e: KeyboardEvent) => {
-            if (e.key === 'Escape') {
-                setMobileMenuOpen(false);
-            }
-        };
-
-        document.addEventListener('keydown', handleEscape);
-        return () => document.removeEventListener('keydown', handleEscape);
-    }, []);
-
-    // Lock body scroll when mobile menu is open
-    useEffect(() => {
-        if (mobileMenuOpen) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
-        return () => {
-            document.body.style.overflow = '';
-        };
-    }, [mobileMenuOpen]);
-
-    return (  
-        <>
-            {/* Backdrop for mobile menu */}
-            {mobileMenuOpen && (
-                <div 
-                    className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 md:hidden"
-                    onClick={() => setMobileMenuOpen(false)}
+  // Simple state for mobile menu
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
+  // Add scroll state variables
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
+  const [visible, setVisible] = useState(true);
+  
+  // Function to toggle menu
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+  
+  // Function to close menu
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+  
+  // Handle scroll behavior
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPos = window.scrollY;
+      
+      // Set visible based on scroll direction
+      if (currentScrollPos > prevScrollPos && currentScrollPos > 100) {
+        // Scrolling down - hide navbar
+        setVisible(false);
+      } else {
+        // Scrolling up - show navbar
+        setVisible(true);
+      }
+      
+      setPrevScrollPos(currentScrollPos);
+    };
+    
+    // Add scroll event listener with throttling
+    let throttleTimeout = null;
+    
+    const throttleScroll = () => {
+      if (throttleTimeout === null) {
+        throttleTimeout = setTimeout(() => {
+          handleScroll();
+          throttleTimeout = null;
+        }, 100);
+      }
+    };
+    
+    window.addEventListener('scroll', throttleScroll);
+    
+    return () => {
+      window.removeEventListener('scroll', throttleScroll);
+      if (throttleTimeout) clearTimeout(throttleTimeout);
+    };
+  }, [prevScrollPos]);
+  
+  // Lock body scroll when menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isMenuOpen]);
+  
+  // CSS class for the typography you specified
+  const navLinkStyle = "text-white hover:text-amber-500 uppercase font-['Clash_Display'] font-medium text-[14px] leading-[100%] tracking-[0.02em]";  
+  return (
+    <div className="z-[1000] relative overflow-display">
+      {/* Fixed navbar with transition for hiding */}
+      <nav 
+        className={`fixed top-0 left-0 right-0 backdrop-blur-sm z-[100] transition-transform duration-300 ${
+          visible ? 'transform-none' : '-translate-y-full'
+        }`}
+      >
+        <div className="container mx-auto px-4">
+          {/* Mobile layout (unchanged) */}
+          <div className="flex justify-between items-center h-16 md:hidden">
+            {/* Logo */}
+            <Link href="/" className="flex-shrink-0">
+              <div className="relative w-20 h-12 transition-transform duration-300 hover:scale-110">
+                <Image 
+                  src="/logo.png" 
+                  alt="Lumbini Lions Logo"
+                  width={80}
+                  height={48}
+                  style={{ objectFit: 'contain' }}
                 />
-            )}
-
-            <nav className={`bg-neutral-900/80 backdrop-blur-sm py-2 fixed w-full z-50 transition-all duration-300 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-16'}`}>
-                <div className="container mx-auto px-4 flex justify-between items-center">
-                    {/* Logo - always visible */}
-                    <Link href="/" className="relative z-50">
-                        <Image 
-                            src="/logo.png" 
-                            width={120}
-                            height={84}
-                            alt="Lumbini Lions Logo" 
-                            className="w-20 h-14 md:w-28 md:h-20 hover:scale-110 transition-transform duration-300" 
-                            priority
-                        />
-                    </Link>
-
-                    {/* Desktop Menu - keep unchanged */}
-                    <div className="hidden md:flex items-center gap-8">
-                        <Link href="/" className="text-amber-500 hover:text-amber-400 text-2xl font-['Bebas_Neue'] uppercase tracking-wide transition-colors duration-300">HOME</Link>
-                        <Link href="/shop" className="text-zinc-100 hover:text-amber-500 text-2xl font-['Bebas_Neue'] uppercase tracking-wide transition-colors duration-300">SHOP</Link>
-                        <Link href="/news" className="text-zinc-100 hover:text-amber-500 text-2xl font-['Bebas_Neue'] uppercase tracking-wide transition-colors duration-300">NEWS</Link>
-                        <Link href="/partners" className="text-zinc-100 hover:text-amber-500 text-2xl font-['Bebas_Neue'] uppercase tracking-wide transition-colors duration-300">PARTNERS</Link>
-                    </div>
-
-                    {/* Hamburger Button - only on mobile */}
-                    <button 
-                        className="md:hidden relative z-50 p-2" 
-                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                        aria-label="Toggle menu"
-                    >
-                        <div className="flex flex-col justify-center items-center">
-                            <span className={`block w-6 h-0.5 bg-white transition-all duration-300 ease-out ${mobileMenuOpen ? 'rotate-45 translate-y-1' : '-translate-y-1'}`}></span>
-                            <span className={`block w-6 h-0.5 bg-white transition-all duration-300 ease-out ${mobileMenuOpen ? 'opacity-0' : 'opacity-100'}`}></span>
-                            <span className={`block w-6 h-0.5 bg-white transition-all duration-300 ease-out ${mobileMenuOpen ? '-rotate-45 -translate-y-1' : 'translate-y-1'}`}></span>
-                        </div>
-                    </button>
-
-                    {/* Mobile Menu */}
-                    <div className={`fixed md:hidden top-0 right-0 w-[250px] h-full bg-neutral-800 z-40 shadow-lg transform transition-transform duration-300 ease-in-out pt-24 ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-                        <div className="flex flex-col items-center gap-6 px-4">
-                            <Link 
-                                href="/" 
-                                className="w-full text-center py-3 text-amber-500 hover:text-amber-400 text-2xl font-['Bebas_Neue'] uppercase tracking-wide transition-colors duration-300 border-b border-neutral-700"
-                                onClick={() => setMobileMenuOpen(false)}
-                            >
-                                HOME
-                            </Link>
-                            
-                            <Link 
-                                href="/shop" 
-                                className="w-full text-center py-3 text-zinc-100 hover:text-amber-500 text-2xl font-['Bebas_Neue'] uppercase tracking-wide transition-colors duration-300 border-b border-neutral-700"
-                                onClick={() => setMobileMenuOpen(false)}
-                            >
-                                SHOP
-                            </Link>
-                            
-                            <Link 
-                                href="/news" 
-                                className="w-full text-center py-3 text-zinc-100 hover:text-amber-500 text-2xl font-['Bebas_Neue'] uppercase tracking-wide transition-colors duration-300 border-b border-neutral-700"
-                                onClick={() => setMobileMenuOpen(false)}
-                            >
-                                NEWS
-                            </Link>
-                            
-                            <Link 
-                                href="/partners" 
-                                className="w-full text-center py-3 text-zinc-100 hover:text-amber-500 text-2xl font-['Bebas_Neue'] uppercase tracking-wide transition-colors duration-300 border-b border-neutral-700"
-                                onClick={() => setMobileMenuOpen(false)}
-                            >
-                                PARTNERS
-                            </Link>
-                            
-                            <Link 
-                                href="/quizpage" 
-                                className="w-full text-center py-3 text-zinc-100 hover:text-amber-500 text-2xl font-['Bebas_Neue'] uppercase tracking-wide transition-colors duration-300 border-b border-neutral-700"
-                                onClick={() => setMobileMenuOpen(false)}
-                            >
-                                QUIZ
-                            </Link>
-                        </div>
-                    </div>
+              </div>
+            </Link>
+            
+            {/* Mobile menu button */}
+            <button 
+              className="md:hidden text-white p-2"
+              onClick={toggleMenu}
+              aria-label="Toggle menu"
+            >
+              {isMenuOpen ? (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
+            </button>
+          </div>
+          
+          {/* Desktop layout with centered logo */}
+          <div className="hidden md:block items-center py-4">
+            <div className="flex flex-row justify-center gap-8 items-center overflow-display w-full">
+              {/* Center logo and navigation links */}
+              <Link href="/news" className={navLinkStyle}>News</Link>
+              <Link href="/team" className={navLinkStyle}>Team</Link>
+              <Link href="/match" className={navLinkStyle}>Match</Link>
+              <Link href="/" className="mx-4 relative z-10 overflow-visible">
+                <div className="relative w-32 h-16 transition-transform duration-300 hover:scale-125">
+                  <Image 
+                    src="/logo.png" 
+                    alt="Lumbini Lions Logo"
+                    width={130}
+                    height={65}
+                    style={{ objectFit: 'contain' }}
+                  />
                 </div>
-            </nav>
-        </>
-    );
-}
+              </Link>
+              <Link href="/gallery" className={navLinkStyle}>Gallery</Link>
+              <Link href="/shop" className={navLinkStyle}>Shop</Link>
+              <Link href="/about" className={navLinkStyle}>About</Link>
+            </div>
+          </div>
+        </div>
+      </nav>
+      
+      {/* Mobile menu (unchanged) */}
+      {isMenuOpen && (
+        <div className="fixed inset-0 z-[101] md:hidden">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+            onClick={closeMenu}
+          ></div>
+          
+          {/* Menu content */}
+          <div className="absolute right-0 top-0 h-full w-64 bg-neutral-900 shadow-lg p-4">
+            {/* Close button - top right */}
+            <button 
+              className="absolute top-3 right-3 text-white bg-amber-600 p-2 rounded-full"
+              onClick={closeMenu}
+              aria-label="Close menu"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            
+            {/* Mobile menu logo */}
+            <div className="mt-10 mb-6 flex justify-center">
+              <Image 
+                src="/logo.png" 
+                alt="Lumbini Lions Logo"
+                width={100}
+                height={60}
+                style={{ objectFit: 'contain' }}
+              />
+            </div>
+            
+            {/* Mobile links */}
+            <div className="flex flex-col space-y-3">
+              <Link 
+                href="/" 
+                className="text-amber-500 uppercase font-['Clash_Display'] font-bold text-[14px] leading-[100%] tracking-[0.02em] text-center py-2 border-b border-neutral-800"
+                onClick={closeMenu}
+              >
+                Home
+              </Link>
+              <Link 
+                href="/news" 
+                className="text-white hover:text-amber-500 uppercase font-['Clash_Display'] font-bold text-[14px] leading-[100%] tracking-[0.02em] text-center py-2 border-b border-neutral-800"
+                onClick={closeMenu}
+              >
+                News
+              </Link>
+              <Link 
+                href="/team" 
+                className="text-white hover:text-amber-500 uppercase font-['Clash_Display'] font-bold text-[14px] leading-[100%] tracking-[0.02em] text-center py-2 border-b border-neutral-800"
+                onClick={closeMenu}
+              >
+                Team
+              </Link>
+              <Link 
+                href="/match" 
+                className="text-white hover:text-amber-500 uppercase font-['Clash_Display'] font-bold text-[14px] leading-[100%] tracking-[0.02em] text-center py-2 border-b border-neutral-800"
+                onClick={closeMenu}
+              >
+                Match
+              </Link>
+              <Link 
+                href="/gallery" 
+                className="text-white hover:text-amber-500 uppercase font-['Clash_Display'] font-bold text-[14px] leading-[100%] tracking-[0.02em] text-center py-2 border-b border-neutral-800"
+                onClick={closeMenu}
+              >
+                Gallery
+              </Link>
+              <Link 
+                href="/shop" 
+                className="text-white hover:text-amber-500 uppercase font-['Clash_Display'] font-bold text-[14px] leading-[100%] tracking-[0.02em] text-center py-2 border-b border-neutral-800"
+                onClick={closeMenu}
+              >
+                Shop
+              </Link>
+              <Link 
+                href="/about" 
+                className="text-white hover:text-amber-500 uppercase font-['Clash_Display'] font-bold text-[14px] leading-[100%] tracking-[0.02em] text-center py-2 border-b border-neutral-800"
+                onClick={closeMenu}
+              >
+                About
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
 
 export default Navbar;
