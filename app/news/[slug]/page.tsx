@@ -5,6 +5,7 @@ import { parseEditorJSContent } from '@/lib/editorjs-parser'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 
+
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const post = await prisma.blogPost.findUnique({
     where: { slug: params.slug }
@@ -18,11 +19,16 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default async function BlogPostPage({ params }: { params: { slug: string } }) {
+
+export default async function BlogPostPage({ 
+  params 
+}: { 
+  params: { slug: string } 
+}) {
+  
   const post = await prisma.blogPost.findUnique({
     where: { slug: params.slug }
   });
-  
   if (!post) {
     notFound();
   }
