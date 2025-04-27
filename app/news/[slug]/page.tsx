@@ -4,9 +4,14 @@ import { prisma } from '@/lib/db'
 import { parseEditorJSContent } from '@/lib/editorjs-parser'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import { Metadata } from 'next';
 
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
+type Props = {
+  params: { slug: string }
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = await prisma.blogPost.findUnique({
     where: { slug: params.slug }
   });
@@ -20,11 +25,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 
-export default async function BlogPostPage({ 
-  params 
-}: { 
-  params: { slug: string } 
-}) {
+export default async function BlogPostPage({ params }: Props) {
+
   
   const post = await prisma.blogPost.findUnique({
     where: { slug: params.slug }
