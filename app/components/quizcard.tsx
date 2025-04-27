@@ -7,21 +7,7 @@ import { createFan } from '../actions/action'
 import Leaderboard from './leaderboard'
 
 const QuizCard: React.FC<QuizCardProps> = ({ questions, leaderboard = [] }) => {
-  // Ensure questions array is not empty
-    if (!questions || questions.length === 0) {
-      return (
-        <div className="min-h-screen bg-neutral-900 pt-40 pb-16 px-4 flex justify-center items-center">
-          <div className="bg-neutral-800/80 backdrop-blur-sm rounded-lg shadow-lg p-6 md:p-10 text-center">
-            <h2 className="text-2xl md:text-3xl font-['Bebas_Neue'] text-white mb-4">
-              Quiz questions are loading...
-            </h2>
-            <p className="text-gray-300 text-base mb-8">
-              Please try again in a moment
-            </p>
-          </div>
-        </div>
-      );
-    }
+
   // State to track if quiz has started
   const [quizStarted, setQuizStarted] = useState(false);
   // State to track current question index
@@ -40,6 +26,31 @@ const QuizCard: React.FC<QuizCardProps> = ({ questions, leaderboard = [] }) => {
   const [time, setTime] = useState(0); // 2 minutes = 120 seconds
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
+  
+  // Clear timer on unmount
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
+  }, []);
+  
+    // Ensure questions array is not empty
+    if (!questions || questions.length === 0) {
+      return (
+        <div className="min-h-screen bg-neutral-900 pt-40 pb-16 px-4 flex justify-center items-center">
+          <div className="bg-neutral-800/80 backdrop-blur-sm rounded-lg shadow-lg p-6 md:p-10 text-center">
+            <h2 className="text-2xl md:text-3xl font-['Bebas_Neue'] text-white mb-4">
+              Quiz questions are loading...
+            </h2>
+            <p className="text-gray-300 text-base mb-8">
+              Please try again in a moment
+            </p>
+          </div>
+        </div>
+      );
+    }
   // Start the quiz
   const startQuiz = () => {
     setQuizStarted(true);
@@ -120,14 +131,6 @@ const QuizCard: React.FC<QuizCardProps> = ({ questions, leaderboard = [] }) => {
     setTime(0);
   };
 
-  // Clear timer on unmount
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
-    };
-  }, []);
 
   return (
     <div className="min-h-screen bg-[#06101B] pt-40 pb-16 px-4">

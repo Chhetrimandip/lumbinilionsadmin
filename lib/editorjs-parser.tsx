@@ -5,6 +5,7 @@ import Image from 'next/image';
 interface EditorJSBlock {
   id: string;
   type: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any;
 }
 

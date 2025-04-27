@@ -7,7 +7,6 @@ import QuizPage from "../quizpage/page";
 import ResultsSection from "../components/ResultsSection";
 import ScrollEffects from "../components/scrolleffects";
 import FixturesSection from "../components/FixturesSection";
-import { prisma } from '@/lib/db'
 
 
 // Data for match results

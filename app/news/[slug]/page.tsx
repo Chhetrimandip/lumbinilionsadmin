@@ -1,7 +1,6 @@
 // app/news/[slug]/page.tsx
 import React from 'react'
 import { prisma } from '@/lib/db'
-import Image from 'next/image'
 import { parseEditorJSContent, getFirstImageFromContent } from '@/lib/editorjs-parser'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
@@ -36,7 +35,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
   });
   
   // Get the first image for the header if exists
-  const headerImageUrl = getFirstImageFromContent(post.content) || post.imageUrl || '/news.jpg';
+  /*const headerImageUrl = getFirstImageFromContent(post.content) || post.imageUrl || '/news.jpg';*/
   
   // Parse the EditorJS content
   const contentElements = parseEditorJSContent(post.content);
