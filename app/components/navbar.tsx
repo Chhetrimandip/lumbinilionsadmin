@@ -123,13 +123,13 @@ const Navbar = () => {
               <Link href="/team" className={navLinkStyle}>Team</Link>
               <Link href="/match" className={navLinkStyle}>Match</Link>
               <Link href="/" className="mx-4 relative z-10 overflow-visible">
-                <div className="relative w-32 h-16 transition-transform duration-300 hover:scale-125">
+                <div className="relative w-auto h-auto transition-transform duration-300 hover:scale-125">
                   <Image 
-                    src="/logo.png" 
-                    alt="Lumbini Lions Logo"
-                    width={130}
-                    height={65}
-                    style={{ objectFit: 'contain' }}
+                  src="/logo.png" 
+                  alt="Lumbini Lions Logo"
+                  width={130}
+                  height={65}
+                  priority
                   />
                 </div>
               </Link>

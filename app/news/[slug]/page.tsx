@@ -1,7 +1,7 @@
 // app/news/[slug]/page.tsx
 import React from 'react'
 import { prisma } from '@/lib/db'
-import { parseEditorJSContent, getFirstImageFromContent } from '@/lib/editorjs-parser'
+import { parseEditorJSContent } from '@/lib/editorjs-parser'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 

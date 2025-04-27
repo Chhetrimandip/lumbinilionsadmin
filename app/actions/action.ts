@@ -6,7 +6,7 @@ export async function createFan(formdata: FormData) {
         const { PrismaClient } = await import("@prisma/client");
         const prisma = new PrismaClient();    
     try {
-        const result = await prisma.fan.create({
+         await prisma.fan.create({
             data: {
                 phone: formdata.get("phone") as string,
                 name: formdata.get("name") as string,
