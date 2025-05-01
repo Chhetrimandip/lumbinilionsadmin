@@ -85,21 +85,7 @@ const CartPage = () => {
         return hash.toString(CryptoJS.enc.Base64);
     };
 
-    // Handle data from eSewa response
-    useEffect(() => {
-        if (dataQuery) {
-            try {
-                const resData = atob(dataQuery);
-                const resObject = JSON.parse(resData);
-                setPaymentData(resObject);
-                if (resObject.status === "COMPLETE") {
-                    setPaymentComplete(true);
-                }
-            } catch (error) {
-                console.error("Error parsing payment data:", error);
-            }
-        }
-    }, [dataQuery]);
+
 
     // Update payment form data when cart total changes
     useEffect(() => {
@@ -117,7 +103,7 @@ const CartPage = () => {
             total_amount: newTotalAmount,
             signature: newSignature
         }));
-    }, [totalAmount]);
+    }, [totalAmount, formData.transaction_uuid, formData.product_code, formData.secret]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
