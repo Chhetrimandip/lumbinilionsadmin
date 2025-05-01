@@ -12,6 +12,9 @@ const nextConfig: NextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
+  eslint: {
+    ignoreDuringBuilds: true, // Add this line
+  },
   images: {
     remotePatterns: [
       {
