@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,Suspense} from 'react';
 import { useCartStore } from '@/store/cart-store';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -7,18 +7,40 @@ import { useSearchParams } from 'next/navigation';
 import { v4 as uuidv4 } from 'uuid';
 import CryptoJS from 'crypto-js';
 
+function SearchParamsHandler({ onDataFound }) {
+    const searchParams = useSearchParams();
+    
+    useEffect(() => {
+      const dataQuery = searchParams.get('data');
+      if (dataQuery) {
+        onDataFound(dataQuery);
+      }
+    }, [searchParams, onDataFound]);
+    
+    return null; // This component doesn't render anything
+  }
 const CartPage = () => {
     const { cart, addtocart, removefromcart, decreaseQuantity, totalitem, totalprice, clearcart } = useCartStore();
     // Add null checks and defaults
     const totalAmount = totalprice();
     const formattedTotal = (totalAmount || 0).toFixed(2);
     const itemCount = totalitem() || 0;
-    
-    // Get search params for payment processing
-    const searchParams = useSearchParams();
-    const dataQuery = searchParams.get('data');
     const [paymentData, setPaymentData] = useState(null);
     const [paymentComplete, setPaymentComplete] = useState(false);
+
+    // Function to process data from search params
+    const handleDataFound = (dataQuery) => {
+        try {
+            const resData = atob(dataQuery);
+            const resObject = JSON.parse(resData);
+            setPaymentData(resObject);
+            if (resObject.status === "COMPLETE") {
+            setPaymentComplete(true);
+            }
+        } catch (error) {
+            console.error("Error parsing payment data:", error);
+        }
+        };
 
     // Payment form data for eSewa
     const [formData, setFormData] = useState({
@@ -180,6 +202,9 @@ const CartPage = () => {
 
     return ( 
         <div className="min-h-screen bg-neutral-900 pt-40 pb-16 px-4">
+            <Suspense fallback={<div>Loading payment data...</div>}>
+              <SearchParamsHandler onDataFound={handleDataFound} />
+            </Suspense>
             <div className="max-w-6xl mx-auto">
                 <h1 className="text-4xl font-['Bebas_Neue'] text-amber-500 mb-8">
                     <span className="text-amber-500">|</span> YOUR CART
