@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic';
+// export const dynamic = 'force-dynamic';
 import React from 'react'
 import QuizCard from '../components/quizcard'
 import { prisma } from '@/lib/db'  // Use the singleton import
@@ -13,7 +13,7 @@ const QuizPage = async () => {
         });
   let quizQuestions: QuizQuestion[] = [];
   
-  // Define fallback data - put this at the beginning so we have it no matter what
+  // Define fallback data - putting this at the beginning so we have it no matter what
   const fallbackQuestions: QuizQuestion[] = [
     {
       id: 1,
@@ -35,7 +35,7 @@ const QuizPage = async () => {
 
     const shuffledQuestions = dbQuestions
     .sort(() => Math.random() - 0.5)
-    .slice(0, 5);
+    .slice(0, 10);
     console.log(`Found ${dbQuestions.length} questions in database`);
     
     if (dbQuestions && dbQuestions.length > 0) {

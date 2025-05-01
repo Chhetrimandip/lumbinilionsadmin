@@ -1,5 +1,5 @@
 // app/news/[slug]/page.tsx
-export const dynamic = 'force-dynamic';
+// export const dynamic = 'force-dynamic';
 import React from 'react'
 import { prisma } from '@/lib/db'
 import { parseEditorJSContent } from '@/lib/editorjs-parser'
@@ -12,8 +12,10 @@ type Props = {
   params: { slug: string }
 }
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  //first await params.slug before using it
+  const waitedparams = await params
   const post = await prisma.blogPost.findUnique({
-    where: { slug: params.slug }
+    where: { slug: waitedparams.slug }
   });
   
   if (!post) return { title: 'Article Not Found' };
@@ -26,10 +28,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 
 export default async function BlogPostPage({ params }: Props) {
-
-  
+  //await params here too
+  const awaitedparams = await params
   const post = await prisma.blogPost.findUnique({
-    where: { slug: params.slug }
+    where: { slug: awaitedparams.slug }
   });
   if (!post) {
     notFound();

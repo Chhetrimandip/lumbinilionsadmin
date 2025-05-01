@@ -87,16 +87,63 @@
   transform: translateY(0);
 }
 
+.element:hover {
+  transform: scale(1.1);
+  -webkit-transform: scale(1.1); /* For Chrome/Safari */
+  -moz-transform: scale(1.1); /* For Firefox */
+}
+.hover-element {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  transition-property: transform, background-color, color;
+  transition-duration: 300ms;
+  transition-timing-function: ease;
+}
+
 /* globals.css */
 html, body {
   max-width: 100vw;
   overflow-x: hidden;
+  background-color: #06101B;
+
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+
+/* Add to your globals.css */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+
+/* Special styling for root page to allow background image to show through */
+html:has(.root-page-container) body {
+  background-color: transparent;
+}
+.root-page-container {
+  background-color: transparent !important;
+}
+.font-poppins {
+  font-family: var(--font-poppins);
 }
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.147 0.004 49.25);
+  --background: #06101B;
+  --foreground: oklch(0.985 0.001 106.423);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.147 0.004 49.25);
   --popover: oklch(1 0 0);
@@ -168,5 +215,22 @@ html, body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Cross-browser hover fixes */
+@layer utilities {
+  .hover-fix {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: transform;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    perspective: 1000px;
+    -webkit-perspective: 1000px;
   }
 }

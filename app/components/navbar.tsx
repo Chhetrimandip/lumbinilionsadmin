@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import styles from './navbar.module.css'
 
 const Navbar = () => {
   // Simple state for mobile menu
@@ -72,12 +73,12 @@ const Navbar = () => {
   }, [isMenuOpen]);
   
   // CSS class for the typography you specified
-  const navLinkStyle = "text-white hover:text-amber-500 uppercase font-['Clash_Display'] font-medium text-[14px] leading-[100%] tracking-[0.02em]";  
+  const navLinkStyle = "text-white hover:text-amber-500 uppercase font-['poppins'] font-medium text-[20px] leading-[100%] tracking-[0.02em]";  
   return (
-    <div className="z-[1000] relative overflow-display">
+    <div className="z-[49] isolation:isolate transform: translateZ(0) relative overflow-display">
       {/* Fixed navbar with transition for hiding */}
       <nav 
-        className={`fixed top-0 left-0 right-0 backdrop-blur-sm z-[100] transition-transform duration-300 ${
+        className={`fixed top-0 left-0 right-0 bg-black/20 z-[48] transition-transform duration-300 ${
           visible ? 'transform-none' : '-translate-y-full'
         }`}
       >
@@ -86,7 +87,7 @@ const Navbar = () => {
           <div className="flex justify-between items-center h-16 md:hidden">
             {/* Logo */}
             <Link href="/" className="flex-shrink-0">
-              <div className="relative w-20 h-12 transition-transform duration-300 hover:scale-110">
+              <div className="relative hover-fix w-20 h-12 transition-transform duration-300 hover:scale-110">
                 <Image 
                   src="/logo.png" 
                   alt="Lumbini Lions Logo"
@@ -115,27 +116,36 @@ const Navbar = () => {
             </button>
           </div>
           
-          {/* Desktop layout with centered logo */}
-          <div className="hidden md:block items-center py-4">
-            <div className="flex flex-row justify-center gap-8 items-center overflow-display w-full">
-              {/* Center logo and navigation links */}
+          {/* Desktop layout with centered logo and decorative lines */}
+          <div className="hidden md:block items-center py-0">
+            <div className="flex flex-row justify-center gap-8 items-center overflow-display w-full relative">
+              {/* Left orange line */}
+              <div className="absolute left-[12%] top-1/2 transform -translate-y-1/2 w-[10%] h-1 bg-amber-500"></div>
+              
+              {/* Navigation links and logo */}
               <Link href="/news" className={navLinkStyle}>News</Link>
               <Link href="/team" className={navLinkStyle}>Team</Link>
               <Link href="/match" className={navLinkStyle}>Match</Link>
-              <Link href="/" className="mx-4 relative z-10 overflow-visible">
-                <div className="relative w-auto h-auto transition-transform duration-300 hover:scale-125">
-                  <Image 
-                  src="/logo.png" 
-                  alt="Lumbini Lions Logo"
-                  width={130}
-                  height={65}
-                  priority
-                  />
+              <Link href="/" className="flex-shrink-0">
+                <div className={styles.logoWrapper}>
+                  <div className={styles.logoContainer}>
+                    <Image 
+                      src="/logo.png" 
+                      alt="Lumbini Lions Logo"
+                      width={130}
+                      height={65}
+                      priority
+                    />
+                  </div>
                 </div>
               </Link>
               <Link href="/gallery" className={navLinkStyle}>Gallery</Link>
               <Link href="/shop" className={navLinkStyle}>Shop</Link>
+              <Link href="/cart" className={navLinkStyle}>Cart</Link>
               <Link href="/about" className={navLinkStyle}>About</Link>
+              
+              {/* Right orange line */}
+              <div className="absolute right-[12%] top-1/2 transform -translate-y-1/2 w-[10%] h-1 bg-amber-500"></div>
             </div>
           </div>
         </div>
@@ -143,10 +153,10 @@ const Navbar = () => {
       
       {/* Mobile menu (unchanged) */}
       {isMenuOpen && (
-        <div className="fixed inset-0 z-[101] md:hidden">
+        <div className="fixed inset-0 z-[49] md:hidden">
           {/* Backdrop */}
           <div 
-            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/80 "
             onClick={closeMenu}
           ></div>
           
@@ -178,49 +188,49 @@ const Navbar = () => {
             <div className="flex flex-col space-y-3">
               <Link 
                 href="/" 
-                className="text-amber-500 uppercase font-['Clash_Display'] font-bold text-[14px] leading-[100%] tracking-[0.02em] text-center py-2 border-b border-neutral-800"
+                className="text-amber-500 uppercase font-['poppins'] font-bold text-[14px] leading-[100%] tracking-[0.02em] text-center py-2 border-b border-neutral-800"
                 onClick={closeMenu}
               >
                 Home
               </Link>
               <Link 
                 href="/news" 
-                className="text-white hover:text-amber-500 uppercase font-['Clash_Display'] font-bold text-[14px] leading-[100%] tracking-[0.02em] text-center py-2 border-b border-neutral-800"
+                className="text-white hover:text-amber-500 uppercase font-['poppins'] font-bold text-[14px] leading-[100%] tracking-[0.02em] text-center py-2 border-b border-neutral-800"
                 onClick={closeMenu}
               >
                 News
               </Link>
               <Link 
                 href="/team" 
-                className="text-white hover:text-amber-500 uppercase font-['Clash_Display'] font-bold text-[14px] leading-[100%] tracking-[0.02em] text-center py-2 border-b border-neutral-800"
+                className="text-white hover:text-amber-500 uppercase font-['poppins'] font-bold text-[14px] leading-[100%] tracking-[0.02em] text-center py-2 border-b border-neutral-800"
                 onClick={closeMenu}
               >
                 Team
               </Link>
               <Link 
                 href="/match" 
-                className="text-white hover:text-amber-500 uppercase font-['Clash_Display'] font-bold text-[14px] leading-[100%] tracking-[0.02em] text-center py-2 border-b border-neutral-800"
+                className="text-white hover:text-amber-500 uppercase font-['poppins'] font-bold text-[14px] leading-[100%] tracking-[0.02em] text-center py-2 border-b border-neutral-800"
                 onClick={closeMenu}
               >
                 Match
               </Link>
               <Link 
                 href="/gallery" 
-                className="text-white hover:text-amber-500 uppercase font-['Clash_Display'] font-bold text-[14px] leading-[100%] tracking-[0.02em] text-center py-2 border-b border-neutral-800"
+                className="text-white hover:text-amber-500 uppercase font-['poppins'] font-bold text-[14px] leading-[100%] tracking-[0.02em] text-center py-2 border-b border-neutral-800"
                 onClick={closeMenu}
               >
                 Gallery
               </Link>
               <Link 
                 href="/shop" 
-                className="text-white hover:text-amber-500 uppercase font-['Clash_Display'] font-bold text-[14px] leading-[100%] tracking-[0.02em] text-center py-2 border-b border-neutral-800"
+                className="text-white hover:text-amber-500 uppercase font-['poppins'] font-bold text-[14px] leading-[100%] tracking-[0.02em] text-center py-2 border-b border-neutral-800"
                 onClick={closeMenu}
               >
                 Shop
               </Link>
               <Link 
                 href="/about" 
-                className="text-white hover:text-amber-500 uppercase font-['Clash_Display'] font-bold text-[14px] leading-[100%] tracking-[0.02em] text-center py-2 border-b border-neutral-800"
+                className="text-white hover:text-amber-500 uppercase font-['poppins'] font-bold text-[14px] leading-[100%] tracking-[0.02em] text-center py-2 border-b border-neutral-800"
                 onClick={closeMenu}
               >
                 About

@@ -22,8 +22,8 @@ model Fan {
   name  String
   email String
   phone String
-  score Int @default(0)
-  time  Int @default(0)
+  score Int    @default(0)
+  time  Int    @default(0)
 }
 
 model Asset {
@@ -45,7 +45,7 @@ model Quizzy {
   question      String
   options       String[]
   correctanswer Int
-  answerimage   String
+  answerimage   String?
   answertext    String
   points        Int      @default(1)
 }
@@ -58,4 +58,24 @@ model BlogPost {
   imageUrl    String?
   author      String
   publishedAt DateTime @default(now())
+}
+
+model Lions {
+  id          String      @id
+  name        String
+  slug        String      @unique
+  class       PlayerClass
+  imageId     String?
+  description String
+  matches     Int
+  strikerate  Float
+  wickets     Int
+  runs        Int
+}
+
+enum PlayerClass {
+  Batsman
+  WicketKeeper
+  AllRounder
+  Bowler
 }

@@ -7,6 +7,12 @@ import QuizPage from "../quizpage/page";
 import ResultsSection from "../components/ResultsSection";
 import ScrollEffects from "../components/scrolleffects";
 import FixturesSection from "../components/FixturesSection";
+import LionPlayers from "../lionplayers/page";
+import NewsPage from "../news/page";
+import styles from "../components/navbar.module.css"
+import FeaturedVideos from "../components/featuredVideo";
+import dynamic from 'next/dynamic';
+import LazyLoadSection from '../components/LazyLoadSection';
 
 
 // Data for match results
@@ -25,102 +31,88 @@ const fixturesArray = [
   { id: 3, team2: "Biratnagar Kings", team2Logo: "/biratnagar.png", date: "12 DEC", time: "9:15 AM" },
   { id: 4, team2: "Karnali Yaks", team2Logo: "/karnali.png", date: "14 DEC", time: "9:15 AM" }
 ];
-
 export default async function RootPage() {
-
   return (
-    <>
-      {/* Global background image */}
-      <div className="fixed inset-0 z-[-1] w-full h-full">
-        <Image
-          src="/headerbg.jpg"
-          alt="Background"
-          fill
-          className="object-cover object-center"
-          priority
-          quality={85}
-          sizes="100vw"
-        />
-      </div>
+    <div className="min-h-screen relative">
+      {/* Hero Section with background image - Only covers the first viewport */}
+      <div className="relative min-h-screen">
+        {/* Background image for hero section only */}
+        <div className="absolute inset-0 z-[1]">
+          <Image
+            src="/headerbg.jpg"
+            alt="Background"
+            fill
+            className="object-cover object-top"
+            priority
+            quality={85}
+            sizes="100vw"
+          />
+        </div>
       
-      <ScrollEffects />
-{/* Hero Section - With adjusted mobile positioning */}
-<div className="relative w-full h-screen overflow-hidden">
-  {/* Single container for positioning both images */}
-  <div className="absolute inset-0 flex items-center md:items-center justify-center">
-    {/* Moved up for mobile by changing items-center to items-start with padding */}
-    <div className="relative w-full h-full flex items-start md:items-center justify-center pt-[5%] md:pt-0 transform scale-[0.95] sm:scale-100 md:scale-110">
-      {/* Ellipse image positioned relative to container */}
-      <Image 
-        src="/ellipse.png" 
-        width={2400}
-        height={1000}
-        className="absolute w-[90%] object-contain sm:scale-100 z-[40] bottom-[40%] md:bottom-[-80%]"
-        alt="Background ellipse"
-        priority
-        unoptimized={true}
-      />
-      
-      {/* Team image positioned relative to container */}
-      <Image 
-        src="/team.png" 
-        width={1500}
-        height={1000}
-        className="absolute w-[1000%] md:w-[65%] object-contain z-[60] bottom-[40%] md:bottom-0"
-        alt="Team image"
-        priority
-        unoptimized={true}
-      />
-    </div>
-  </div>
-{/* Gradient overlay - extend higher and lower on mobile */}
-<div className="absolute bottom-[28%] md:bottom-0 left-0 right-0 h-[40%] md:h-1/6 bg-gradient-to-t from-[#06101B] via-[#06101B]/90 to-transparent z-[90]"></div>
-  {/* Sponsors section - moved higher on mobile */}
-  <div className="absolute bottom-[30%] md:bottom-0 left-0 w-full z-[110]">
-    <div className="container mx-auto px-4 md:px-8">
-      <div className="grid grid-cols-4 md:grid-cols-8 gap-4 sm:gap-6 md:gap-8">
-        {[
-          { src: "/ncell.png", alt: "Ncell" },
-          { src: "/buddhaair.png", alt: "Buddha Air" },
-          { src: "/hilife.png", alt: "Hi-Life" },
-          { src: "/babu88.png", alt: "Babu88" },
-          { src: "/yeti.png", alt: "Yeti Airlines" },
-          { src: "/fortuna.png", alt: "Fortuna" },
-          { src: "/nidpil.png", alt: "NIDPIL" },
-          { src: "/folliderm.png", alt: "Folliderm" }
-        ].map((sponsor, index) => (
-          <div key={index} className="flex justify-center items-center">
+        <ScrollEffects />
+        
+        {/* Team images container */}
+        <div className="absolute inset-0 z-[3] flex items-center justify-center">
+          <div className="relative w-full fade-in-on-scroll h-full flex items-center justify-center">            
             <Image 
-              src={sponsor.src}
-              width={300}
-              height={300}
-              alt={sponsor.alt}
-              className="h-8 sm:h-10 w-auto object-contain opacity-100 hover:opacity-100 transition-all duration-300 hover:scale-110 brightness-[1.5] contrast-[1.1]"
-              style={{ filter: "brightness(3) contrast(1.8)" }}
+              src="/team.png" 
+              width={1500}
+              height={1000}
+              className="absolute w-[100%] lg:w-[70%] md:w-[90%] max-w-5xl object-contain "
+              alt="Team image"
+              priority
             />
           </div>
-        ))}
+        </div>
+        
+        {/* Gradient overlay - positioned relative to the team image */}
+        <div className="absolute bottom-0 lg:top-[400px] left-0 right-0 h-[50vh] z-[7]">
+          <div className="w-full h-full bg-gradient-to-t from-[#06101B] via-[#06101B]/80 to-transparent"></div>
+        </div>
+        
+        {/* Sponsors section - floating over the gradient */}
+        <div className="relative flex justify-center top-[130vw] md:top-[700px] left-0 right-0 z-[8]">
+          <div className="container px-4">
+            <div className="grid grid-cols-4 md:grid-cols-8 gap-4 sm:gap-6 md:gap-8">
+              {[
+                { src: "/ncell.png", alt: "Ncell" },
+                { src: "/buddhaair.png", alt: "Buddha Air" },
+                { src: "/hilife.png", alt: "Hi-Life" },
+                { src: "/babu88.png", alt: "Babu88" },
+                { src: "/yeti.png", alt: "Yeti Airlines" },
+                { src: "/fortuna.png", alt: "Fortuna" },
+                { src: "/nidpil.png", alt: "NIDPIL" },
+                { src: "/folliderm.png", alt: "Folliderm" }
+              ].map((sponsor, index) => (
+                <div key={index} className={styles.logoWrapper}>
+                <div  className={`${styles.logoContainer} flex justify-center items-center `}>
+                  <Image 
+                    src={sponsor.src}
+                    width={300}
+                    height={300}
+                    alt={sponsor.alt}
+                    className="h-8 sm:h-10 w-auto object-contain hover:scale-110 transition-all duration-300"
+                    style={{ filter: "brightness(3) contrast(1.8)" }}
+                  />
+                </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Content Sections 
+          <QuizPage />
+          {/* Uncomment these as needed */}
+      <div className="relative z-0 bg-[#06101B]">
+          <ResultsSection results={resultArray} />
+          <LionPlayers />
+          <FeaturedVideos/>
+          <NewsPage/>
+        <div className="container mx-0 py-20">
+        </div>
       </div>
     </div>
-  </div>
-</div>
-
-
-{/* Bottom Sections - responsive margin adjustment */}
-<div className="relative bg-[#06101B] mt-[-50%] md:mt-[-1px]">
-  {/* Semi-transparent background for better readability */}
-  <div className="absolute inset-0 bg-[#06101B] z-1"></div>
-  <div className="relative z-10">
-    <div className="pt-10">
-      <ResultsSection results={resultArray} />
-    </div>
-    <FixturesSection fixtures={fixturesArray} />
-
-    <QuizPage />
-    <Secondpage />
-    <Thirdpage />
-  </div>
-</div>
-    </>
   );
 }
