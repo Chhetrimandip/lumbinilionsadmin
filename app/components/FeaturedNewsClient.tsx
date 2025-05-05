@@ -23,7 +23,7 @@ function FeaturedNewsClient  ({displayFeatured,ExcerptFromContent}: FeaturedNews
 
 
 return(
-<div className="bg-amber-500/10 backdrop-blur-sm rounded-xl mb-16 overflow-hidden border border-amber-500/40">
+<div className="bg-amber-500/10 backdrop-blur-sm rounded-xl mx-2 mt-10  mb-16 overflow-hidden border border-amber-500/40">
 <div className="relative h-96">
         <Image 
           src={displayFeatured.image || '/news.jpg'}

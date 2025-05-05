@@ -1,74 +1,46 @@
 'use client'
-import React from 'react'
-import Image from 'next/image'
-import Link from 'next/link'  // Import Link component
-import styles from './PlayerCard.module.css'
+
+import React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import styles from './PlayerCard.module.css';
 
 interface PlayerProps {
-    firstName: string
-    lastName: string
-    imageId: string | null
-    slug: string    // Added slug
+  id: string;
+  firstName: string;
+  lastName: string;
+  imageId: string | null;
+  slug: string;
+  class?: string;
 }
 
 const PlayerCard: React.FC<{ player: PlayerProps }> = ({ player }) => {
-    // Handle imageId properly
-    const imageUrl = player.imageId 
-        ? `/${player.imageId}.png` 
-        : `/default-player.png`;  // Fallback image
+  // Use imageId or firstName for the card image filename
+  //todo 
+  const imageName = player.firstName.toLowerCase();
+  const imgSrc = `/playercards/${imageName}card.png`;
+  
+  // Handle image loading errors
+  const handleImageError = (e: any) => {
+    e.currentTarget.src = '/default-player.png'; // Fallback image
+  };
 
-    return (
-        <Link href={`/players/${player.slug}`} className={styles.playerCardWrapper}>
-            <div className={styles.playerCard}>
-                {/* Images Layer */}
-                <div className={styles.cardBackground}>
-                    {/* Player image with error handling */}
-                    <Image
-                        src={imageUrl}
-                        alt={`${player.firstName} ${player.lastName}`}
-                        height={400}
-                        width={300}
-                        className={styles.playerImage}
-                        onError={(e) => {
-                            // Fallback if image doesn't load
-                            const imgElement = e.currentTarget as HTMLImageElement;
-                            imgElement.src = "/default-player.png";
-                        }}
-                    />
-                    
-                    <Image
-                        src="/statsicon.png"
-                        alt="Stats"
-                        height={48}
-                        width={48}
-                        className={styles.statsIcon}
-                    />
-                    
-                    {/* Create 4 rows with different numbers of dots */}
-                    <div className={styles.dotsContainer}>
-                        {[19, 19, 19, 19].map((dotsCount, rowIndex) => (
-                            <div key={`row-${rowIndex}`} className={styles.dotsRow}>
-                                {[...Array(dotsCount)].map((_, i) => (
-                                    <div 
-                                        key={`dot-${rowIndex}-${i}`} 
-                                        className={styles.dot}
-                                    ></div>
-                                ))}
-                            </div>
-                        ))}
-                    </div>
-                </div>
+  return (
+    <Link href={`/players/${player.slug}`} className={styles.playerCardWrapper}>
+      {/* Simple card container with just the image */}
+      <div className={styles.playerCard}>
+        <Image
+          src={imgSrc}
+          alt={`${player.firstName} ${player.lastName}`}
+          width={300}
+          height={400}
+          className={styles.playerImage}
+          onError={handleImageError}
+          priority
+        />
+      </div>
+    </Link>
+  );
+};
 
-                {/* Player Name Text */}
-                <div className={styles.playerName}>
-                    <h3 className={styles.lastName}>
-                        {player.lastName}
-                    </h3>
-                    <span className={styles.firstName}>{player.firstName}</span>
-                </div>
-            </div>
-        </Link>
-    )
-}
-
-export default PlayerCard
+export default PlayerCard;

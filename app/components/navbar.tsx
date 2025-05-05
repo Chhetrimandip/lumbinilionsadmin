@@ -73,83 +73,84 @@ const Navbar = () => {
   }, [isMenuOpen]);
   
   // CSS class for the typography you specified
-  const navLinkStyle = "text-white hover:text-amber-500 uppercase font-['poppins'] font-medium text-[20px] leading-[100%] tracking-[0.02em]";  
+  const navLinkStyle = "text-white hover:text-amber-500 uppercase font-['poppins'] font-extrabold text-[14px] leading-[100%] tracking-[0.02em]";  
   return (
-    <div className="z-[49] isolation:isolate transform: translateZ(0) relative overflow-display">
-      {/* Fixed navbar with transition for hiding */}
-      <nav 
-        className={`fixed top-0 left-0 right-0 bg-black/20 z-[48] transition-transform duration-300 ${
-          visible ? 'transform-none' : '-translate-y-full'
-        }`}
-      >
-        <div className="container mx-auto px-4">
-          {/* Mobile layout (unchanged) */}
-          <div className="flex justify-between items-center h-16 md:hidden">
-            {/* Logo */}
-            <Link href="/" className="flex-shrink-0">
-              <div className="relative hover-fix w-20 h-12 transition-transform duration-300 hover:scale-110">
-                <Image 
-                  src="/logo.png" 
-                  alt="Lumbini Lions Logo"
-                  width={80}
-                  height={48}
-                  style={{ objectFit: 'contain' }}
-                />
+<div className="z-[49]  isolation:isolate relative ">
+  {/* Fixed navbar with transition for hiding */}
+  <nav 
+    className={`fixed top-0 left-0 right-0 bg-black/20 z-[48] transition-transform duration-300 ${
+      visible ? 'transform-none' : '-translate-y-full'
+    }`}
+  >
+    <div className="container z-[50] mx-auto px-4">
+      {/* Mobile layout - center vertically in 67px height */}
+      <div className="flex justify-between items-center h-[67px] md:hidden">
+        {/* Logo */}
+        <Link href="/" className="flex-shrink-0">
+          <div className="relative hover-fix w-20 h-12 transition-transform duration-300 hover:scale-110">
+            <Image 
+              src="/logo.png" 
+              alt="Lumbini Lions Logo"
+              width={80}
+              height={48}
+              style={{ objectFit: 'contain' }}
+            />
+          </div>
+        </Link>
+        
+        {/* Mobile menu button */}
+        <button 
+          className="md:hidden text-white p-2"
+          onClick={toggleMenu}
+          aria-label="Toggle menu"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
+          </svg>
+        </button>
+      </div>
+      
+      {/* Desktop layout with centered logo and decorative lines */}
+      <div className="hidden md:flex md:h-[67px] md:items-center md:justify-center">
+        <div className="flex flex-row justify-center items-center w-full relative">
+          {/* Navigation links with adjusted spacing */}
+          <div className="flex items-center justify-center space-x-6 lg:space-x-8">
+            <Link href="/news" className={navLinkStyle}>News</Link>
+            <Link href="/team" className={navLinkStyle}>Team</Link>
+            <Link href="/match" className={navLinkStyle}>Match</Link>
+            
+            {/* Logo container with fixed dimensions */}
+            <Link href="/" className="flex-shrink-0 mx-2 lg:mx-6">
+              <div className={styles.logoWrapper}>
+                <div className={styles.logoContainer}>
+                  <Image 
+                    src="/logo.png" 
+                    alt="Lumbini Lions Logo"
+                    width={130}
+                    height={65}
+                    priority
+                  />
+                </div>
               </div>
             </Link>
             
-            {/* Mobile menu button */}
-            <button 
-              className="md:hidden text-white p-2"
-              onClick={toggleMenu}
-              aria-label="Toggle menu"
-            >
-              {isMenuOpen ? (
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              )}
-            </button>
+            <Link href="/gallery" className={navLinkStyle}>Gallery</Link>
+            <Link href="/shop" className={navLinkStyle}>Shop</Link>
+            <Link href="/about" className={navLinkStyle}>About</Link>
           </div>
           
-          {/* Desktop layout with centered logo and decorative lines */}
-          <div className="hidden md:block items-center py-0">
-            <div className="flex flex-row justify-center gap-8 items-center overflow-display w-full relative">
-              {/* Left orange line */}
-              <div className="absolute left-[12%] top-1/2 transform -translate-y-1/2 w-[10%] h-1 bg-amber-500"></div>
-              
-              {/* Navigation links and logo */}
-              <Link href="/news" className={navLinkStyle}>News</Link>
-              <Link href="/team" className={navLinkStyle}>Team</Link>
-              <Link href="/match" className={navLinkStyle}>Match</Link>
-              <Link href="/" className="flex-shrink-0">
-                <div className={styles.logoWrapper}>
-                  <div className={styles.logoContainer}>
-                    <Image 
-                      src="/logo.png" 
-                      alt="Lumbini Lions Logo"
-                      width={130}
-                      height={65}
-                      priority
-                    />
-                  </div>
-                </div>
-              </Link>
-              <Link href="/gallery" className={navLinkStyle}>Gallery</Link>
-              <Link href="/shop" className={navLinkStyle}>Shop</Link>
-              <Link href="/cart" className={navLinkStyle}>Cart</Link>
-              <Link href="/about" className={navLinkStyle}>About</Link>
-              
-              {/* Right orange line */}
-              <div className="absolute right-[12%] top-1/2 transform -translate-y-1/2 w-[10%] h-1 bg-amber-500"></div>
-            </div>
+          {/* Responsive decorative lines */}
+          <div className="absolute left-0 right-0 bottom-3 w-full flex justify-center">
+            {/* Left orange line - responsive width using percentages */}
+            <div className="absolute right-[50%] bottom-0 mr-[90px] w-[30%] max-w-[300px] h-[0.5px] bg-gradient-to-r from-transparent to-amber-500"></div>
+            
+            {/* Right orange line - responsive width using percentages */}
+            <div className="absolute left-[50%] bottom-0 ml-[90px] w-[30%] max-w-[300px] h-[0.5px] bg-gradient-to-l from-transparent to-amber-500"></div>
           </div>
         </div>
-      </nav>
+      </div>
+    </div>
+  </nav>
       
       {/* Mobile menu (unchanged) */}
       {isMenuOpen && (

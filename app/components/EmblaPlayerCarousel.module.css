@@ -1,0 +1,379 @@
+.emblaMain {
+    position: relative;
+    padding: 0;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .emblaMainViewport {
+    overflow: hidden;
+    width: 100%;
+  }
+  
+  .emblaMainContainer {
+    display: flex;
+    user-select: none;
+    -webkit-touch-callout: none;
+    -khtml-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  .emblaMainSlide {
+    min-width: 100%;
+    position: relative;
+    padding: 0 24px;
+  }
+  
+  .playerMainCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: calc(100vh - 400px);
+    min-height: 500px;
+    position: relative;
+  }
+  
+  /* Player background styling */
+  .playerBgWrapper {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 90%;
+    width: 100%;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  }
+  
+  .playerImageWrapper {
+    position: relative;
+    height: 70%;
+    width: 70%;
+    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.3));
+    z-index: 2;
+    transition: transform 0.3s ease;
+  }
+  
+  /* Hover effect for player images */
+  .playerImageWrapper:hover {
+    transform: scale(1.05);
+  }
+  
+  .playerInfo {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    padding: 24px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+    border: 1px solid rgba(255, 165, 0, 0.2);
+    transition: all 0.3s ease;
+    z-index: 3;
+  }
+  
+  .statItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 12px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+  
+  .statItem:hover {
+    background: rgba(255, 165, 0, 0.15);
+    transform: translateY(-5px);
+  }
+  
+  /* Roar Controls */
+  .roarControl {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+    opacity: 0.7;
+    left: 0;
+  }
+  
+
+  
+  .roarControlRight {
+    left: auto;
+    right: 0;
+  }
+  
+  .roarImg {
+    width: auto;
+    height: auto;
+  }
+  
+  /* Thumbnails */
+  .emblaThumb {
+    position: relative;
+    padding: 24px 0;
+    margin-top: 32px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .emblaThumbViewport {
+    overflow: hidden;
+    width: 100%;
+  }
+  
+  .emblaThumbContainer {
+    display: flex;
+    gap: 8px;
+    user-select: none;
+    -webkit-touch-callout: none;
+    -khtml-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  .emblaThumbSlide {
+    min-width: 80px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: transparent;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .thumbImageContainer {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    border: 3px solid transparent;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  
+  .emblaThumbSelected .thumbImageContainer {
+    border-color: #f59e0b;
+    transform: scale(1.1);
+  }
+  
+  .thumbPlayerName {
+    display: block;
+    color: #ffffff;
+    margin-top: 8px;
+    font-size: 0.875rem;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+  }
+  
+  .emblaThumbSelected .thumbPlayerName {
+    color: #f59e0b;
+    opacity: 1;
+    font-weight: bold;
+  }
+  
+  .playerNumber {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: #f59e0b;
+    color: #06101B;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 12px;
+  }
+  
+  /* Responsive adjustments */
+  @media (min-width: 768px) {
+    .playerMainCard {
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+    }
+  
+    .playerImageWrapper {
+      width: 50%;
+      margin-bottom: 0;
+    }
+  
+    .playerInfo {
+      width: 50%;
+      text-align: left;
+    }
+    
+    /* Adjust background size on desktop */
+    .playerBgWrapper {
+      width: 80%;
+      margin: 0 auto;
+    }
+  }
+  
+  /* Additional mobile adjustments */
+  @media (max-width: 640px) {
+    .emblaThumbSlide {
+      min-width: 60px;
+    }
+  
+    .thumbImageContainer {
+      width: 60px;
+      height: 60px;
+    }
+    
+    .playerNumber {
+      width: 18px;
+      height: 18px;
+      font-size: 10px;
+    }
+    
+    .thumbPlayerName {
+      font-size: 0.75rem;
+    }
+    
+    .roarControl {
+      width: 50px;
+      opacity: 0.5;
+    }
+    
+    .roarImg {
+      width: 50px;
+      height: auto;
+    }
+  }
+  
+  /* Make the player image larger on mobile */
+  @media (max-width: 767px) {
+    .playerMainCard {
+      min-height: 600px;
+    }
+    
+    .playerImageWrapper {
+      height: 100%;
+      width: 100%;
+      margin-bottom: 0;
+      filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.5));
+    }
+    
+    /* Make background smaller than the player on mobile */
+    .playerBgWrapper {
+      height: 80%;
+      width: 85%;
+    }
+  }
+  
+  /* Mobile stats overlay with gradient */
+  .mobileStatsOverlay {
+    display: none;
+  }
+  
+  @media (max-width: 767px) {
+    .mobileStatsOverlay {
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.7) 50%, transparent 100%);
+      padding-top: 70px;
+      padding-bottom: 20px;
+    border-radius: 0 0 25px 25px;
+    }
+    
+    .mobileStatsContent {
+      padding: 0 15px;
+      text-align: center;
+    }
+    
+    .mobileStatsGrid {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 10px;
+    }
+    
+    .mobileStatItem {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 70px;
+    }
+  }
+  
+  /* Adjust thumbnails on mobile */
+  @media (max-width: 640px) {
+    .emblaThumb {
+      max-width: 100%;
+      padding: 16px 0;
+      margin-top: 16px;
+    }
+    
+    .emblaThumbContainer {
+      justify-content: center;
+    }
+  }
+
+  .playerCardWrapper {
+    position: relative;
+    width: 350px; /* Adjust as needed */
+    height: 450px; /* Adjust as needed */
+    margin: 0 auto;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease;
+  }
+  
+  /* Scale up player card of the active slide */
+  .emblaMainSlide[data-active="true"] .playerCardWrapper {
+    transform: scale(1.1);
+  }
+  
+  /* Adjust main slide layout for PlayerCard */
+  @media (min-width: 768px) {
+    .playerMainCard {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: center;
+    }
+    
+    .playerCardWrapper {
+      justify-self: end;
+    }
+    
+    .playerInfo {
+      justify-self: start;
+    }
+  }
+  
+  /* Add this script to highlight active slide */
+  @media (max-width: 767px) {
+    .playerCardWrapper {
+      height: 400px;
+      width: 300px;
+    }
+    
+    .playerMainCard {
+      flex-direction: column;
+      gap: 24px;
+    }
+    
+    .playerCardWrapper {
+      margin-bottom: 24px;
+    }
+  }

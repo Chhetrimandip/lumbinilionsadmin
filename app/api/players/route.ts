@@ -23,19 +23,22 @@ export async function GET() {
       const lastName = nameParts.pop() || '';
       const firstName = nameParts.join(' ');
       
+      // Check if imageId is null and provide a default
+      const imageId = player.imageId || null;
+      
       return {
         id: player.id,
         firstName,
         lastName,
-        imageId: player.imageId || `default-player`,
+        imageId, // This can be null
         slug: player.slug,
-        class: player.class, 
-
+        class: player.class,
       };
     });
 
     return NextResponse.json(formattedPlayers);
   } catch (error) {
+    console.error('Error fetching players:', error);
     return NextResponse.json(
       { error: 'Failed to fetch players' },
       { status: 500 }

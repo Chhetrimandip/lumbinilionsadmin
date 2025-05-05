@@ -1,15 +1,27 @@
 // app/components/ResultsSection.tsx
 "use client";
 import React, { useRef } from 'react';
-import Resultcard from "./resultcard";
+import MatchCard from "./resultcard";
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface ResultType {
-  id: number;
-  team2: string;
-  margin: number;
-  victory: boolean;
-  teamLogo: string;
+  id: string;
+  opponent: string;
+  opponentLogo: string;
+  matchDate: Date;
+  isCompleted: boolean;
+  venue?: string;
+  victory?: boolean;
+  lionsRuns?: number;
+  lionsWickets?: number;
+  lionsOvers?: number;
+  opponentRuns?: number;
+  opponentWickets?: number;
+  opponentOvers?: number;
+  margin?: number;
+  marginType?: string;
+  ballsLeft?: number;
 }
 
 interface ResultsSectionProps {
@@ -34,63 +46,55 @@ export default function ResultsSection({ results }: ResultsSectionProps) {
   };
 
   return (
-    <section className="w-full py-20 md:py-16">
-      <div className="container py-14 mx-auto px-4">
-        <div className="flex flex-col w-full max-w-6xl mx-auto">
-          {/* Section Header - Now left-aligned */}
-          <div className="mb-8 md:mb-12 self-start flex justify-between w-full">
-            <div>
-              <h4 className="text-amber-500 text-sm md:text-base font-medium">
-                RECENT PERFORMANCES
-              </h4>
-              <h2 className="text-white text-2xl md:text-3xl lg:text-4xl font-normal uppercase mt-2">
-                MATCH RESULTS
-              </h2>
-            </div>
-            
-            {/* Navigation buttons (hidden on mobile, visible on larger screens) */}
-            <div className="hidden md:flex items-center gap-2">
-              <button 
-                onClick={() => scrollTo('left')} 
-                className="bg-gray-800 hover:bg-gray-700 text-white p-2 rounded-full"
-                aria-label="Previous result"
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </button>
-              <button 
-                onClick={() => scrollTo('right')} 
-                className="bg-gray-800 hover:bg-gray-700 text-white p-2 rounded-full"
-                aria-label="Next result"
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9 6L15 12L9 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </button>
-            </div>
-          </div>
-          
-          {/* Scrollable Results Container */}
+<section className="w-full md:mx-30 md:py-20 overflow-hidden">
+  {/* Change from "container mx-auto" to have right padding of 0 on desktop */}
+  <div className="container-fluid px-4 md:pl-12 md:pr-0">
+    <div className="flex flex-col w-full max-w-8xl">
+      {/* Section Header - Same as before */}
+      <div className="mb-8 md:mb-12 self-start flex justify-between w-full">
+        <div>
+          <h2 className="text-white text-2xl md:text-3xl lg:text-4xl font-[poppins] font-semibold uppercase mt-2">
+            MATCH RESULTS
+          </h2>
+          <h4 className="text-gray-500 text-sm md:text-base font-[poppins] text-[14px] font-medium">
+            RECENT PERFORMANCES
+          </h4>
+        </div>
+        {/* Navigation buttons - Same as before */}
+        <div className="hidden md:flex items-center gap-2">
+          {/* buttons stay the same */}
+        </div>
+      </div>
+      
+      {/* Scrollable Results Container - Change from px-0 to pr-0 */}
+      <div 
+        ref={scrollContainerRef}
+        className="flex overflow-x-auto snap-x snap-mandatory pb-6 -mx-4 px-4 md:mx-0 md:pl-0 md:pr-0 scrollbar-hide"
+        style={{
+          scrollbarWidth: 'none', // Firefox
+          msOverflowStyle: 'none', // IE/Edge
+        }}
+      >
+        {/* Add a spacer div at the start for small screens */}
+        <div className="md:hidden w-[5%] flex-shrink-0"></div>
+        
+        {results.map((result, index) => (
           <div 
-            ref={scrollContainerRef}
-            className="flex overflow-x-auto snap-x snap-mandatory pb-6 -mx-4 px-4 md:mx-0 md:px-0 scrollbar-hide"
+            key={result.id} 
+            className={`
+              w-[90%] md:w-[30%] lg:w-[28%] flex-shrink-0 
+              ${index === 0 ? 'snap-start md:snap-start pl-0 md:pl-0' : 'snap-center'} 
+              ${index < results.length - 1 ? 'px-2' : 'pl-2 pr-0'}
+            `}
             style={{
-              scrollbarWidth: 'none', // Firefox
-              msOverflowStyle: 'none', // IE/Edge
+              marginRight: index === results.length - 1 ? '0' : '' 
             }}
           >
-            {/* Add a spacer div at the start for small screens */}
-            <div className="md:hidden w-[5%] flex-shrink-0"></div>
-            
-            {results.map(result => (
-              <div 
-                key={result.id} 
-                className="w-[90%] md:w-1/2 lg:w-1/3 flex-shrink-0 px-2 snap-center"
-              >
-                <Resultcard result={result} />
-              </div>
-            ))}
+            <MatchCard match={result} />
+          </div>
+        ))}
+        
+      </div>
             
             {/* Add a spacer div at the end for small screens */}
             <div className="md:hidden w-[5%] flex-shrink-0"></div>
@@ -109,7 +113,6 @@ export default function ResultsSection({ results }: ResultsSectionProps) {
             </Link>
           </div> 
         </div>
-      </div>
     </section>
   );
 }

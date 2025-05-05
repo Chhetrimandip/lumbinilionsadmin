@@ -32,7 +32,7 @@ const Newscard: React.FC<NewsProp> = ({ news }) => {
     const articleUrl = news.slug ? `/news/${news.slug}` : `/news/article/${news.id}`;
     
     return (
-        <div className="overflow-hidden hover:shadow-[0_0_15px_rgba(251,191,36,0.15)] transition-shadow duration-300">
+        <div className="overflow-hidden mx-5 md:mx-0 hover:shadow-[0_0_15px_rgba(251,191,36,0.15)] transition-shadow duration-300">
         <Link href={articleUrl} className="text-amber-500 hover:text-amber-400 font-semibold transition-colors inline-block">
             <div className="relative h-[369px] w-[454px]">
                 {/* Image covers the entire card */}

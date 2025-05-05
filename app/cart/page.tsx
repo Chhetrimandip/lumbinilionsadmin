@@ -1,9 +1,9 @@
 'use client'
-import React, { useState, useEffect ,Suspense} from 'react';
+import React, { useState, useEffect ,Suspense, useCallback} from 'react';
 import { useCartStore } from '@/store/cart-store';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { v4 as uuidv4 } from 'uuid';
 import CryptoJS from 'crypto-js';
 
@@ -19,8 +19,12 @@ function SearchParamsHandler({ onDataFound }) {
     
     return null; // This component doesn't render anything
   }
-const CartPage = () => {
+
+  const PRODUCT_CODE = "EPAYTEST";
+  const SECRET = "8gBm/:&EnhH.1/q";
+  const CartPage = () => {
     const { cart, addtocart, removefromcart, decreaseQuantity, totalitem, totalprice, clearcart } = useCartStore();
+    const router = useRouter();
     // Add null checks and defaults
     const totalAmount = totalprice();
     const formattedTotal = (totalAmount || 0).toFixed(2);
@@ -29,7 +33,7 @@ const CartPage = () => {
     const [paymentComplete, setPaymentComplete] = useState(false);
 
     // Function to process data from search params
-    const handleDataFound = (dataQuery) => {
+    const handleDataFound = useCallback((dataQuery) => {
         try {
             const resData = atob(dataQuery);
             const resObject = JSON.parse(resData);
@@ -40,7 +44,7 @@ const CartPage = () => {
         } catch (error) {
             console.error("Error parsing payment data:", error);
         }
-        };
+        },[]);
 
     // Payment form data for eSewa
     const [formData, setFormData] = useState({
@@ -50,11 +54,11 @@ const CartPage = () => {
         transaction_uuid: uuidv4(),
         product_service_charge: "0.00",
         product_delivery_charge: "0.00",
-        product_code: "EPAYTEST",
+        product_code: PRODUCT_CODE ,
         signed_field_names: "total_amount,transaction_uuid,product_code",
         success_url: "http://localhost:3000/cart", // Change for production
-        failure_url: "http://localhost:3000/cart",
-        secret: "8gBm/:&EnhH.1/q",
+        failure_url: "http://localhost:3000/cart", // change for production
+        secret: SECRET,
         signature: ""
     });
 
@@ -65,6 +69,8 @@ const CartPage = () => {
         region: '',
         address: '',
         landmark: '',
+        district: '',
+        email: '',
         image: null
     });
 
@@ -93,8 +99,8 @@ const CartPage = () => {
         const newSignature = generateSignature(
             newTotalAmount,
             formData.transaction_uuid,
-            formData.product_code,
-            formData.secret
+            PRODUCT_CODE,
+            SECRET
         );
         
         setFormData(prev => ({
@@ -103,7 +109,7 @@ const CartPage = () => {
             total_amount: newTotalAmount,
             signature: newSignature
         }));
-    }, [totalAmount, formData.transaction_uuid, formData.product_code, formData.secret]);
+    }, [totalAmount]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -129,44 +135,94 @@ const CartPage = () => {
         if (!shippingData.phoneNum) missingFields.push('Phone number');
         if (!shippingData.region) missingFields.push('Region');
         if (!shippingData.address) missingFields.push('Address');
-        if (!paymentComplete && !shippingData.image) missingFields.push('Payment screenshot');
+        if (!shippingData.email) missingFields.push('Email');
+        
+        // Ensure payment is complete one way or another
+        const isPaymentValid = paymentComplete || shippingData.image;
+        if (!isPaymentValid) missingFields.push('Payment confirmation');
 
         if (missingFields.length > 0) {
             alert(`Please complete the following fields: ${missingFields.join(', ')}`);
             return;
         }
 
-        // Create payment reference object
-        const paymentRef = paymentData ? {
-            transactionCode: paymentData.transaction_code,
-            transactionUuid: paymentData.transaction_uuid,
-            status: paymentData.status,
-            amount: paymentData.total_amount
-        } : null;
+        try {
+            // Calculate total with shipping
+            const totalWithShipping = (parseFloat(formattedTotal) + 5).toFixed(2);
+            
+            // Prepare the order data
+            const orderData = {
+                customerName: shippingData.recipientName,
+                customerPhone: shippingData.phoneNum,
+                customerEmail: shippingData.email, // Optional in your schema
+                totalAmount: totalWithShipping,
+                
+                // Shipping address details
+                shippingAddress: {
+                    recipientName: shippingData.recipientName,
+                    phoneNumber: shippingData.phoneNum,
+                    city: shippingData.region,
+                    district: shippingData.district, // You might want to add this field to your form
+                    streetAddress: shippingData.address,
+                    landmark: shippingData.landmark || ""
+                },
+                
+                // Payment details
+                payment: {
+                    status: "COMPLETED", // Always completed since we only submit completed orders
+                    amount: totalWithShipping,
+                    paymentMethod: paymentComplete ? "esewa" : "manual",
+                    // For eSewa payments, use their transaction data
+                    ...(paymentData ? {
+                        transactionCode: paymentData.transaction_code,
+                        transactionUuid: paymentData.transaction_uuid
+                    }: {})
+                },
+                
+                // Cart items
+                orderItems: cart.map(item => ({
+                    productId: item.id,
+                    quantity: item.quantity,
+                    price: item.price,
+                    name: item.name,
+                    imageUrl: item.image
+                }))
+            };
 
-        // Create form data for submission
-        const finalShipData = new FormData();
-        finalShipData.append("recipientName", shippingData.recipientName);
-        finalShipData.append("phoneNum", shippingData.phoneNum);
-        finalShipData.append("region", shippingData.region);
-        finalShipData.append("address", shippingData.address);
-        finalShipData.append("landmark", shippingData.landmark || "");
+            // Use FormData for file uploads
+            const formData = new FormData();
+    
+            // Append order JSON
+            formData.append("orderData", JSON.stringify(orderData));
+            
+            // If there's a payment screenshot, append it
+            if (shippingData.image) {
+                formData.append("paymentProof", shippingData.image);
+            }
         
-        if (shippingData.image) {
-            finalShipData.append("image", shippingData.image);
+            // Make the API call to save the data
+            const response = await fetch('/api/orders', {
+                method: 'POST',
+                body: formData
+            });
+            
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Failed to create order');
+            }
+            
+            const result = await response.json();
+            console.log('Order submitted successfully', result);
+            alert('Your order has been placed successfully!');
+            clearcart();
+            
+            // Redirect to confirmation or home page
+            router.push('/');
+            
+        } catch (error) {
+            console.error('Error submitting order:', error);
+            alert('There was a problem placing your order. Please try again.');
         }
-        
-        if (paymentRef) {
-            finalShipData.append("paymentReference", JSON.stringify(paymentRef));
-        }
-        
-        finalShipData.append("items", JSON.stringify(cart));
-
-        // In a real app, you would submit this data to your backend
-        console.log('Order submitted:', { shippingData, paymentRef, cart });
-        alert('Your order has been placed successfully!');
-        clearcart();
-        // Redirect to confirmation page or home
     };
     
     if (!cart || cart.length === 0) {
@@ -326,7 +382,7 @@ const CartPage = () => {
                                             
                                             <button type="submit" className="w-full bg-[#60BB46] hover:bg-[#4da339] text-white py-3 px-4 rounded-lg font-bold flex items-center justify-center transition-colors">
                                                 <Image 
-                                                    src="/esewa.jpg" 
+                                                    src="/esewa.png" 
                                                     alt="eSewa" 
                                                     width={24} 
                                                     height={24} 
@@ -396,6 +452,17 @@ const CartPage = () => {
                                 placeholder="Enter your phone number"
                             />
                         </div>
+                        <div>
+                            <label className="block text-white mb-2">Phone Number</label>
+                            <input 
+                                type="text"
+                                name="email"
+                                value={shippingData.email}
+                                onChange={handleChange}
+                                className="w-full px-4 py-2 rounded-lg bg-neutral-700 border border-neutral-600 text-white focus:outline-none focus:border-amber-500"
+                                placeholder="Enter your phone number"
+                            />
+                        </div>
 
                         <div>
                             <label className="block text-white mb-2">Region/City</label>
@@ -418,6 +485,18 @@ const CartPage = () => {
                                 onChange={handleChange}
                                 className="w-full px-4 py-2 rounded-lg bg-neutral-700 border border-neutral-600 text-white focus:outline-none focus:border-amber-500"
                                 placeholder="Enter your street address"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block text-white mb-2">District</label>
+                            <input 
+                                type="text"
+                                name="district"
+                                value={shippingData.district}
+                                onChange={handleChange}
+                                className="w-full px-4 py-2 rounded-lg bg-neutral-700 border border-neutral-600 text-white focus:outline-none focus:border-amber-500"
+                                placeholder="Enter your district"
                             />
                         </div>
 
