@@ -15,6 +15,13 @@ export default function HeroPlayers() {
   const rightPlayers = [7, 8, 9, 10, 11]; 
   
   // Check screen size on mount and resize
+  // State to track if component is loaded
+  const [isloaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    // Set isLoaded to true after component mounts
+    setIsLoaded(true);
+  }, []);
   useEffect(() => {
     const checkScreenSize = () => {
       setIsSmallScreen(window.innerWidth < 768);
@@ -30,35 +37,35 @@ export default function HeroPlayers() {
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
   
-  // Cycle player images
-  useEffect(() => {
-    // Change player images every 10 seconds
-    const interval = setInterval(() => {
-      // Cycle through left players
-      setLeftIndex((prevIndex) => (prevIndex + 1) % leftPlayers.length);
-      // Cycle through right players
-      setRightIndex((prevIndex) => (prevIndex + 1) % rightPlayers.length);
-    }, 10000);
-    
-    return () => clearInterval(interval);
-  }, [leftPlayers.length, rightPlayers.length]);
-  
+
+  const containerClass = `relative w-full fade-in-on-scroll h-full flex items-center justify-center ${isloaded ? 'show' : ''}`;
   return (
-    <div className="absolute inset-0 z-[3] md:top-[150px] top-[75px] flex items-center justify-center">
-      <div className="relative w-full fade-in-on-scroll h-full flex items-center justify-center">            
+        <div className="absolute inset-0 z-[3] md:top-[150px] top-[75px] flex items-center justify-center">
+
         {/* Player images with staggered positioning and z-index */}
-        <div className="relative h-[572px] w-full max-w-[1100px] flex items-center justify-center">
+        <div className={containerClass}>
+        <div className="absolute z-[0] left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <Image 
+            src="/ellipse.png"
+            alt="Background ellipse" 
+            height={560} 
+            width={1200} 
+            className="player-image md:scale-120 lg:scale-130 xl:scale-100" 
+          />
+        </div>
           {/* Left-most player (layer 1) - hidden on small screens */}
           {!isSmallScreen && (
-            <div className="absolute md:left-[15%] left-[10%] transform -translate-x-[15%] z-[1] transition-all duration-1000">
+            <div className="absolute md:left-[15%]  left-[10%] transform translate-y-[10%] translate-x-[20%] z-[1] transition-all duration-1000">
               <Image 
-                src="/players/bikashleft.png" //4
+
+                src="/players/tilakleftest.png" //4
+                // src="/players/bikashleft.png" //4
                 // src={`/players/${leftPlayers[(leftIndex) % 5]}.png`} 
                 alt={`player${leftPlayers[(leftIndex) % 5]}`} 
                 height={550} 
                 width={275} 
-                className="player-image md:scale-125 lg:scale-135 xl:scale-150" 
-              />
+                className="player-image md:scale-125 lg:scale-135 xl:scale-160" 
+                />
             </div>
           )} 
           
@@ -66,72 +73,65 @@ export default function HeroPlayers() {
           <div 
             className={`absolute ${
               isSmallScreen 
-                ? 'left-0 transform -translate-x-[10%]' 
-                : 'md:left-[25%] left-[15%] transform -translate-x-[5%]'
+              ? 'left-0 transform -translate-x-[19%] scale-120 translate-y-[5vh]' 
+              : 'md:left-[25%] left-[15%] transform  scale-120 translate-y-[25%] translate-x-[5%]'
             } z-[2] transition-all duration-1000`}
           >
             <Image 
             //   src={`/players/${leftPlayers[(leftIndex + 1) % 5]}.png`} 
-              src="/players/tomleft.png"
-              alt={`player${leftPlayers[(leftIndex + 1) % 5]}`} 
-              height={isSmallScreen ? 520 : 560} 
-              width={isSmallScreen ? 260 : 280} 
-              className="player-image md:scale-120 lg:scale-130 xl:scale-150" 
+            src="/players/bibekleft.png"
+            // src="/players/benright.png"
+            alt={`player${leftPlayers[(leftIndex + 1) % 5]}`} 
+            height={isSmallScreen ? 520 : 560} 
+            width={isSmallScreen ? 260 : 280} 
+            className="player-image transform md:-translate-x-[20px] md:scale-120 lg:scale-130 xl:scale-160" 
             />
           </div>
           
           {/* Center player (layer 5 - top) - stays the same */}
-          <div className="absolute z-[5] transform scale-110 md:scale-125 lg:scale-160 xl:scale-170">
+          <div className="absolute z-[5] transform scale-110 md:translate-y-[25%] translate-x-[10px] md:scale-125 lg:scale-160 xl:scale-180">
             <Image 
               src="/players/rohitcenter.png" 
               alt="player8" 
               height={590} 
-              width={295} 
+              width={350} 
               className="player-image"
               priority 
-            />
+              />
           </div>
           
           {/* Right player (layer 2) - shown on all screens */}
           <div 
             className={`absolute ${
               isSmallScreen 
-                ? 'right-0 transform translate-x-[10%]' 
-                : 'md:right-[30%] right-[15%] transform translate-x-[10%]'
-            } z-[2] transition-all duration-1000`}
-          >
+              ? 'right-0 transform translate-y-[5vh] scale-110 translate-x-[15%]' 
+                : 'md:right-[30%] scale-110 right-[15%] transform translate-y-[10%] translate-x-[20%]'
+              } z-[2] transition-all duration-1000`}
+              >
             <Image 
             //   src={`/players/${rightPlayers[(rightIndex) % 5]}.png`} 
-              src="/players/benright.png"
+            src="/players/arjunright.png"
+            // src="/players/tomleft.png"
               alt={`player${rightPlayers[(rightIndex) % 5]}`} 
               height={isSmallScreen ? 520 : 560} 
               width={isSmallScreen ? 260 : 280} 
-              className="player-image md:scale-110 lg:scale-130 xl:scale-150" 
-            />
+              className="player-image md:scale-110 lg:scale-130 xl:scale-160" 
+              />
           </div>
-          
-            <Image 
-            //   src={`/players/${rightPlayers[(rightIndex) % 5]}.png`} 
-              src="/ellipse.png"
-              alt={`player${rightPlayers[(rightIndex) % 5]}`} 
-              height={isSmallScreen ? 520 : 560} 
-              width={isSmallScreen ? 260 : 280} 
-              className="player-image md:scale-120 lg:scale-130 xl:scale-300" 
-            />
-          {/* Right-most player (layer 1) - hidden on small screens */}
+
           {!isSmallScreen && (
-            <div className="absolute md:right-[15%] right-[10%] transform translate-x-[15%] z-[1] transition-all duration-1000">
+            <div className="absolute md:right-[15%] right-[10%] transform translate-x-[15%] scale-110 translate-y-[6%] z-[1] transition-all duration-1000">
               <Image 
                 // src={`/players/${rightPlayers[(rightIndex + 1) % 5]}.png`} 
-                src="/players/bibekright.png"
+                // src="/players/bibekright.png"
+                src="/players/aashutoshrightest.png"
                 alt={`player${rightPlayers[(rightIndex + 1) % 5]}`} 
                 height={550} 
                 width={275} 
-                className="player-image md:scale-125 lg:scale-135 xl:scale-150"  //10
+                className="transform -translate-x-[10px] player-image md:scale-125 lg:scale-135 xl:scale-160"  //10
               />
             </div>
           )}
         </div>
       </div>
-    </div>
 )}

@@ -89,9 +89,12 @@ export const EmblaPlayerCarousel = () => {
   return (
     <div className="bg-[#06101B] text-white py-20 relative">
       <div className="container mx-auto px-4">
-        <h2 className="text-2xl md:text-4xl font-bold md:ml-[20px] text-start mb-0">
+        <h2 className="text-2xl md:text-4xl md:ml-[10vw] font-bold text-start mb-0">
           <span className="text-white-500 font-[poppins]">OUR LIONS</span> 
         </h2>
+        <p className="text-1xl pb-[5%] md:text-[14px] mt-10px md:ml-[10.1vw] opacity-80 font-[poppins] text-start mb-0">
+          View all lions
+        </p>
         
         {/* Main carousel with roar controls */}
         <div className={styles.emblaMain}>
@@ -104,7 +107,7 @@ export const EmblaPlayerCarousel = () => {
             <Image
               src="/leftroar.png"
               alt="Previous"
-              width={271}
+              width={287}
               height={466}
               className={styles.roarImg}
             />
@@ -161,7 +164,7 @@ export const EmblaPlayerCarousel = () => {
             <Image
               src="/rightroar.png"
               alt="Next"
-              width={271}
+              width={287}
               height={466}
               className={styles.roarImg}
             />

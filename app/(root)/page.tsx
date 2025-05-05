@@ -16,7 +16,6 @@ import LazyLoadSection from '../components/LazyLoadSection';
 import { prisma } from "@/lib/db";
 import HeroPlayersWrapper from "../components/HeroPlayersWrapper";
 
-
 export default async function RootPage() {
   let resultArray = [];
   try {
@@ -31,34 +30,71 @@ export default async function RootPage() {
   return (
     <div className="min-h-screen relative">
       {/* Hero Section with background image */}
-      <div className="relative min-h-screen">
+      <div className="relative min-h-[100vh] md:min-h-[110vh]">
         {/* Background image for hero section */}
-        <div className="absolute inset-0 z-[1]">
-          <Image
-            src="/headerbg.jpg"
-            alt="Background"
-            fill
-            className="object-cover object-top"
-            priority
-            quality={85}
-            sizes="100vw"
-          />
+        <div className="absolute inset-0 z-[1] h-full w-full">
+          {/* Desktop background */}
+          <div className="hidden md:block relative h-full w-full">
+            <Image
+              src="/headerbg.png"
+              alt="Background"
+              fill
+              className="object-cover object-top"
+              priority
+              quality={85}
+            />
+          </div>
+          
+          {/* Mobile background - using the same image but with different sizing */}
+          <div className="md:hidden relative h-full w-full">
+            <Image
+              src="/headerbg.png"
+              alt="Background"
+              fill
+              className="object-cover object-center"
+              priority
+              quality={75}
+            />
+          </div>
         </div>
       
         <ScrollEffects />
         
-        {/* Replace the static player images with the dynamic component */}
-        <HeroPlayersWrapper />
-        
-        
-        {/* Gradient overlay - positioned relative to the team image */}
-        <div className="absolute bottom-0 lg:top-[550px] left-0 right-0 h-[50vh] z-[7]">
-          <div className="w-full h-full bg-gradient-to-t from-[#06101B] via-[#06101B]/80 to-transparent"></div>
+        {/* Team image with viewport-relative positioning */}
+        <div className="absolute inset-0 z-[5] flex items-center justify-center">
+          {/* Desktop sizing */}
+          <div className="hidden md:block relative top-[13.5vh] transform scale-[1.45]">
+            <Image 
+              src="/team.png" 
+              height={895} 
+              width={688} 
+              alt="teamimage" 
+              className="object-contain"
+              priority
+            />
+          </div>
+          
+          {/* Mobile sizing */}
+          <div className="md:hidden relative w-full h-[60vh] flex items-center justify-center">
+            <div className="relative w-[90%] max-w-[350px]">
+              <Image 
+                src="/team.png" 
+                height={695} 
+                width={488} 
+                alt="teamimage" 
+                className="object-contain"
+                priority
+              />
+            </div>
+          </div>
         </div>
         
-        {/* Sponsors section - floating over the gradient */}
-        <div className="relative flex justify-center top-[130vw] md:top-[700px] left-0 right-0 z-[10]">
-          <div className="container z-[10] md:mx-[150px] px-4">
+        {/* Backdrop shadow overlay for better text readability */}
+        <div className="absolute inset-0 h-[115vh] z-[3] bg-gradient-to-b from-black/0 via-black/10 to-[#06101B] pointer-events-none"></div>
+        
+        {/* Sponsors section with viewport-relative positioning */}
+        <div className="absolute w-full z-[10] bottom-[-10vh] md:bottom-[-15vh] lg:bottom-[2vh]">
+          <div className="container mx-auto px-4 md:px-[150px]">
             <div className="grid grid-cols-4 md:grid-cols-7 gap-4 sm:gap-6 md:gap-8">
               {[
                 { src: "/ncell.png", alt: "Ncell" },
@@ -87,8 +123,8 @@ export default async function RootPage() {
         </div>
       </div>
 
-      {/* Content Sections */}
-      <div className="relative top-[-70px] pt-5 sm:top-[-150px] md:pt-[0px] pt-[60px] md:top-[20px] z-[8] bg-[#06101B]">         
+      {/* Content Sections - using viewport positioning */}
+      <div className="relative overflow-hidden bg-[#06101B] z-[11] pt-[10vh] md:pt-[10vh]">         
         <ResultsSection results={resultArray} />
         <LionPlayers />
         <FeaturedVideos/>
