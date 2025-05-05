@@ -18,7 +18,8 @@ const PlayerCard: React.FC<{ player: PlayerProps }> = ({ player }) => {
   // Use imageId or firstName for the card image filename
   //todo 
   const imageName = player.firstName.toLowerCase();
-  const imgSrc = `/playercards/${imageName}card.png`;
+  // const imgSrc = `/playercards/${imageName}card.png`;
+  const imgSrc = `/players1/${imageName}card.png`;
   
   // Handle image loading errors
   const handleImageError = (e: any) => {

@@ -93,7 +93,7 @@ export default async function RootPage() {
         <div className="absolute inset-0 h-[115vh] z-[3] bg-gradient-to-b from-black/0 via-black/10 to-[#06101B] pointer-events-none"></div>
         
         {/* Sponsors section with viewport-relative positioning */}
-        <div className="absolute w-full z-[10] bottom-[-10vh] md:bottom-[-15vh] lg:bottom-[2vh]">
+        <div className="absolute w-full z-[12] bottom-[26vh] md:bottom-[-15vh] lg:bottom-[2vh]">
           <div className="container mx-auto px-4 md:px-[150px]">
             <div className="grid grid-cols-4 md:grid-cols-7 gap-4 sm:gap-6 md:gap-8">
               {[
@@ -124,7 +124,7 @@ export default async function RootPage() {
       </div>
 
       {/* Content Sections - using viewport positioning */}
-      <div className="relative overflow-hidden bg-[#06101B] z-[11] pt-[10vh] md:pt-[10vh]">         
+      <div className="relative overflow-hidden bg-[#06101B] z-[11] pt-[10vh] md:pt-[10vh] md:mt-[0] mt-[-32.5vh]">         
         <ResultsSection results={resultArray} />
         <LionPlayers />
         <FeaturedVideos/>
