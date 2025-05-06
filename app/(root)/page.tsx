@@ -15,11 +15,12 @@ import dynamic from 'next/dynamic';
 import LazyLoadSection from '../components/LazyLoadSection';
 import { prisma } from "@/lib/db";
 import HeroPlayersWrapper from "../components/HeroPlayersWrapper";
+import HeroPlayers from "../components/HeroPlayers";
 
 export default async function RootPage() {
   let resultArray = [];
   try {
-    resultArray = await prisma.schedule.findMany({
+     resultArray = await prisma.schedule.findMany({
       orderBy: { matchDate: 'desc' },
       take: 5
     });
@@ -60,10 +61,12 @@ export default async function RootPage() {
       
         <ScrollEffects />
         
-        {/* Team image with viewport-relative positioning */}
+        <HeroPlayers/>
+
+        {/* Team image with viewport-relative positioning
         <div className="absolute inset-0 z-[5] flex items-center justify-center">
           {/* Desktop sizing */}
-          <div className="hidden md:block relative top-[13.5vh] transform scale-[1.45]">
+          {/* <div className="hidden md:block relative top-[13.5vh] transform scale-[1.45]">
             <Image 
               src="/team.png" 
               height={895} 
@@ -75,7 +78,7 @@ export default async function RootPage() {
           </div>
           
           {/* Mobile sizing */}
-          <div className="md:hidden relative w-full h-[60vh] flex items-center justify-center">
+          {/* <div className="md:hidden relative w-full h-[60vh] flex items-center justify-center">
             <div className="relative w-[90%] max-w-[350px]">
               <Image 
                 src="/team.png" 
@@ -87,13 +90,13 @@ export default async function RootPage() {
               />
             </div>
           </div>
-        </div>
-        
+        </div> */}
+
         {/* Backdrop shadow overlay for better text readability */}
         <div className="absolute inset-0 h-[115vh] z-[3] bg-gradient-to-b from-black/0 via-black/10 to-[#06101B] pointer-events-none"></div>
         
         {/* Sponsors section with viewport-relative positioning */}
-        <div className="absolute w-full z-[12] bottom-[26vh] md:bottom-[-15vh] lg:bottom-[2vh]">
+        <div className="absolute w-full hidden md:block z-[12] bottom-[26vh] md:bottom-[-15vh] lg:bottom-[2vh]">
           <div className="container mx-auto px-4 md:px-[150px]">
             <div className="grid grid-cols-4 md:grid-cols-7 gap-4 sm:gap-6 md:gap-8">
               {[
@@ -129,8 +132,6 @@ export default async function RootPage() {
         <LionPlayers />
         <FeaturedVideos/>
         <NewsPage/>
-        <div className="container mx-0 py-20">
-        </div>
       </div>
     </div>
   );

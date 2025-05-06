@@ -116,10 +116,7 @@ const LionPlayersContent = () => {
           <p>First player image: {formattedPlayers[0]?.imageUrl}</p>
         </div>
       )} */}
-      
-      <div className='md:scale-[200%]'>
 
-      </div>
       {/* Simple scrollable container
       <div 
         ref={scrollContainerRef}

@@ -65,12 +65,101 @@ model Lions {
   name        String
   slug        String      @unique
   class       PlayerClass
-  imageId     String?
   description String
   matches     Int
   strikerate  Float
   wickets     Int
   runs        Int
+  imageId     String?
+  jersey      Int         @default(0)
+}
+
+model Product {
+  id             String   @id @default(cuid())
+  name           String
+  price          Decimal  @db.Decimal(10, 2)
+  description    String
+  imageId        String?
+  availableSizes Size[]
+  inventory      Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Order {
+  id              String           @id @default(cuid())
+  status          OrderStatus      @default(PENDING)
+  customerName    String
+  customerPhone   String
+  customerEmail   String?
+  totalAmount     Decimal          @db.Decimal(10, 2)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  orderItems      OrderItem[]
+  payment         Payment?
+  shippingAddress ShippingAddress?
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  productId String
+  quantity  Int
+  size      Size?
+  price     Decimal @db.Decimal(10, 2)
+  name      String
+  imageUrl  String?
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
+
+model ShippingAddress {
+  id            String  @id @default(cuid())
+  orderId       String  @unique
+  recipientName String
+  phoneNumber   String
+  city          String
+  district      String
+  streetAddress String
+  landmark      String?
+  order         Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
+
+model Payment {
+  id              String        @id @default(cuid())
+  orderId         String        @unique
+  transactionCode String?
+  transactionUuid String?
+  status          PaymentStatus @default(COMPLETED)
+  amount          Decimal       @db.Decimal(10, 2)
+  paymentMethod   String
+  paymentProof    String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  order           Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
+
+model Schedule {
+  id              String   @id @default(cuid())
+  opponent        String
+  opponentLogo    String?
+  matchDate       DateTime
+  venue           String?
+  matchType       String?
+  isCompleted     Boolean  @default(false)
+  victory         Boolean?
+  lionsRuns       Int?
+  lionsWickets    Int?
+  lionsOvers      Float?
+  opponentRuns    Int?
+  opponentWickets Int?
+  opponentOvers   Float?
+  margin          Int?
+  marginType      String?
+  ballsLeft       Int?
+  description     String?
+  highlightUrl    String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 enum PlayerClass {
@@ -80,8 +169,6 @@ enum PlayerClass {
   Bowler
 }
 
-// E-commerce models
-
 enum Size {
   XS
   S
@@ -89,18 +176,6 @@ enum Size {
   L
   XL
   XXL
-}
-
-model Product {
-  id              String        @id @default(cuid())
-  name            String
-  price           Decimal       @db.Decimal(10, 2)
-  description     String
-  imageId         String?
-  availableSizes  Size[]
-  inventory       Int           @default(0)
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
 }
 
 enum OrderStatus {
@@ -114,90 +189,4 @@ enum OrderStatus {
 enum PaymentStatus {
   COMPLETED
   FAILED
-}
-
-// Since we don't have user accounts, this is a simple guest order
-model Order {
-  id                String        @id @default(cuid())
-  orderItems        OrderItem[]
-  status            OrderStatus   @default(PENDING)
-  customerName      String
-  customerPhone     String
-  customerEmail     String?
-  shippingAddress   ShippingAddress?
-  payment           Payment?
-  totalAmount       Decimal       @db.Decimal(10, 2)
-  createdAt         DateTime      @default(now())
-  updatedAt         DateTime      @updatedAt
-}
-
-model OrderItem {
-  id        String  @id @default(cuid())
-  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  orderId   String
-  productId String
-  quantity  Int
-  size      Size?
-  price     Decimal @db.Decimal(10, 2)
-  name      String  // Store product name at time of purchase
-  imageUrl  String? // Store image URL at time of purchase
-}
-
-model ShippingAddress {
-  id            String   @id @default(cuid())
-  order         Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  orderId       String   @unique
-  recipientName String
-  phoneNumber   String
-  city          String
-  district      String
-  streetAddress String
-  landmark      String?
-}
-
-model Payment {
-  id               String        @id @default(cuid())
-  order            Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  orderId          String        @unique
-  transactionCode  String?       
-  transactionUuid  String?       
-  status           PaymentStatus @default(COMPLETED) //can be changed but since data is sent only after paymen
-  amount           Decimal       @db.Decimal(10, 2)
-  paymentMethod    String        // "esewa", "cash_on_delivery", etc.
-  paymentProof     String?       // URL to uploaded payment screenshot
-  createdAt        DateTime      @default(now())
-  updatedAt        DateTime      @updatedAt
-}
-
-model Schedule {
-  id            String    @id @default(cuid())
-  opponent      String    // Name of opposing team
-  opponentLogo  String?   // URL to opponent's logo
-  matchDate     DateTime  // When the match occurs
-  venue         String?   // Where the match is played
-  matchType     String?   // T20, ODI, Test, etc.
-  
-  // Result fields - all nullable for upcoming matches
-  isCompleted   Boolean   @default(false)
-  victory       Boolean?  // true = won, false = lost, null = not played
-  
-  // Detailed scoring - separate runs and wickets
-  lionsRuns     Int?      // Lions runs scored
-  lionsWickets  Int?      // Lions wickets lost
-  lionsOvers    Float?    // Lions overs played (e.g. 19.5)
-  
-  opponentRuns  Int?      // Opponent runs scored
-  opponentWickets Int?    // Opponent wickets lost
-  opponentOvers Float?    // Opponent overs played
-  
-  // Victory margin
-  margin        Int?      // Margin of victory/defeat
-  marginType    String?   // "runs" or "wickets"
-  ballsLeft     Int?      // Optional balls remaining
-  
-  // Additional info
-  description   String?   // Any notes about the match
-  highlightUrl  String?   // Optional link to highlights
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
 }

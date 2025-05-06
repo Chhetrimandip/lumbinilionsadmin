@@ -19,7 +19,7 @@ const PlayerCard: React.FC<{ player: PlayerProps }> = ({ player }) => {
   //todo 
   const imageName = player.firstName.toLowerCase();
   // const imgSrc = `/playercards/${imageName}card.png`;
-  const imgSrc = `/players1/${imageName}card.png`;
+  const imgSrc = `/playercards/${imageName}card.png`;
   
   // Handle image loading errors
   const handleImageError = (e: any) => {

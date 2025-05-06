@@ -50,12 +50,12 @@ export default function HeroPlayers() {
             alt="Background ellipse" 
             height={560} 
             width={1200} 
-            className="player-image md:scale-120 lg:scale-130 xl:scale-100" 
+            className="player-image scale-220 md:scale-120 lg:scale-130 xl:scale-100" 
           />
         </div>
           {/* Left-most player (layer 1) - hidden on small screens */}
           {!isSmallScreen && (
-            <div className="absolute md:left-[15%]  left-[10%] transform translate-y-[10%] translate-x-[20%] z-[1] transition-all duration-1000">
+            <div className="absolute md:left-[14%]  left-[10%] transform translate-y-[10%] translate-x-[20%] z-[1] transition-all duration-1000">
               <Image 
 
                 src="/players/tilakleftest.png" //4
@@ -73,7 +73,7 @@ export default function HeroPlayers() {
           <div 
             className={`absolute ${
               isSmallScreen 
-              ? 'left-0 transform -translate-x-[19%] scale-120 translate-y-[5vh]' 
+              ? 'left-0 transform -translate-x-[20vw] scale-125 translate-y-[2vh]' 
               : 'md:left-[25%] left-[15%] transform  scale-120 translate-y-[25%] translate-x-[5%]'
             } z-[2] transition-all duration-1000`}
           >
@@ -89,7 +89,7 @@ export default function HeroPlayers() {
           </div>
           
           {/* Center player (layer 5 - top) - stays the same */}
-          <div className="absolute z-[5] transform scale-110 md:translate-y-[25%] translate-x-[10px] md:scale-125 lg:scale-160 xl:scale-180">
+          <div className="absolute z-[5] transform scale-110 md:translate-y-[20%] translate-x-[15px] md:scale-125 lg:scale-160 xl:scale-180">
             <Image 
               src="/players/rohitcenter.png" 
               alt="player8" 
@@ -104,8 +104,8 @@ export default function HeroPlayers() {
           <div 
             className={`absolute ${
               isSmallScreen 
-              ? 'right-0 transform translate-y-[5vh] scale-110 translate-x-[15%]' 
-                : 'md:right-[30%] scale-110 right-[15%] transform translate-y-[10%] translate-x-[20%]'
+              ? 'right-0 transform translate-y-[1vh] scale-110 translate-x-[25%]' 
+                : 'md:right-[32%] scale-110 right-[15%] transform translate-y-[27%] translate-x-[20%]'
               } z-[2] transition-all duration-1000`}
               >
             <Image 
@@ -120,7 +120,7 @@ export default function HeroPlayers() {
           </div>
 
           {!isSmallScreen && (
-            <div className="absolute md:right-[15%] right-[10%] transform translate-x-[15%] scale-110 translate-y-[6%] z-[1] transition-all duration-1000">
+            <div className="absolute md:right-[22%] right-[10%] transform translate-x-[15%] scale-110 translate-y-[17%] z-[1] transition-all duration-1000">
               <Image 
                 // src={`/players/${rightPlayers[(rightIndex + 1) % 5]}.png`} 
                 // src="/players/bibekright.png"

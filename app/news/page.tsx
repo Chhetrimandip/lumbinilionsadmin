@@ -53,7 +53,7 @@ export default async function NewsPage() {
     const displayFeatured = featuredPost || fallbackNews[0];
     const excerpt = getExcerptFromContent(displayFeatured.content, 150) || displayFeatured.subtitle || ''
     return (<div>
-    <FeaturedNewsClient displayFeatured={displayFeatured} ExcerptFromContent='excerpt'/>
+    {/* <FeaturedNewsClient displayFeatured={displayFeatured} ExcerptFromContent='excerpt'/> */}
         <div className="flex justify-center h-full w-full min-h-screen z-[10] pt-40 md:pt-10 pt-[-10px] overflow-hidden relative">
             {/* Background container with correct positioning */}
 {/* Background container that spans full width */}

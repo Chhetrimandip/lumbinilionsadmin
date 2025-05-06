@@ -11,6 +11,11 @@ export async function GET() {
         imageId: true,
         slug: true,
         class: true,
+        matches     :true,
+        strikerate  :true,
+        wickets    :true,
+        runs       :true,
+        jersey : true,
       },
       orderBy: {
         name: 'asc',
@@ -33,6 +38,12 @@ export async function GET() {
         imageId, // This can be null
         slug: player.slug,
         class: player.class,
+        matches: player.matches,
+        strikerate : player.strikerate,
+        wickets  : player.wickets,
+        runs : player.runs,
+        jersey: player.jersey
+
       };
     });
 

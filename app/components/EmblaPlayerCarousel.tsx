@@ -10,7 +10,10 @@ import PlayerCard from "./PlayerCard"; // Import the PlayerCard component
 export const EmblaPlayerCarousel = () => {
   const { players, loading, error } = usePlayerData();
   const [selectedIndex, setSelectedIndex] = useState(0);
+  console.log(players);
   
+  // Add state to track auto-play
+  const [autoPlayEnabled, setAutoPlayEnabled] = useState(true);
   
   // Main carousel
   const [mainViewRef, mainEmbla] = useEmblaCarousel({ 
@@ -30,16 +33,28 @@ export const EmblaPlayerCarousel = () => {
     (index) => {
       if (!mainEmbla || !thumbEmbla) return;
       mainEmbla.scrollTo(index);
+      
+      // Pause autoplay for a short time when manually navigating
+      setAutoPlayEnabled(false);
+      setTimeout(() => setAutoPlayEnabled(true), 15000); // Resume after 15 seconds of inactivity
     },
     [mainEmbla, thumbEmbla]
   );
   
   const scrollPrev = useCallback(() => {
     if (mainEmbla) mainEmbla.scrollPrev();
+    
+    // Pause autoplay for a short time when manually navigating
+    setAutoPlayEnabled(false);
+    setTimeout(() => setAutoPlayEnabled(true), 15000); // Resume after 15 seconds of inactivity
   }, [mainEmbla]);
 
   const scrollNext = useCallback(() => {
     if (mainEmbla) mainEmbla.scrollNext();
+    
+    // Pause autoplay for a short time when manually navigating
+    setAutoPlayEnabled(false);
+    setTimeout(() => setAutoPlayEnabled(true), 15000); // Resume after 15 seconds of inactivity
   }, [mainEmbla]);
   
   const onSelect = useCallback(() => {
@@ -53,6 +68,21 @@ export const EmblaPlayerCarousel = () => {
     thumbEmbla.scrollTo(newIndex);
   }, [mainEmbla, thumbEmbla]);
   
+  // Auto-play functionality
+  useEffect(() => {
+    if (!mainEmbla || !autoPlayEnabled) return;
+    
+    // Set up interval for auto-scrolling
+    const autoPlayInterval = setInterval(() => {
+      mainEmbla.scrollNext();
+    }, 10000); // 10 seconds
+    
+    // Clear interval on cleanup
+    return () => {
+      clearInterval(autoPlayInterval);
+    };
+  }, [mainEmbla, autoPlayEnabled]);
+  
   // Initialize
   useEffect(() => {
     if (!mainEmbla || !thumbEmbla) return;
@@ -60,8 +90,17 @@ export const EmblaPlayerCarousel = () => {
     onSelect();
     mainEmbla.on("select", onSelect);
     
+    // Reset auto-play when user interacts with carousel
+    const handlePointerDown = () => {
+      setAutoPlayEnabled(false);
+      setTimeout(() => setAutoPlayEnabled(true), 15000);
+    };
+    
+    mainEmbla.on("pointerDown", handlePointerDown);
+    
     return () => {
       mainEmbla.off("select", onSelect);
+      mainEmbla.off("pointerDown", handlePointerDown);
     };
   }, [mainEmbla, thumbEmbla, onSelect]);
   
@@ -87,7 +126,7 @@ export const EmblaPlayerCarousel = () => {
   const selectedPlayer = players[selectedIndex] || {};
   
   return (
-    <div className="bg-[#06101B] text-white py-20 relative">
+    <div className="bg-[#06101B] text-white relative">
       <div className="container mx-auto px-4">
         <h2 className="text-2xl md:text-4xl md:ml-[10vw] font-bold text-start mb-0">
           <span className="text-white-500 font-[poppins]">OUR LIONS</span> 
@@ -124,31 +163,53 @@ export const EmblaPlayerCarousel = () => {
                   </div>
                   
                   {/* Keep the desktop stats section */}
-                  <div className={`${styles.playerInfo} md:block hidden`}>
-                    <h3 className="text-2xl md:text-4xl font-bold mb-2">
-                      {player.firstName} <span className="text-amber-500">{player.lastName}</span>
-                    </h3>
-                    <p className="text-amber-400 uppercase tracking-wider mb-6">{player.class || "All-Rounder"}</p>
-                    
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                      <div className={styles.statItem}>
-                        <span className="text-sm text-gray-400">Matches</span>
-                        <span className="text-2xl font-bold">26</span>
-                      </div>
-                      <div className={styles.statItem}>
-                        <span className="text-sm text-gray-400">Runs</span>
-                        <span className="text-2xl font-bold">643</span>
-                      </div>
-                      <div className={styles.statItem}>
-                        <span className="text-sm text-gray-400">Average</span>
-                        <span className="text-2xl font-bold">38.5</span>
-                      </div>
-                      <div className={styles.statItem}>
-                        <span className="text-sm text-gray-400">Strike Rate</span>
-                        <span className="text-2xl font-bold">145.2</span>
-                      </div>
-                    </div>
-                  </div>
+{/* Redesigned desktop stats section */}
+<div className={`${styles.playerInfo} md:block hidden`}>
+  <h3 className="text-3xl md:text-4xl font-bold mb-2 font-['Bebas_Neue']">
+    {player.firstName} <span className="text-amber-500">{player.lastName}</span>
+  </h3>
+  
+  <div className="flex items-center mb-6 space-x-4">
+    <span className="bg-amber-500 text-[#06101B] px-4 py-1 rounded-md uppercase text-sm font-bold tracking-wider">
+      {player.class || "All-Rounder"}
+    </span>
+    <span className="text-gray-400 text-sm">Jersey: {player.jersey}</span>
+  </div>
+  
+  <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+    <div className={styles.statItem}>
+      <span className="text-amber-400 text-lg font-bold">{player.matches}</span>
+      <span className="text-sm text-gray-300">Matches</span>
+    </div>
+    <div className={styles.statItem}>
+      <span className="text-amber-400 text-lg font-bold">{player.runs}</span>
+      <span className="text-sm text-gray-300">Runs</span>
+    </div>
+    <div className={styles.statItem}>
+      <span className="text-amber-400 text-lg font-bold">38</span>
+      <span className="text-sm text-gray-300">Average</span>
+    </div>
+    <div className={styles.statItem}>
+      <span className="text-amber-400 text-lg font-bold">{player.strikerate}</span>
+      <span className="text-sm text-gray-300">Strike Rate</span>
+    </div>
+  </div>
+  
+  <p className="text-gray-300 text-sm leading-relaxed mb-6">
+    {player.description || 
+      "A formidable player known for powerful batting and strategic gameplay. Has been a key asset for the Lumbini Lions with consistent performances throughout the season."}
+  </p>
+  
+  <a 
+    href={`/players/${player.slug}`} 
+    className="inline-flex items-center bg-amber-500 hover:bg-amber-600 text-[#06101B] font-bold py-2 px-4 rounded-md transition-all"
+  >
+    Player Profile
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+      <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd"/>
+    </svg>
+  </a>
+</div>
                 </div>
               </div>
             ))}
