@@ -166,6 +166,7 @@ export const PlayerCardCarousel = () => {
                             src={imgSrc}
                             alt={`${player.firstName} ${player.lastName}`}
                             fill
+                            quality={100}
                             className={styles.playerImage}
                             onError={(e) => {
                               e.currentTarget.src = "/default-player.png";

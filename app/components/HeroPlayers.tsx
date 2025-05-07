@@ -107,6 +107,7 @@ export default function HeroPlayers() {
               alt="Left player" 
               height={520}
               width={260}
+              quality={100}
               className="player-image" 
             />
           </div>
@@ -118,6 +119,7 @@ export default function HeroPlayers() {
               alt="Center player" 
               height={590} 
               width={350} 
+              quality={100}
               className="player-image"
               priority 
             />
@@ -130,6 +132,7 @@ export default function HeroPlayers() {
               alt="Right player" 
               height={520}
               width={260}
+              quality={100}
               className="player-image" 
             />
           </div>
@@ -169,7 +172,7 @@ export default function HeroPlayers() {
               {/* Left player */}
               <div className="absolute left-[23%] bottom-0 h-[100%] w-[30%] z-[2]">
                 <Image 
-                  src="/players/tomlefte.png"
+                  src="/players/tomleft.png"
                   alt="Left player" 
                   fill
                   style={{ objectFit: 'contain', objectPosition: 'bottom' }}
