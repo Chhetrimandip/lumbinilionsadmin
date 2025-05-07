@@ -15,20 +15,20 @@
 
 .playerCard {
   position: relative;
-  margin-top: 10vh;
-  scale: 1.1;
   width: 100%;
   height: 100%;
   overflow: visible;
+  /* Remove vertical margin that was causing misalignment */
+  margin-top: 0;
 }
- @media (min-width: 768px) {
+
+@media (min-width: 768px) {
   .playerCard {
-    margin-top: -3vw;
-    margin-left: 10vw;
-    scale: 1.3;
+    /* Fix syntax error in your CSS and remove vertical margin */
+    margin-top: 0;
+    scale: 1.05;
   }
-  
- }
+}
 
 .playerImage {
   width: 100%;
@@ -38,12 +38,6 @@
 }
 
 /* For the carousel */
-.playerCardScrollItem {
-  flex: 0 0 300px;
-  padding: 0 10px;
-}
-
-/*todo*/
 .playerCardScrollItem {
   flex: 0 0 300px;
   padding: 0 10px;

@@ -16,6 +16,7 @@ import LazyLoadSection from '../components/LazyLoadSection';
 import { prisma } from "@/lib/db";
 import HeroPlayersWrapper from "../components/HeroPlayersWrapper";
 import HeroPlayers from "../components/HeroPlayers";
+import PlayerCardCarousel from "../components/PlayerCardCarousel";
 
 export default async function RootPage() {
   let resultArray = [];
@@ -31,13 +32,13 @@ export default async function RootPage() {
   return (
     <div className="min-h-screen relative">
       {/* Hero Section with background image */}
-      <div className="relative min-h-[100vh] md:min-h-[110vh]">
+      <div className="relative min-h-[100vh] md:min-h-[100vh]">
         {/* Background image for hero section */}
         <div className="absolute inset-0 z-[1] h-full w-full">
           {/* Desktop background */}
           <div className="hidden md:block relative h-full w-full">
             <Image
-              src="/headerbg.png"
+              src="/headerbg2.png"
               alt="Background"
               fill
               className="object-cover object-top"
@@ -49,7 +50,7 @@ export default async function RootPage() {
           {/* Mobile background - using the same image but with different sizing */}
           <div className="md:hidden relative h-full w-full">
             <Image
-              src="/headerbg.png"
+              src="/headerbg2.png"
               alt="Background"
               fill
               className="object-cover object-center"
@@ -129,7 +130,8 @@ export default async function RootPage() {
       {/* Content Sections - using viewport positioning */}
       <div className="relative overflow-hidden bg-[#06101B] z-[11] pt-[10vh] md:pt-[10vh] md:mt-[0] mt-[-32.5vh]">         
         <ResultsSection results={resultArray} />
-        <LionPlayers />
+        {/* <LionPlayers /> */}
+        <PlayerCardCarousel/>
         <FeaturedVideos/>
         <NewsPage/>
       </div>

@@ -1,0 +1,197 @@
+.embla {
+  position: relative;
+  max-width: 100%;
+}
+
+.emblaViewport {
+  overflow: hidden;
+  width: 100%;
+}
+
+.emblaContainer {
+  display: flex;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -khtml-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.emblaSlide {
+  min-width: 100%; /* For phones - show 1 at a time */
+  padding-left: 1rem;
+  position: relative;
+}
+
+.playerCard {
+  display: block;
+  text-decoration: none;
+  background: transparent;
+  transition: all 0.3s ease;
+  text-align: start;
+  font-weight: semibold;
+  text-indent: 2vh;
+}
+
+.playerCard:hover {
+  transform: translateY(-5px);
+}
+
+/* Container for the image wrapper */
+.playerImageWrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+}
+
+/* Fixed size container for the image */
+.imageFixedContainer {
+  width: 270px;
+  height: 365px;
+  position: relative;
+  margin: 0 auto;
+}
+
+.playerImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.playerName {
+  margin-bottom: 1vh ;
+}
+
+/* New navigation buttons styles */
+.navButton {
+  color: #f9f9fa;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.navButton:hover {
+  background-color: #d97706;
+  transform: scale(1.1);
+}
+
+/* Roar image styles */
+.roarImageLeft {
+  position: absolute;
+  margin-left: -5vw;
+  top: 38%;
+  transform: translateY(-50%);
+  opacity: 0.3;
+  height: 466px;
+  width: 271px;
+  pointer-events: none;
+  z-index: 1;
+  display: none; /* Hidden on mobile */
+}
+
+.roarImageRight {
+  position: absolute;
+  margin-right: -5vw;
+  top: 38%;
+  transform: translateY(-50%);
+  opacity: 0.3;
+  height: 466px;
+  width: 271px;
+  pointer-events: none;
+  z-index: 1;
+  display: none; /* Hidden on mobile */
+}
+
+.roarImg {
+  height: 100%;
+  width: auto;
+}
+
+/* Responsive adjustments */
+@media (min-width: 640px) {
+  .emblaSlide {
+    min-width: 50%; /* Show 2 at a time on small screens */
+  }
+  
+  .imageFixedContainer {
+    width: 240px;
+    height: 324px;
+  }
+}
+
+@media (min-width: 768px) {
+  .emblaSlide {
+    min-width: 33.33333%; /* Show 3 at a time on medium screens */
+  }
+  
+  .imageFixedContainer {
+    width: 250px;
+    height: 337px;
+  }
+  
+  /* Show roar images on medium+ screens */
+  .roarImageLeft, .roarImageRight {
+    display: block;
+  }
+  
+  .roarImageLeft {
+    left: 0;
+  }
+  
+  .roarImageRight {
+    right: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .embla{
+    margin-left: 162px;
+    margin-right: 10vw;
+    padding-bottom: vh;
+    margin-top: -15vh; /* Add negative top margin to reduce gap */
+  }
+  
+  .emblaContainer{
+    padding-top: 20vh;
+    margin-left: -1rem;
+  }
+  
+  .emblaSlide {
+    min-width: 25%; /* Show 4 at a time on large screens */
+  }
+  
+  .imageFixedContainer {
+    width: 270px;
+    height: 365px;
+  }
+  
+  /* Adjust roar images on large screens */
+  .roarImageLeft {
+    left: 2%;
+  }
+  
+  .roarImageRight {
+    right: 2%;
+  }
+}
+
+@media (min-width: 1536px) {
+  /* Adjust roar images on extra large screens */
+  .roarImageLeft {
+    left: 5%;
+  }
+  
+  .roarImageRight {
+    right: 5%;
+  }
+}

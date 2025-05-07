@@ -87,7 +87,7 @@ const Navbar = () => {
       <div className="flex justify-between items-center h-[67px] md:hidden">
         {/* Logo */}
         <Link href="/" className="flex-shrink-0">
-          <div className="relative hover-fix w-20 h-12 transition-transform duration-300 hover:scale-110">
+          <div className="relative  hover-fix w-20 h-12 transition-transform duration-300 hover:scale-110">
             <Image 
               src="/logo.png" 
               alt="Lumbini Lions Logo"
@@ -120,7 +120,7 @@ const Navbar = () => {
             <Link href="/match" className={navLinkStyle}>Match</Link>
             
             {/* Logo container with fixed dimensions */}
-            <Link href="/" className="flex-shrink-0 mx-2 lg:mx-6">
+            <Link href="/" className="flex-shrink-0 mx-2 md:mt-10 lg:pr-5">
               <div className={styles.logoWrapper}>
                 <div className={styles.logoContainer}>
                   <Image 
@@ -140,7 +140,7 @@ const Navbar = () => {
           </div>
           
           {/* Responsive decorative lines */}
-          <div className="absolute left-0 right-0 bottom-3 w-full flex justify-center">
+          <div className="absolute left-0 right-0 bottom-7 w-full flex justify-center">
             {/* Left orange line - responsive width using percentages */}
             <div className="absolute right-[50%] bottom-0 mr-[90px] w-[30%] max-w-[300px] h-[0.5px] bg-gradient-to-r from-transparent to-amber-500"></div>
             

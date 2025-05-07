@@ -8,6 +8,7 @@
   padding: 0;
   isolation: isolate;
   overflow: visible;
+  scale : 1.2
 }
 
 .logoContainer {

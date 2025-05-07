@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import Image from 'next/image';
 
-
 interface ScheduleProps {
   match : {
     id: string;
@@ -22,29 +21,61 @@ interface ScheduleProps {
     ballsLeft?: number;
   }
 }
+
 const MatchCard: FC<{ match: ScheduleProps['match'] }> = ({ match }) => {
   const isUpcoming = !match.isCompleted;
   match.margin = match.lionsRuns && match.opponentRuns 
     ? Math.abs(match.lionsRuns - match.opponentRuns) 
     : undefined;
-  match.marginType = "run"
-  console.log("Match data : ", match)
+  match.marginType = "run";
+  
   return (
     <div className="overflow-hidden py-5 bg-[#050C13] hover:bg-[#162339] transition-all duration-300 shadow-lg">
       {/* Logos section - same for both types */}
-      <div className="flex flex-row items-center p-5 w-full">
-        <div className="flex-shrink-0 mr-2">
+      <div className="flex flex-row justify-start w-full">
+        <div className="flex-shrink-0 mr-[-8px]">
           <Image src="/logo.png" alt="Lumbini Lions Logo" width={180} height={144} 
-            className="w-32 h-22 sm:w-32 sm:h-24 object-contain drop-shadow-lg" />
+            className="w-32 h-22 sm:w-32 sm:h-24 md:scale-120 object-contain drop-shadow-lg" />
         </div>
         <Image src={match.opponentLogo} alt={`${match.opponent} Logo`} width={120} height={120}
           className="w-20 h-20 sm:w-24 sm:h-24 object-contain drop-shadow-lg" />
       </div>
       
-      {/* Team names - same for both */}
-      <span className="text-white px-5 font-[poppins] font-semibold text-[16px] text-xs sm:text-sm text-center">
-        LUMBINI LIONS VS {match.opponent?.toUpperCase() || "TBD"}
-      </span>
+      {/* Team names with scores underneath */}
+      <div className="flex justify-start px-7 mt-3">
+        {/* Lions side */}
+        <div className="flex flex-col ">
+          <span className="text-white font-[poppins] mr-1 font-semibold text-[16px] text-xs sm:text-sm">
+            Lumbini Lions <span className='mx-3 hidden md:inline'> vs </span>
+          </span>
+          {!isUpcoming && (
+            <span className="text-white opacity-70 text-xs sm:text-sm mt-2 font-[poppins]">
+              {match.lionsRuns}/{match.lionsWickets} 
+              {match.lionsOvers && `(${match.lionsOvers})`}
+            </span>
+          )}
+        </div>
+        
+        {/* VS text
+        <div className="flex items-center mt-[-3vh]">
+          <span className="text-white mx-5 font-[poppins] font-semibold text-[16px] text-xs sm:text-sm">
+            vs
+          </span>
+        </div> */}
+        
+        {/* Opponent side */}
+        <div className="flex flex-col">
+          <span className="text-white font-[poppins] font-semibold text-[16px] text-xs sm:text-sm">
+            {match.opponent || "TBD"}
+          </span>
+          {!isUpcoming && (
+            <span className="text-white opacity-70 text-xs mt-2 sm:text-sm font-[poppins]">
+              {match.opponentRuns}/{match.opponentWickets}
+              {match.opponentOvers && `(${match.opponentOvers})`}
+            </span>
+          )}
+        </div>
+      </div>
       
       {isUpcoming ? (
         // Upcoming match section
@@ -66,27 +97,18 @@ const MatchCard: FC<{ match: ScheduleProps['match'] }> = ({ match }) => {
           </div>
         </>
       ) : (
-        // Completed match section
-      <>
-        <div className="flex font-[poppins] font-semiblod text-[16px] justify-between mt-2 text-white px-5 opacity-70">
-          <span>
-            {match.lionsRuns}/{match.lionsWickets} 
-            {match.lionsOvers && `(${match.lionsOvers})`}
-          </span>
-          <span>
-            {match.opponentRuns}/{match.opponentWickets}
-            {match.opponentOvers && `(${match.opponentOvers})`}
-          </span>
-        </div>
-        <hr className="opacity-30" />
-        <p className="text-amber-500 px-5 mt-2">
-          Lumbini Lions {match.victory 
-            ? `won by ${match.margin} ${match.marginType}${match.ballsLeft ? ` (${match.ballsLeft} balls left)` : ''}` 
-            : `lost by ${match.margin} ${match.marginType}`}
-        </p>
-      </>
+        // Completed match section - just showing result now, scores moved up
+        <>
+          <hr className="opacity-30 mt-5 mx-7" />
+          <p className="text-amber-500 font-[poppins] font-medium pb-3 text-[14px] mt-4 ml-[1.7vw]">
+            Lumbini Lions {match.victory 
+              ? `won by ${match.margin} ${match.marginType}${match.ballsLeft ? ` (${match.ballsLeft} balls left)` : ''}` 
+              : `lost by ${match.margin} ${match.marginType}`}
+          </p>
+        </>
       )}
     </div>
   );
 };
+
 export default MatchCard;
