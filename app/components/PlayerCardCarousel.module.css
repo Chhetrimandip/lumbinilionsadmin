@@ -6,6 +6,11 @@
 .emblaViewport {
   overflow: hidden;
   width: 100%;
+  cursor: grab;
+}
+
+.emblaViewport.is-dragging {
+  cursor: grabbing;
 }
 
 .emblaContainer {
@@ -14,12 +19,17 @@
   -webkit-touch-callout: none;
   -khtml-user-select: none;
   -webkit-tap-highlight-color: transparent;
+  will-change: transform;
+  transition: height 0.2s;
+  margin-left: -1rem;
 }
 
 .emblaSlide {
+  flex: 0 0 auto;
   min-width: 100%; /* For phones - show 1 at a time */
   padding-left: 1rem;
   position: relative;
+  scroll-snap-align: center;
 }
 
 .playerCard {
@@ -115,6 +125,29 @@
 .roarImg {
   height: 100%;
   width: auto;
+}
+
+/* Add these styles for dots */
+.dotContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  gap: 0.5rem;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.3);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dotSelected {
+  background-color: #d97706; /* amber-600 */
+  transform: scale(1.3);
 }
 
 /* Responsive adjustments */

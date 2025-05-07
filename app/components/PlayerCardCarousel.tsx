@@ -11,16 +11,21 @@ export const PlayerCardCarousel = () => {
   const { players, loading, error } = usePlayerData();
   const [activeIndex, setActiveIndex] = useState(0);
   const [autoPlayEnabled, setAutoPlayEnabled] = useState(true);
-  
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
+
   // Initialize carousel with 4 slides visible at once on desktop
   const [viewportRef, embla] = useEmblaCarousel({
     loop: true,
-    align: 'start',
+    align: 'center', // Changed from 'start' to 'center' for better snapping
     skipSnaps: false,
     slidesToScroll: 1,
-    dragFree: true,
+    dragFree: false, // Changed from true to false to enforce snapping
+    containScroll: 'trimSnaps',
+    inViewThreshold: 0.7, // Consider a slide in view when 70% visible
+    duration: 10, // Animation duration in milliseconds (higher = slower, smoother transitions)
   });
-  
+
   const scrollPrev = useCallback(() => {
     if (embla) embla.scrollPrev();
     setAutoPlayEnabled(false);
@@ -32,16 +37,22 @@ export const PlayerCardCarousel = () => {
     setAutoPlayEnabled(false);
     setTimeout(() => setAutoPlayEnabled(true), 15000);
   }, [embla]);
-  
+
   const onSelect = useCallback(() => {
     if (!embla) return;
     setActiveIndex(embla.selectedScrollSnap());
+    setSelectedIndex(embla.selectedScrollSnap());
   }, [embla]);
-  
+
+  const scrollTo = useCallback(
+    (index: number) => embla && embla.scrollTo(index),
+    [embla]
+  );
+
   // Auto-play functionality
   useEffect(() => {
     if (!embla || !autoPlayEnabled) return;
-    
+
     const autoPlayInterval = setInterval(() => {
       if (embla.canScrollNext()) {
         embla.scrollNext();
@@ -49,33 +60,34 @@ export const PlayerCardCarousel = () => {
         embla.scrollTo(0);
       }
     }, 10000); // 10 seconds interval for auto-scrolling
-    
+
     return () => {
       clearInterval(autoPlayInterval);
     };
   }, [embla, autoPlayEnabled]);
-  
+
   // Initialize and setup event listeners
   useEffect(() => {
     if (!embla) return;
-    
+
+    setScrollSnaps(embla.scrollSnapList());
     onSelect();
     embla.on("select", onSelect);
-    
+
     // Reset auto-play when user interacts with carousel
     const handlePointerDown = () => {
       setAutoPlayEnabled(false);
       setTimeout(() => setAutoPlayEnabled(true), 15000);
     };
-    
+
     embla.on("pointerDown", handlePointerDown);
-    
+
     return () => {
       embla.off("select", onSelect);
       embla.off("pointerDown", handlePointerDown);
     };
   }, [embla, onSelect]);
-  
+
   if (loading) {
     return (
       <div className="h-64 flex items-center justify-center">
@@ -83,7 +95,7 @@ export const PlayerCardCarousel = () => {
       </div>
     );
   }
-  
+
   if (error || players.length === 0) {
     return (
       <div className="text-center py-8">
@@ -93,7 +105,7 @@ export const PlayerCardCarousel = () => {
   }
 
   return (
-    <div className="bg-[#06101B] text-white pb-[30vh] relative">
+    <div className="bg-[#06101B] text-white pb-[10vh] md:pb-[30vh] relative">
       {/* Left roar image (decorative) */}
       <div className={styles.roarImageLeft}>
         <Image
@@ -104,7 +116,7 @@ export const PlayerCardCarousel = () => {
           className={styles.roarImg}
         />
       </div>
-      
+
       {/* Right roar image (decorative) */}
       <div className={styles.roarImageRight}>
         <Image
@@ -115,7 +127,7 @@ export const PlayerCardCarousel = () => {
           className={styles.roarImg}
         />
       </div>
-      
+
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between mb-1">
           <h2 className="text-2xl md:text-4xl font-bold">
@@ -123,7 +135,7 @@ export const PlayerCardCarousel = () => {
               <span className="text-[14px] font-medium opacity-60 ">View all</span>
             </span>
           </h2>
-          
+
           {/* Navigation buttons moved to right side */}
           <div className="flex space-x-3">
             <button 
@@ -146,7 +158,7 @@ export const PlayerCardCarousel = () => {
             </button>
           </div>
         </div>
-        
+
         <div className={styles.embla}>
           <div className={styles.emblaViewport} ref={viewportRef}>
             <div className={styles.emblaContainer}>
@@ -155,7 +167,7 @@ export const PlayerCardCarousel = () => {
                 const imageName = player.firstName.toLowerCase();
                 const imgSrc = `/playercards/${imageName}card.png`;
                 // const imgSrc = "/playercards/tomcard.png"
-                
+
                 return (
                   <div className={styles.emblaSlide} key={player.id}>
                     <Link href={`/players/${player.slug}`} className={styles.playerCard}>
@@ -187,6 +199,16 @@ export const PlayerCardCarousel = () => {
             </div>
           </div>
         </div>
+        <div className={styles.dotContainer}>
+  {scrollSnaps.map((_, index) => (
+    <button
+      key={index}
+      className={`${styles.dot} ${index === selectedIndex ? styles.dotSelected : ''}`}
+      onClick={() => scrollTo(index)}
+      aria-label={`Go to slide ${index + 1}`}
+    />
+  ))}
+</div>
       </div>
     </div>
   );
