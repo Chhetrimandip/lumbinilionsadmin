@@ -38,6 +38,7 @@ const TeamPage = () => {
                         fill
                         className="object-cover"
                     />
+
                     
                     {/* Overlay Image */}
                     <div className="absolute inset-0">
@@ -51,8 +52,17 @@ const TeamPage = () => {
                     
                     {/* Text Overlay */}
                     <div className="absolute inset-0 flex items-center justify-center">
+                            {/* Lion Shield positioned behind text */}
+                            <div className="absolute w-[335px] h-[344.5px] opacity-100">
+                                <Image 
+                                    src="/lionsshield.png"
+                                    alt="Lion Shield"
+                                    fill
+                                    className="object-contain"
+                                />
+                            </div>
                         <h1 className="text-4xl md:text-6xl lg:text-7xl text-white font-bold font-['poppins'] tracking-wider">
-                            OUR PLAYERS
+                            OUR LIONS
                         </h1>
                     </div>
                 </div>

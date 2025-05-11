@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 const Footer = () => {
     return (
-        <footer className="w-full bg-neutral-900 text-white z-[0] mt-0 md:mt-5">
+        <footer className="w-full bg-[#050C13] text-white z-[0] mt-0 md:mt-5">
             <div className="max-w-7xl mx-auto px-4 py-12">
                 {/* Top section with logo and title */}
                 <div className="flex flex-col md:flex-row justify-between items-center mb-10">
@@ -16,7 +16,7 @@ const Footer = () => {
                             height={80}
                             className="w-20 h-20 object-contain"
                         />
-                        <h2 className="text-4xl font-['Bebas_Neue'] text-amber-500 ml-4">LUMBINI LIONS</h2>
+                        <h2 className="text-4xl font-[poppins] text-amber-500 ml-4">LUMBINI LIONS</h2>
                     </div>
                     
                     <div className="flex space-x-4">
@@ -43,20 +43,20 @@ const Footer = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {/* Quick Links */}
                     <div>
-                        <h3 className="text-2xl font-['Bebas_Neue'] text-amber-500 mb-4">
+                        <h3 className="text-2xl font-[poppins] text-amber-500 mb-4">
                             <span className="text-amber-500">|</span> Quick Links
                         </h3>
                         <div className="flex flex-col space-y-2">
-                            <Link className="text-zinc-100 hover:text-amber-500 transition-colors text-lg font-['Bebas_Neue']" href="/about">
+                            <Link className="text-zinc-100 hover:text-amber-500 transition-colors text-lg font-[poppins]" href="/about">
                                 About us
                             </Link>
-                            <Link className="text-zinc-100 hover:text-amber-500 transition-colors text-lg font-['Bebas_Neue']" href="/contact">
+                            <Link className="text-zinc-100 hover:text-amber-500 transition-colors text-lg font-[poppins]" href="/contact">
                                 Contact us
                             </Link>
-                            <Link className="text-zinc-100 hover:text-amber-500 transition-colors text-lg font-['Bebas_Neue']" href="/shop">
+                            <Link className="text-zinc-100 hover:text-amber-500 transition-colors text-lg font-[poppins]" href="/shop">
                                 Shop
                             </Link>
-                            <Link className="text-zinc-100 hover:text-amber-500 transition-colors text-lg font-['Bebas_Neue']" href="/news">
+                            <Link className="text-zinc-100 hover:text-amber-500 transition-colors text-lg font-[poppins]" href="/news">
                                 News
                             </Link>
                         </div>
@@ -64,25 +64,25 @@ const Footer = () => {
                     
                     {/* FAQ */}
                     <div>
-                        <h3 className="text-2xl font-['Bebas_Neue'] text-amber-500 mb-4">
+                        <h3 className="text-2xl font-[poppins] text-amber-500 mb-4">
                             <span className="text-amber-500">|</span> Frequently Asked Questions
                         </h3>
                         <ul className="space-y-2">
-                            <li className="text-zinc-100 text-lg font-['Bebas_Neue']">Where can we buy your merchandise?</li>
-                            <li className="text-zinc-100 text-lg font-['Bebas_Neue']">How to sign up for the merchandise giveaways?</li>
-                            <li className="text-zinc-100 text-lg font-['Bebas_Neue']">When is the next home game?</li>
+                            <li className="text-zinc-100 text-lg font-[poppins]">Where can we buy your merchandise?</li>
+                            <li className="text-zinc-100 text-lg font-[poppins]">How to sign up for the merchandise giveaways?</li>
+                            <li className="text-zinc-100 text-lg font-[poppins]">When is the next home game?</li>
                         </ul>
                     </div>
                     
                     {/* Contact Info */}
                     <div>
-                        <h3 className="text-2xl font-['Bebas_Neue'] text-amber-500 mb-4">
+                        <h3 className="text-2xl font-[poppins] text-amber-500 mb-4">
                             <span className="text-amber-500">|</span> Contact Information
                         </h3>
                         <div className="space-y-2">
-                            <p className="text-zinc-100 text-lg font-['Bebas_Neue']">Email: info@lumbinilions.com</p>
-                            <p className="text-zinc-100 text-lg font-['Bebas_Neue']">Phone: +977 123-456-7890</p>
-                            <p className="text-zinc-100 text-lg font-['Bebas_Neue']">Address: Lumbini, Nepal</p>
+                            <p className="text-zinc-100 text-lg font-[poppins]">Email: info@lumbinilions.com</p>
+                            <p className="text-zinc-100 text-lg font-[poppins]">Phone: +977 123-456-7890</p>
+                            <p className="text-zinc-100 text-lg font-[poppins]">Address: Lumbini, Nepal</p>
                         </div>
                     </div>
                 </div>

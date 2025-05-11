@@ -14,42 +14,42 @@ const Shoppage = () => {
         {
             id: 1,
             name: "Lumbini Lions Home Jersey",
-            price: "55.99",
+            price: "900.99",
             image: "/jersey.png",
             isFeatured: true
         },
         {
             id: 2,
             name: "Lumbini Lions Away Jersey",
-            price: "55.99",
-            image: "/awayjersey.jpeg",
+            price: "900.99",
+            image: "/awayjersey.jpg",
             isFeatured: false
         },
         {
             id: 3,
             name: "Lumbini Lions Cap",
-            price: "25.99",
+            price: "500.99",
             image: "/cap.jpeg",
             isFeatured: false
         },
         {
             id: 4,
             name: "Lumbini Lions Mug",
-            price: "15.99",
+            price: "199.99",
             image: "/mug.jpeg",
             isFeatured: false
         },
         {
             id: 5,
             name: "Lumbini Lions T-Shirt",
-            price: "35.99",
+            price: "500.99",
             image: "/tshirt.png",
             isFeatured: false
         },
         {
             id: 6,
             name: "Lumbini Lions Hoodie",
-            price: "65.99",
+            price: "2000.99",
             image: "/hoodie.png",
             isFeatured: false
         }
@@ -93,13 +93,13 @@ const Shoppage = () => {
                                 <button 
                                     onClick={() => addtocart({
                                         id: "jersey",
-                                        price: 55.99,
+                                        price: 900.99,
                                         name: "Lumbini Lions Official Jersey",
                                         image: "/jersey.png"
                                     })} 
                                     className="bg-amber-500 hover:bg-amber-600 text-black text-xl font-['Bebas_Neue'] px-6 py-3 rounded-lg transition-colors"
                                 >
-                                    ADD TO CART — $55.99
+                                    ADD TO CART — Rs900.99
                                 </button>
                                 <button className="bg-neutral-700 hover:bg-neutral-600 text-white text-xl font-['Bebas_Neue'] px-6 py-3 rounded-lg transition-colors">
                                     VIEW DETAILS

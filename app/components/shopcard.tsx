@@ -40,7 +40,7 @@ const Shopcard: React.FC<ProductProps> = ({ product }) => {
       <div className="p-5">
         <h3 className="text-xl text-white font-semibold mb-2">{product.name}</h3>
         <div className="flex justify-between items-center mt-4">
-          <span className="text-amber-500 font-bold">${product.price}</span>
+          <span className="text-amber-500 font-bold">Rs{product.price}</span>
           <button 
             onClick={handleAddToCart}
             className="bg-neutral-700 hover:bg-amber-500 text-white hover:text-black px-4 py-2 rounded transition-colors duration-300">

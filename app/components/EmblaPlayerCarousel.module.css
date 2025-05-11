@@ -14,7 +14,7 @@
   .emblaMainContainer {
     display: flex;
     user-select: none;
-    margin-top: 13vh;
+    margin-top: 8vh;
     -webkit-touch-callout: none;
     -khtml-user-select: none;
     -webkit-tap-highlight-color: transparent;
@@ -369,8 +369,9 @@
     .playerMainCard {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 24px;
+      gap: 2px;
       align-items: center;
+      margin-left: 10%;
     }
     
     .playerCardWrapper {

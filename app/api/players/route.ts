@@ -16,6 +16,7 @@ export async function GET() {
         wickets    :true,
         runs       :true,
         jersey : true,
+        description: true
       },
       orderBy: {
         name: 'asc',
@@ -42,7 +43,8 @@ export async function GET() {
         strikerate : player.strikerate,
         wickets  : player.wickets,
         runs : player.runs,
-        jersey: player.jersey
+        jersey: player.jersey,
+        description: player.description,
 
       };
     });

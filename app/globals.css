@@ -215,6 +215,22 @@ html:has(.root-page-container) body {
   --sidebar-ring: oklch(0.553 0.013 58.071);
 }
 
+@layer utilities {
+  .clip-roof {
+    clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
+  }
+}
+
+
+.mask-fade-center {
+  -webkit-mask-image: linear-gradient(to right, black 20%, transparent 35%, transparent 65%, black 80%);
+  mask-image: linear-gradient(to right, black 20%, transparent 50%, transparent 55%, black 80%);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

@@ -17,6 +17,7 @@ import { prisma } from "@/lib/db";
 import HeroPlayersWrapper from "../components/HeroPlayersWrapper";
 import HeroPlayers from "../components/HeroPlayers";
 import PlayerCardCarousel from "../components/PlayerCardCarousel";
+import NewsContent from "../components/NewsContent";
 
 export default async function RootPage() {
   let resultArray = [];
@@ -133,7 +134,7 @@ export default async function RootPage() {
         {/* <LionPlayers /> */}
         <PlayerCardCarousel/>
         <FeaturedVideos/>
-        <NewsPage/>
+        <NewsContent/>
       </div>
     </div>
   );

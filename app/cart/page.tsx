@@ -281,7 +281,7 @@ function SearchParamsHandler({ onDataFound }) {
                                         
                                         <div className="flex-grow text-center sm:text-left">
                                             <h3 className="text-white font-medium mb-1">{item.name || `Product #${item.id}`}</h3>
-                                            <p className="text-amber-500 font-bold">${(item.price || 0).toFixed(2)}</p>
+                                            <p className="text-amber-500 font-bold">Rs{(item.price || 0).toFixed(2)}</p>
                                         </div>
                                         
                                         <div className="flex items-center">
@@ -331,16 +331,16 @@ function SearchParamsHandler({ onDataFound }) {
                             <div className="p-6">
                                 <div className="flex justify-between mb-4">
                                     <span className="text-gray-400">Subtotal:</span>
-                                    <span className="text-white">${formattedTotal}</span>
+                                    <span className="text-white">Rs{formattedTotal}</span>
                                 </div>
                                 <div className="flex justify-between mb-4">
                                     <span className="text-gray-400">Shipping:</span>
-                                    <span className="text-white">$5.00</span>
+                                    <span className="text-white">Rs5.00</span>
                                 </div>
                                 <div className="border-t border-neutral-700 pt-4 mb-6">
                                     <div className="flex justify-between">
                                         <span className="text-lg text-white font-bold">Total:</span>
-                                        <span className="text-lg text-amber-500 font-bold">${(parseFloat(formattedTotal) + 5).toFixed(2)}</span>
+                                        <span className="text-lg text-amber-500 font-bold">Rs{(parseFloat(formattedTotal) + 5).toFixed(2)}</span>
                                     </div>
                                 </div>
 

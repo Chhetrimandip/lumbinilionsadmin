@@ -126,7 +126,7 @@ export const EmblaPlayerCarousel = () => {
   const selectedPlayer = players[selectedIndex] || {};
   
   return (
-    <div className="bg-[#06101B] text-white relative">
+    <div className="bg-[#06101B] text-white relative ">
       <div className="container mx-auto px-4">
         <h2 className="text-2xl md:text-4xl md:ml-[10vw] font-bold text-start mb-0">
           <span className="text-white-500 font-[poppins]">OUR LIONS</span> 
@@ -227,6 +227,7 @@ export const EmblaPlayerCarousel = () => {
               alt="Next"
               width={287}
               height={466}
+              quality={100}
               className={styles.roarImg}
             />
           </button>
