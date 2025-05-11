@@ -57,10 +57,10 @@ export default async function PlayerDetailPage({ params }: { params: { slug: str
               <div className="flex flex-col items-center space-y-4">
                 {/* First trapezium with mask effect */}
                 <div className="relative w-full max-w-[75%] lg:max-w-[65%] h-16 md:h-20 lg:h-24">
-                  <div className="w-full h-full mask-fade-center">
+                  {/* <div className="w-full h-full  mask-fade-center"> */}
                   {/* Trapezium shape */}
                   <div className="bg-amber-500 clip-roof w-full h-full shadow-lg"></div>
-                  </div>
+                  {/* </div> */}
 
                   {/* Content */}
                   <div className="absolute inset-0 flex items-center justify-between px-6 md:px-24 z-10">
@@ -78,10 +78,10 @@ export default async function PlayerDetailPage({ params }: { params: { slug: str
 
                 {/* Second trapezium with mask effect */}
                 <div className="relative w-full max-w-[85%] lg:max-w-[75%] h-16 md:h-20 lg:h-24">
-                  <div className="w-full h-full mask-fade-center">
+                  {/* <div className="w-full h-full mask-fade-center"> */}
                     {/* Trapezium shape */}
                     <div className="bg-white clip-roof w-full h-full shadow-lg"></div>
-                  </div>
+                  {/* </div> */}
 
                   {/* Content */}
                     <div className="absolute inset-0 flex items-center justify-between px-6 md:px-24 z-10">
@@ -131,14 +131,14 @@ export default async function PlayerDetailPage({ params }: { params: { slug: str
                 </div>
                 
                 {/* Social Icons */}
-                <div className="flex hidden md:block space-x-4 mt-6 sm:mt-10">
-                  <a href="#" className="size-12 sm:size-16 flex items-center justify-center border border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-black transition-all duration-300">
+                <div className="flex hidden md:block space-x-4 mt-6 y-5 sm:mt-10">
+                  <a href="#" className="size-12 py-2 sm:size-8 flex items-center justify-center text-amber-500 hover:bg-amber-500 hover:text-black transition-all duration-300">
                     <Instagram className="w-6 h-6 sm:w-8 sm:h-8" />
                   </a>
-                  <a href="#" className="size-12 sm:size-16 flex items-center justify-center border border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-black transition-all duration-300">
+                  <a href="#" className="size-12 py-2 m:size-8 flex items-center justify-center text-amber-500 hover:bg-amber-500 hover:text-black transition-all duration-300">
                     <Facebook className="w-6 h-6 sm:w-8 sm:h-8" />
                   </a>
-                  <a href="#" className="size-12 sm:size-16 flex items-center justify-center border border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-black transition-all duration-300">
+                  <a href="#" className="sizeoy-2 -12 sm:size-8 flex items-center justify-center text-amber-500 hover:bg-amber-500 hover:text-black transition-all duration-300">
                     <Twitter className="w-6 h-6 sm:w-8 sm:h-8" />
                   </a>
                 </div>

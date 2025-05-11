@@ -27,7 +27,7 @@
 .emblaSlide {
   flex: 0 0 auto;
   min-width: 100%; /* For phones - show 1 at a time */
-  padding-left: 1rem;
+  padding-left: 3rem;
   position: relative;
   scroll-snap-align: center;
 }

@@ -15,7 +15,7 @@ const Shoppage = () => {
             id: 1,
             name: "Lumbini Lions Home Jersey",
             price: "900.99",
-            image: "/jersey.png",
+            image: "/shirt.png",
             isFeatured: true
         },
         {
@@ -27,9 +27,9 @@ const Shoppage = () => {
         },
         {
             id: 3,
-            name: "Lumbini Lions Cap",
-            price: "500.99",
-            image: "/cap.jpeg",
+            name: "Lumbini Lions Hoodie",
+            price: "4000.99",
+            image: "/hoodie.png",
             isFeatured: false
         },
         {
@@ -43,16 +43,10 @@ const Shoppage = () => {
             id: 5,
             name: "Lumbini Lions T-Shirt",
             price: "500.99",
-            image: "/tshirt.png",
+            image: "/shirt.png",
             isFeatured: false
         },
-        {
-            id: 6,
-            name: "Lumbini Lions Hoodie",
-            price: "2000.99",
-            image: "/hoodie.png",
-            isFeatured: false
-        }
+
     ];
 
     return (

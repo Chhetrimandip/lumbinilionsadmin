@@ -31,9 +31,9 @@ const Shopcard: React.FC<ProductProps> = ({ product }) => {
         <Image 
           src={product.image}
           alt={product.name}
-          width={220}
-          height={220}
-          className="max-h-[220px] w-auto object-contain"
+          width={400}
+          height={230}
+          className="max-h-[230px] w-auto object-contain"
         />
       </div>
       

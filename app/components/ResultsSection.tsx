@@ -1,6 +1,6 @@
 // app/components/ResultsSection.tsx
 "use client";
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import MatchCard from "./resultcard";
 import Link from 'next/link';
 import Image from 'next/image';
@@ -30,6 +30,9 @@ interface ResultsSectionProps {
 
 export default function ResultsSection({ results }: ResultsSectionProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
 
   // Set initial scroll position with a slight offset to the right
   React.useEffect(() => {
@@ -52,6 +55,31 @@ export default function ResultsSection({ results }: ResultsSectionProps) {
     });
   };
 
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!scrollContainerRef.current) return;
+    
+    setIsDragging(true);
+    setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
+    setScrollLeft(scrollContainerRef.current.scrollLeft);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !scrollContainerRef.current) return;
+    
+    e.preventDefault();
+    const x = e.pageX - scrollContainerRef.current.offsetLeft;
+    const walk = (x - startX) * 1.5; // Scroll-speed multiplier
+    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
+  };
+
   return (
     <section className="w-full md:py-20 overflow-hidden">
       {/* md;pl12 */}
@@ -64,10 +92,13 @@ export default function ResultsSection({ results }: ResultsSectionProps) {
                 MATCH RESULTS
               </h2>
               <h4 className="text-gray-500 text-sm md:text-base font-[poppins] text-[14px] font-medium">
+                <Link href="/match">
                 View all matches
+                </Link>
               </h4>
             </div>
-            {/* todo ask <div className="hidden md:flex items-center gap-2">
+            {/* todo ask  */}
+            <div className="hidden pr-[10vh] md:flex items-center gap-2">
               <button
                 onClick={() => scrollTo('left')}
                 aria-label="Previous"
@@ -86,21 +117,26 @@ export default function ResultsSection({ results }: ResultsSectionProps) {
                   <path fillRule="evenodd" d="M16.28 11.47a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 011.06-1.06l7.5 7.5z" clipRule="evenodd" />
                 </svg>
               </button>
-            </div> */}
+            </div>
           </div>
           
           {/* Simple scrollable container  */}
           <div className="relative overflow-visible">            
             <div 
               ref={scrollContainerRef}
-              className="flex overflow-x-auto snap-x snap-mandatory pb-6 scrollbar-hide"
+              className="flex overflow-x-auto snap-x snap-mandatory pb-6 scrollbar-hide cursor-grab active:cursor-grabbing"
               style={{
                 scrollbarWidth: 'none',
                 msOverflowStyle: 'none',
                 paddingLeft: '0',          // Remove left padding
                 paddingRight: '0',         // Remove right padding
                 scrollSnapType: 'x mandatory',
+                
               }}
+              onMouseDown={handleMouseDown}
+              onMouseUp={handleMouseUp}
+              onMouseLeave={handleMouseLeave}
+              onMouseMove={handleMouseMove}
             >
             {/* Add spacer div at the end to allow scrolling past the last card */}
             <div className="w-[80px] md:w-[9.5%] flex-shrink-0"></div>
