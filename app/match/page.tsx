@@ -92,7 +92,7 @@ const MatchesPage = () => {
 
       <main className="max-w-7xl mx-auto px-4 space-y-12">
         {/* Tournament Standings Table */}
-        <section className="bg-[#0F1923]/80 backdrop-blur-md rounded-xl overflow-hidden border border-amber-500/30 shadow-lg shadow-amber-500/5">
+        {/* <section className="bg-[#0F1923]/80 backdrop-blur-md rounded-xl overflow-hidden border border-amber-500/30 shadow-lg shadow-amber-500/5">
           <div className="p-4 md:p-6 border-b border-amber-500/20">
             <h2 className="text-2xl font-bold flex items-center">
               <Award className="w-6 h-6 text-amber-500 mr-2" />
@@ -184,7 +184,7 @@ const MatchesPage = () => {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
         
         {/* Upcoming Matches Section - Added from thirdpage.tsx */}
         <section className="bg-[#0F1923]/80 backdrop-blur-md rounded-xl overflow-hidden border border-amber-500/30 shadow-lg shadow-amber-500/5">

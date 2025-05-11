@@ -34,13 +34,6 @@ const Shoppage = () => {
         },
         {
             id: 4,
-            name: "Lumbini Lions Mug",
-            price: "199.99",
-            image: "/mug.jpeg",
-            isFeatured: false
-        },
-        {
-            id: 5,
             name: "Lumbini Lions T-Shirt",
             price: "500.99",
             image: "/shirt.png",

@@ -6,16 +6,9 @@ import { Camera, Maximize2, X } from 'lucide-react';
 export default function GalleryPage() {
   const [galleryImages, setGalleryImages] = useState([]);
   const [error, setError] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null); // State for selected image
+  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
 
-  const openmodal= (image) => {
-    setSelectedImage(image);
-    setIsModalOpen(true);
-  }
-  const closeModal = () => {
-    setIsModalOpen(false)
-  }
   useEffect(() => {
     async function fetchImages() {
       try {
@@ -33,6 +26,16 @@ export default function GalleryPage() {
 
     fetchImages();
   }, []);
+
+  const openModal = (image) => {
+    setSelectedImage(image);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setSelectedImage(null);
+    setIsModalOpen(false);
+  };
 
   return (
     <div className="bg-gradient-to-b from-[#06101B] to-[#0A192F] text-white min-h-screen py-16">
@@ -82,6 +85,7 @@ export default function GalleryPage() {
                 key={image.id}
                 className={`group relative rounded-lg overflow-hidden bg-neutral-900 border border-neutral-800 
                   ${image.isLandscape ? 'sm:col-span-2' : 'row-span-1 sm:row-span-2'}`}
+                onClick={() => openModal(image)} // Open modal on click
               >
                 <div className={`relative ${
                   image.isLandscape 
@@ -106,7 +110,7 @@ export default function GalleryPage() {
                       </p>
                     </div>
                     {/* Expand button */}
-                    <button onClick={() => openmodal(image)} className="absolute top-4 right-4 bg-black/50 text-white p-2 rounded-full hover:bg-amber-500 hover:text-black transition-colors">
+                    <button className="absolute top-4 right-4 bg-black/50 text-white p-2 rounded-full hover:bg-amber-500 hover:text-black transition-colors">
                       <Maximize2 className="w-5 h-5" />
                     </button>
                   </div>
@@ -146,21 +150,25 @@ export default function GalleryPage() {
           </div>
         </div>
       </main>
-      {/* Full screen modal preview*/}
+      {/* Modal for Full-Screen Preview */}
       {isModalOpen && selectedImage && (
-        <div className='fixed inset-0 bg-black/80 flex items-center justify-center z-50'>
-          <div className='relative w-full max-w-4xl'>
-            <button className='absolute top-4 right-4 bg-black/50 text-white p-2 rounded-full hover:bg-red-500 transition-colors'
-            onClick={closeModal}>
-              <X className='w-6 h-6'/>
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
+          <div className="relative w-full max-w-4xl">
+            <button
+              className="absolute top-4 right-4 bg-black/50 text-white p-2 rounded-full hover:bg-red-500 transition-colors"
+              onClick={closeModal}
+            >
+              <X className="w-6 h-6" />
             </button>
-            <Image src={selectedImage.imageUrl}
-            alt={selectedImage.title || "Gallery Image"}
-            width={1200}
-            height = {800}
-            className='object-contain'/>
+            <Image
+              src={selectedImage.imageUrl}
+              alt={selectedImage.title || 'Gallery Image'}
+              width={1200}
+              height={800}
+              className="object-contain"
+            />
           </div>
-          </div>
+        </div>
       )}
     </div>
   );

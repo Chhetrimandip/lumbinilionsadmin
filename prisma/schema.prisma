@@ -162,6 +162,13 @@ model Schedule {
   updatedAt       DateTime @updatedAt
 }
 
+model Gallery {
+  id        String   @id @default(cuid())
+  imageUrl  String
+  title     String?
+  createdAt DateTime @default(now())
+}
+
 enum PlayerClass {
   Batsman
   WicketKeeper

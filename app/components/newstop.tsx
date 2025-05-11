@@ -8,7 +8,7 @@ const NewsTop = () => {
         {/* Background Image */}
         <div className="w-full h-[300px] md:h-[595px] relative">
             <Image 
-                src="/headerbg2.png"
+                src="/news3.jpg" 
                 alt="Header Background"
                 fill
                 className="object-cover"
@@ -16,14 +16,14 @@ const NewsTop = () => {
 
             
             {/* Overlay Image */}
-            <div className="absolute inset-0">
+            {/* <div className="absolute inset-0">
                 <Image 
                     src="/rectangle151.png"
                     alt="Overlay"
                     fill
                     className="object-cover"
                 />
-            </div>
+            </div> */}
             
             {/* Text Overlay */}
             <div className="absolute inset-0 flex items-center justify-center">
