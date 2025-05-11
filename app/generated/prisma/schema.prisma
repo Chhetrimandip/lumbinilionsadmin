@@ -1,0 +1,193 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Asset {
+  id  String @id @default(cuid())
+  url String
+}
+
+model Fan {
+  id    String @id
+  name  String
+  email String
+  phone String
+  score Int    @default(0)
+  time  Int    @default(0)
+}
+
+model Post {
+  id        String   @id
+  title     String
+  content   String
+  published Boolean? @default(false)
+  updatedat DateTime
+  createdat DateTime @default(now())
+}
+
+model Quiz {
+  id            String   @id
+  question      String
+  options       String[]
+  correctanswer Int
+  answerimage   String
+  answertext    String
+  points        Int      @default(1)
+}
+
+model Quizzy {
+  id            String   @id
+  question      String
+  options       String[]
+  correctanswer Int
+  answerimage   String?
+  answertext    String
+  points        Int      @default(1)
+}
+
+model BlogPost {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  content     String
+  imageUrl    String?
+  author      String
+  publishedAt DateTime @default(now())
+}
+
+model Lions {
+  id          String      @id
+  name        String
+  slug        String      @unique
+  class       PlayerClass
+  description String
+  matches     Int
+  strikerate  Float
+  wickets     Int
+  runs        Int
+  jersey      Int         @default(0)
+  imageId     String?
+}
+
+model Order {
+  id              String           @id
+  status          OrderStatus      @default(PENDING)
+  customerName    String
+  customerPhone   String
+  customerEmail   String?
+  totalAmount     Decimal          @db.Decimal(10, 2)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime
+  OrderItem       OrderItem[]
+  Payment         Payment?
+  ShippingAddress ShippingAddress?
+}
+
+model OrderItem {
+  id        String  @id
+  orderId   String
+  productId String
+  quantity  Int
+  size      Size?
+  price     Decimal @db.Decimal(10, 2)
+  name      String
+  imageUrl  String?
+  Order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
+
+model Payment {
+  id              String        @id
+  orderId         String        @unique
+  transactionCode String?
+  transactionUuid String?
+  status          PaymentStatus @default(COMPLETED)
+  amount          Decimal       @db.Decimal(10, 2)
+  paymentMethod   String
+  paymentProof    String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime
+  Order           Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
+
+model Product {
+  id             String   @id
+  name           String
+  price          Decimal  @db.Decimal(10, 2)
+  description    String
+  imageId        String?
+  availableSizes Size[]
+  inventory      Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime
+}
+
+model ShippingAddress {
+  id            String  @id
+  orderId       String  @unique
+  recipientName String
+  phoneNumber   String
+  city          String
+  district      String
+  streetAddress String
+  landmark      String?
+  Order         Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
+
+model Schedule {
+  id              String   @id
+  opponent        String
+  opponentLogo    String?
+  matchDate       DateTime
+  venue           String?
+  matchType       String?
+  isCompleted     Boolean  @default(false)
+  victory         Boolean?
+  lionsRuns       Int?
+  lionsWickets    Int?
+  lionsOvers      Float?
+  opponentRuns    Int?
+  opponentWickets Int?
+  opponentOvers   Float?
+  margin          Int?
+  marginType      String?
+  ballsLeft       Int?
+  description     String?
+  highlightUrl    String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime
+}
+
+enum PlayerClass {
+  Batsman
+  WicketKeeper
+  AllRounder
+  Bowler
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  COMPLETED
+  FAILED
+}
+
+enum Size {
+  XS
+  S
+  M
+  L
+  XL
+  XXL
+}

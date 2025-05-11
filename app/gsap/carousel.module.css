@@ -1,0 +1,74 @@
+.carousel {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 110vh; /* Increased from 100vh */
+  transform: rotateX(-0deg) translateY(-70px);
+  transform-style: preserve-3d;
+  perspective: 800px;
+  user-select: none;
+  cursor: grab;
+}
+
+.carouselImage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -125px 0 0 -125px; /* Increased from -100px */
+  width: 250px; /* Increased from 200px */
+  height: 250px; /* Increased from 200px */
+  transform: translate3d(0, 0, -10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  transform-origin: 50% 50%;
+}
+
+
+@media (max-width: 600px) {
+  .carousel {
+    transform: rotateX(-10deg) scale(.6) translateY(-60px);
+  }
+}
+
+.carouselImage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -100px 0 0 -100px;
+  width: 200px;
+  height: 200px;
+  transform: translate3d(0, 0, -10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  transform-origin: 50% 50%;
+  transition: all 0.3s ease-out; /* Add transition for smooth effect */
+  overflow: hidden; /* Keep the image within bounds */
+}
+
+.carouselImage:hover {
+  transform: translate3d(0, 0, -10px) scale(1.2); /* 10% larger on hover */
+  z-index: 10; /* Ensure hovered image appears above others */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Optional: add shadow for depth */
+}
+
+/* Add these styles to carousel.module.css */
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.imageWrapper:hover {
+  transform: scale(1.1);
+  z-index: 10;
+}
