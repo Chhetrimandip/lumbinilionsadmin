@@ -5,26 +5,49 @@ import { Camera, Maximize2, X } from 'lucide-react';
 
 export default function GalleryPage() {
   const [galleryImages, setGalleryImages] = useState([]);
+  const [filteredImages, setFilteredImages] = useState([]);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
 
-  const openmodal= (image) => {
+  const openmodal = (image) => {
     setSelectedImage(image);
     setIsModalOpen(true);
   }
+  
   const closeModal = () => {
-    setIsModalOpen(false)
+    setIsModalOpen(false);
   }
+
+  // Filter images based on selected category
+  useEffect(() => {
+    if (!galleryImages.length) return;
+
+    if (selectedCategory === null || selectedCategory === 'All') {
+      setFilteredImages(galleryImages);
+    } else {
+      setFilteredImages(galleryImages.filter(image => 
+        image.category === selectedCategory
+      ));
+    }
+  }, [selectedCategory, galleryImages]);
+
   useEffect(() => {
     async function fetchImages() {
       try {
-        const response = await fetch('/api/gallery'); // API route to fetch gallery images
+        const response = await fetch('/api/gallery');
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
         setGalleryImages(data);
+        setFilteredImages(data);
+        
+        // Extract unique categories
+        const uniqueCategories = ['All', ...new Set(data.map(img => img.category).filter(Boolean))];
+        setCategories(uniqueCategories);
       } catch (err) {
         console.error('Error fetching images:', err);
         setError('Failed to load gallery images. Please try again later.');
@@ -46,15 +69,19 @@ export default function GalleryPage() {
             fill
             className="object-cover"
           />
-          {/* Overlay Image */}
-          <div className="absolute inset-0">
-            <Image 
-              src="/rectangle151.png"
-              alt="Overlay"
-              fill
-              className="object-cover"
-            />
-          </div>
+          {/* Overlay gradient */}
+          <div 
+            className="absolute inset-0"
+            style={{
+              background: `linear-gradient(to bottom, 
+                rgba(6, 16, 27, 0) 0%, 
+                rgba(6, 16, 27, 0.43) 18%, 
+                rgba(6, 16, 27, 0.73) 45%, 
+                rgba(6, 16, 27, 0.90) 75%, 
+                rgba(6, 16, 27, 1) 100%)`,
+              backdropFilter: 'blur(2px)'
+            }}
+          ></div>
           {/* Text Overlay */}
           <div className="absolute inset-0 flex items-center justify-center">
             {/* Lion Shield positioned behind text */}
@@ -72,27 +99,42 @@ export default function GalleryPage() {
           </div>
         </div>
       </div>
+      
       <main className="max-w-7xl mx-auto px-4">
+        {/* Filter categories - dynamically generated */}
+        <div className="container mx-auto px-4 md:px-6 lg:px-8 mt-12">
+          <div className='text-white font-bold text-[20px] font-[poppins] flex flex-wrap gap-6 mb-12 justify-center'>
+            {categories.map((category) => (
+              <button 
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-2 py-1 transition-all duration-300 ${
+                  (selectedCategory === category || (category === 'All' && selectedCategory === null)) 
+                  ? 'text-white border-b-2 border-amber-500' 
+                  : 'text-white/60 hover:text-white'
+                }`}
+              >
+                {category.toUpperCase()}
+              </button>
+            ))}
+          </div>
+        </div>
+        
         {error ? (
           <div className="text-center text-red-500">{error}</div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-            {galleryImages.map((image) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:mt-10 md:gap-6">
+            {filteredImages.map((image) => (
               <div
                 key={image.id}
-                className={`group relative rounded-lg overflow-hidden bg-neutral-900 border border-neutral-800 
-                  ${image.isLandscape ? 'sm:col-span-2' : 'row-span-1 sm:row-span-2'}`}
+                className="group relative rounded-lg overflow-hidden bg-neutral-900 border border-neutral-800"
               >
-                <div className={`relative ${
-                  image.isLandscape 
-                    ? 'h-64 sm:h-72 md:h-80 lg:h-96' 
-                    : 'h-80 sm:h-[28rem] md:h-[32rem] lg:h-[36rem]'
-                }`}>
+                <div className="relative h-[235px] w-[353px] mx-auto">
                   <Image
                     src={image.imageUrl}
                     alt={image.title || 'Gallery Image'}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    width={353}
+                    height={235}
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   {/* Overlay on hover */}
@@ -102,7 +144,7 @@ export default function GalleryPage() {
                         {image.title || 'Gallery Image'}
                       </p>
                       <p className="text-white/70 text-sm">
-                        NPL 2024 • Lumbini Lions
+                        {image.category ? `${image.category} • ` : ''}NPL 2024 • Lumbini Lions
                       </p>
                     </div>
                     {/* Expand button */}
@@ -115,13 +157,17 @@ export default function GalleryPage() {
             ))}
           </div>
         )}
-        {/* Load More Button */}
-        <div className="mt-12 flex justify-center">
-          <button className="bg-amber-500 hover:bg-amber-600 text-black px-8 py-3 rounded-lg font-semibold transition-colors flex items-center space-x-2">
-            <span>Load More Images</span>
-            <Camera className="w-5 h-5 ml-2" />
-          </button>
-        </div>
+        
+        {/* Load More Button - Only show if there are images */}
+        {filteredImages.length > 0 && (
+          <div className="mt-12 flex justify-center">
+            <button className="bg-amber-500 hover:bg-amber-600 text-black px-8 py-3 rounded-lg font-semibold transition-colors flex items-center space-x-2">
+              <span>Load More Images</span>
+              <Camera className="w-5 h-5 ml-2" />
+            </button>
+          </div>
+        )}
+        
         {/* Gallery Info */}
         <div className="mt-20 mb-10 border-t border-white/10 pt-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -146,21 +192,24 @@ export default function GalleryPage() {
           </div>
         </div>
       </main>
+      
       {/* Full screen modal preview*/}
       {isModalOpen && selectedImage && (
         <div className='fixed inset-0 bg-black/80 flex items-center justify-center z-50'>
           <div className='relative w-full max-w-4xl'>
             <button className='absolute top-4 right-4 bg-black/50 text-white p-2 rounded-full hover:bg-red-500 transition-colors'
-            onClick={closeModal}>
+              onClick={closeModal}>
               <X className='w-6 h-6'/>
             </button>
-            <Image src={selectedImage.imageUrl}
-            alt={selectedImage.title || "Gallery Image"}
-            width={1200}
-            height = {800}
-            className='object-contain'/>
+            <Image 
+              src={selectedImage.imageUrl}
+              alt={selectedImage.title || "Gallery Image"}
+              width={1200}
+              height={800}
+              className='object-contain'
+            />
           </div>
-          </div>
+        </div>
       )}
     </div>
   );

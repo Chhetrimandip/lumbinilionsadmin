@@ -7,7 +7,7 @@ import { prisma } from '@/lib/db'
 import { getExcerptFromContent, getFirstImageFromContent } from '@/lib/editorjs-parser'
 import FeaturedNewsClient from '../components/FeaturedNewsClient'
 import NewsTop from '../components/newstop'
-import MergedFeaturedNews from './MergedFeaturedNews'
+import MergedFeaturedNews from '../components/MergedFeaturedNews'
 
 // This must be a Server Component to directly use Prisma
 export default async function NewsContent() {
@@ -57,21 +57,23 @@ export default async function NewsContent() {
     return (
         <div className="overflow-x-hidden w-full"> 
                     {/* <FeaturedNewsClient displayFeatured={displayFeatured} ExcerptFromContent='excerpt'/> */}
-                        <MergedFeaturedNews displayFeatured={displayFeatured} ExcerptFromContent={excerpt}/>
+                        {/* <MergedFeaturedNews displayFeatured={displayFeatured} ExcerptFromContent={excerpt}/> */}
                         <div className="flex justify-center h-full w-full min-h-screen z-[10] pt-40 md:pt-10 pt-[-10px] overflow-hidden relative">
                             {/* Background container with correct positioning */}
                 {/* Background container that spans full width */}
-                {/* <div className='absolute top-0 left-0 right-0 w-screen -z-10 pointer-events-none'>
+                <div className='absolute top-0 left-0 right-0 w-screen -z-10 '>
                 <div className='relative w-full'>
                     <h1 className="text-3xl absolute top-15 left-10 md:left-54 md:text-5xl font-['poppins'] z-10 text-white">
                     LATEST NEWS
                     </h1>
+                    <Link href="/news">
                     <h1 className="text-1xl absolute top-30 left-10 md:left-54 opacity-70 md:text-[15px] font-['poppins'] z-10 text-white">
                     View all news
                     </h1>
+                    </Link>
                     <div className="w-full h-[500px] relative">
 
-                    {/* <Image
+                    <Image
                         src="/bluetemple.png"
                         alt="Background"
                         fill
@@ -82,7 +84,7 @@ export default async function NewsContent() {
                     /> 
                      </div>
                 </div>
-                </div> */} 
+                </div> 
             
             {/* News grid positioned to overlay the background */}
             <div className="relative z-20 mx-auto max-w-6xl mt-[194px]">

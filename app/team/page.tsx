@@ -41,15 +41,18 @@ const TeamPage = () => {
 
                     
                     {/* Overlay Image */}
-                    <div className="absolute inset-0">
-                        <Image 
-                            src="/rectangle151.png"
-                            alt="Overlay"
-                            fill
-                            className="object-cover"
-                        />
-                    </div>
-                    
+                    <div 
+                        className="absolute inset-0"
+                        style={{
+                        background: `linear-gradient(to bottom, 
+                        rgba(6, 16, 27, 0) 0%, 
+                        rgba(6, 16, 27, 0.43) 18%, 
+                        rgba(6, 16, 27, 0.73) 45%, 
+                        rgba(6, 16, 27, 0.90) 75%, 
+                        rgba(6, 16, 27, 1) 100%)`,
+                        backdropFilter: 'blur(2px)'
+                        }}
+                    ></div>
                     {/* Text Overlay */}
                     <div className="absolute inset-0 flex items-center justify-center">
                             {/* Lion Shield positioned behind text */}

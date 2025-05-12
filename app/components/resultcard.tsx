@@ -22,7 +22,7 @@ interface ScheduleProps {
   }
 }
 
-const MatchCard: FC<{ match: ScheduleProps['match'] }> = ({ match }) => {
+const MatchCard1: FC<{ match: ScheduleProps['match'] }> = ({ match }) => {
   const isUpcoming = !match.isCompleted;
   match.margin = match.lionsRuns && match.opponentRuns 
     ? Math.abs(match.lionsRuns - match.opponentRuns) 
@@ -48,10 +48,15 @@ const MatchCard: FC<{ match: ScheduleProps['match'] }> = ({ match }) => {
           <span className="text-white font-[poppins] mr-1 font-semibold text-[16px] text-xs sm:text-sm">
             Lumbini Lions <span className='mx-3 hidden md:inline'> vs </span>
           </span>
-          {!isUpcoming && (
+
+          {!isUpcoming ? (
             <span className="text-white opacity-70 text-xs sm:text-sm mt-2 font-[poppins]">
               {match.lionsRuns}/{match.lionsWickets} 
               {match.lionsOvers && `(${match.lionsOvers})`}
+            </span>
+          ) : (
+            <span className='font-[poppins] text-[14px] mt-2 opacity-60 '>
+              Nepal Premier League
             </span>
           )}
         </div>
@@ -80,26 +85,31 @@ const MatchCard: FC<{ match: ScheduleProps['match'] }> = ({ match }) => {
       {isUpcoming ? (
         // Upcoming match section
         <>
-          <div className="flex flex-col items-center mt-2 text-white px-5">
-            <span className="text-amber-500 font-bold">
+                  <hr className="border-amber-500 mt-5 mx-7" />
+
+          <div className="flex flex-row items-start justify-between mt-4 pb-3 text-white px-7">
+            <span className="text-white text-[14px] opacity-60  font-medium">
               {new Date(match.matchDate).toLocaleDateString('en-US', { 
-                weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' 
-              })}
+              weekday: 'long', day: 'numeric', month: 'long'
+              }).replace(/(\d+)/, '$1\u1D57\u02B0')}
             </span>
-            <span className="text-white opacity-70">
+            <span>
+            <span className="text-white text-[14px] opacity-70 pr-[2px]">
               {new Date(match.matchDate).toLocaleTimeString('en-US', { 
                 hour: '2-digit', minute: '2-digit' 
-              })}
+              })},
             </span>
             {match.venue && (
               <span className="text-white opacity-70 text-sm mt-1">{match.venue}</span>
             )}
+
+            </span>
           </div>
         </>
       ) : (
         // Completed match section - just showing result now, scores moved up
         <>
-          <hr className="opacity-30 mt-5 mx-7" />
+          <hr className="border-amber-500 mt-5 mx-7" />
           <p className="text-amber-500 font-[poppins] font-medium pb-3 text-[14px] mt-4 ml-[1.7vw]">
             Lumbini Lions {match.victory 
               ? `won by ${match.margin} ${match.marginType}${match.ballsLeft ? ` (${match.ballsLeft} balls left)` : ''}` 
@@ -111,4 +121,4 @@ const MatchCard: FC<{ match: ScheduleProps['match'] }> = ({ match }) => {
   );
 };
 
-export default MatchCard;
+export default MatchCard1;

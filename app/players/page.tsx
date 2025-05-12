@@ -3,8 +3,6 @@ import Image from "next/image";
 import { Instagram, Facebook, Twitter } from "lucide-react";
 import { EmblaPlayerCarousel } from "../components/EmblaPlayerCarousel";
 
-
-
 const PlayerPage: React.FC = () => {
   return (
     <div>
