@@ -86,6 +86,7 @@ export default function GalleryClientPage({ initialImages }) {
       setParentCategories(uniqueParentCategories);
     }
   }, [initialImages]);
+  console.log(initialImages)
 
   return (
     <div className="bg-gradient-to-b from-[#06101B] to-[#0A192F] text-white min-h-screen py-16">
@@ -186,13 +187,14 @@ export default function GalleryClientPage({ initialImages }) {
         className="group relative rounded-lg overflow-hidden bg-neutral-900 border border-neutral-800"
       >
         <div className="relative h-[235px] w-[353px] mx-auto">
-          <Image
-            src={image.imageUrl}
-            alt={image.title || 'Gallery Image'}
-            width={353}
-            height={235}
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
-          />
+        <Image
+          src={`${image.imageUrl.replace('/upload/', '/upload/f_auto,q_auto/')}`}
+          alt={image.title || 'Gallery Image'}
+          width={353}
+          height={235}
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+
           {/* Overlay on hover */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
             <div className="w-full">
