@@ -1,7 +1,8 @@
 "use client"
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { format } from "date-fns";
+import { downloadOrdersCSV, downloadDetailedOrdersCsv } from "@/lib/utils"; // Add these imports
 
 // Define the Order type based on your Prisma schema
 interface OrderItem {
@@ -60,7 +61,7 @@ export const OrdersView = ({ orders = [] }: { orders: Order[] }) => {
   const [updatingStatus, setUpdatingStatus] = useState(false);
   const [updateError, setUpdateError] = useState<string | null>(null);
   const [localOrders, setLocalOrders] = useState<Order[]>(orders);
-
+  const [isExporting, setIsExporting] = useState(false);
   // Update local orders when props change
   useEffect(() => {
     setLocalOrders(orders);
@@ -150,6 +151,31 @@ export const OrdersView = ({ orders = [] }: { orders: Order[] }) => {
     }
   };
 
+
+  //handle bulk csv download
+  const handleBulkExport = useCallback(() => {
+  try {
+    setIsExporting(true);
+    downloadOrdersCSV(filteredOrders);
+  } catch (error) {
+    console.error('CSV export error:', error);
+    alert('Failed to export orders. Please try again.');
+  } finally {
+    setIsExporting(false);
+  }
+}, [filteredOrders]);
+
+const handleDetailedExport = useCallback((order) => {
+  try {
+    setIsExporting(true);
+    downloadDetailedOrdersCsv(order);
+  } catch (error) {
+    console.error('CSV export error:', error);
+    alert('Failed to export order details. Please try again.');
+  } finally {
+    setIsExporting(false);
+  }
+}, []);
   return (
     <div className="flex flex-col space-y-6">
       {/* Header with search and filters */}
@@ -184,6 +210,33 @@ export const OrdersView = ({ orders = [] }: { orders: Order[] }) => {
             <option value="DELIVERED">Delivered</option>
             <option value="CANCELLED">Cancelled</option>
           </select>
+          {/* Add Export CSV button */}
+          <button 
+            onClick={handleBulkExport}
+            disabled={filteredOrders.length === 0 || isExporting}
+            className={`px-4 py-2 rounded-lg transition-colors ${
+              filteredOrders.length === 0 || isExporting
+                ? 'bg-gray-300 cursor-not-allowed text-gray-500' 
+                : 'bg-green-600 text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50'
+            } flex items-center justify-center`}
+          >
+            {isExporting ? (
+              <>
+                <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Exporting...
+              </>
+            ) : (
+              <>
+                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                </svg>
+                Export All ({filteredOrders.length})
+              </>
+            )}
+          </button>
         </div>
       </div>
 
@@ -244,6 +297,32 @@ export const OrdersView = ({ orders = [] }: { orders: Order[] }) => {
                     {activeOrder.status}
                   </span>
                   
+                      {/* Add Export Details button */}
+                      <button
+                        onClick={() => handleDetailedExport(activeOrder)}
+                        disabled={isExporting}
+                        className={`text-sm px-3 py-1 rounded-full font-medium flex items-center ${
+                          isExporting ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'bg-green-100 text-green-700 hover:bg-green-200'
+                        }`}
+                      >
+                        {isExporting ? (
+                          <>
+                            <svg className="animate-spin -ml-1 mr-1 h-3 w-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            Exporting...
+                          </>
+                        ) : (
+                          <>
+                            <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                            </svg>
+                            Export Details
+                          </>
+                        )}
+                      </button>
+
                   {/* Status update dropdown */}
                   <div className="flex flex-col w-full md:w-auto">
                     <div className="flex items-center">

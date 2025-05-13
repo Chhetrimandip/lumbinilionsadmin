@@ -7,6 +7,8 @@ import { QuizResultsView } from './QuizResultsView';
 import { GalleryView } from './GalleryView';
 import { QuizquestionsView } from './QuizquestionsView';
 import { FanView } from './FanView';
+import { OrdersView } from './OrdersView';
+import LeagueView from './leagueview';
 
 // Define the QuizzyType interface based on Prisma's QuizzyCreateInput
 interface QuizzyType {
@@ -53,16 +55,32 @@ interface LionType {
   runs        : number
 }
 
+interface LeagueType {
+  id: string
+  name:   string
+  played : number
+  won    : number
+  lost   : number
+  nr     : number
+  points : number
+  pos: number
+}
+interface GalleryType {
+  id? : String
+  imageUrl : String
+  title: String
+}
 // Update the Dashboard props
 interface DashboardProps {
   quiz?: QuizzyType[];
   fan?: FansType[];
   blogs?: BlogsType[];
   stats?: LionType[];
+  league?: LeagueType[];
 }
 
-// Add this import at the top with your other imports
-import { OrdersView } from './OrdersView';
+
+
 
 interface Order {
   id: string;
@@ -88,10 +106,12 @@ const Dashboard = ( ) => {
   const [stats,setStatsData] = useState([])
   const [quiz,setQuizData] = useState([])
   const [schedule,setScheduleData] = useState([])
-  const [activeView, setActiveView] = useState('blogs'); // Consistent naming
+  const [activeView, setActiveView] = useState('blogs'); 
   const [error,setError]  = useState<string | null>(null);
   const [loading,setLoading] = useState(false);
   const [orders, setOrdersData] = useState<Order[]>([]);
+  const [league,setLeaguesData] = useState<LeagueType[]>([])
+  const [gallery,setGalleryData] = useState<GalleryType[]>([])
 
   
 //fetch data based on action
@@ -111,6 +131,12 @@ const Dashboard = ( ) => {
               data = await response.json()
               setFanData(data)
             }
+            break;
+          case 'gallery':
+            const galleryResponse = await fetch('/api/gallery');
+            const galleryData = await galleryResponse.json();
+            // You might need to add gallery state to the component
+            setGalleryData(galleryData);
             break;
           case 'quizquestions':
             if (quiz.length === 0){
@@ -145,6 +171,13 @@ const Dashboard = ( ) => {
               const response = await fetch('/api/orders');
               data = await response.json();
               setOrdersData(data);
+            }
+            break;
+          case 'league':
+            if (orders.length === 0) {
+              const response = await fetch('/api/league');
+              data = await response.json();
+              setLeaguesData(data);
             }
             break;
           case 'quizResults':
@@ -194,9 +227,11 @@ fetchData();
       case 'quizquestions':
         return <QuizquestionsView quizData={quiz} />;
       case 'fandata':
-        return <FanView fansdata={fans} />; // Use fans instead of undefined fan
-        case 'orders':
-          return <OrdersView orders={orders} />;
+        return <FanView fansdata={fans} />; 
+      case 'orders':
+        return <OrdersView orders={orders} />;
+      case 'league':
+        return <LeagueView league={league} />;
       default:
         return <BlogsView blogs={blogs} />;
     }
@@ -268,6 +303,12 @@ fetchData();
               className={`block text-xl cursor-pointer ${activeView === 'gallery' ? 'font-semibold' : ''}`}
             >
               Gallery
+            </a>
+            <a 
+              onClick={() => handleNavigation('league')} 
+              className={`block text-xl cursor-pointer ${activeView === 'league' ? 'font-semibold' : ''}`}
+            >
+              League
             </a>
             <a 
               onClick={handleLogout} 

@@ -87,3 +87,140 @@ export function downloadcsv(fansArray: {id:string, name:string, email:string, ph
   window.URL.revokeObjectURL(url);
   document.body.removeChild(element);
 }
+
+export function downloadDetailedOrdersCsv(order: Order) {
+  if (!order) return;
+  
+  const escapeCSV = (field: any) => {
+    if (field === null || field === undefined) return '';
+    
+    const stringField = String(field);
+    if (stringField.includes('"') || stringField.includes(',') || stringField.includes('\n')) {
+      return `"${stringField.replace(/"/g, '""')}"`;
+    }
+    return stringField;
+  };
+
+  const formatDate = (dateString: string) => {
+    try {
+      return new Date(dateString).toLocaleString();
+    } catch (e) {
+      return dateString;
+    }
+  };
+  
+  let csvContent = '';
+  
+  // Order details
+  csvContent += 'ORDER DETAILS\n';
+  csvContent += 'Order ID,Status,Total Amount,Created Date,Updated Date\n';
+  csvContent += `${escapeCSV(order.id)},${escapeCSV(order.status)},${escapeCSV(order.totalAmount)},${escapeCSV(formatDate(order.createdAt))},${escapeCSV(formatDate(order.updatedAt))}\n\n`;
+  
+  // Customer details
+  csvContent += 'CUSTOMER DETAILS\n';
+  csvContent += 'Name,Phone,Email\n';
+  csvContent += `${escapeCSV(order.customerName)},${escapeCSV(order.customerPhone)},${escapeCSV(order.customerEmail || '')}\n\n`;
+  
+  // Shipping address if available
+  if (order.ShippingAddress) {
+    csvContent += 'SHIPPING ADDRESS\n';
+    csvContent += 'Recipient,Phone,Street Address,City,District,Landmark\n';
+    csvContent += `${escapeCSV(order.ShippingAddress.recipientName)},${escapeCSV(order.ShippingAddress.phoneNumber)},${escapeCSV(order.ShippingAddress.streetAddress)},${escapeCSV(order.ShippingAddress.city)},${escapeCSV(order.ShippingAddress.district)},${escapeCSV(order.ShippingAddress.landmark || '')}\n\n`;
+  }
+  
+  // Payment details if available
+  if (order.Payment) {
+    csvContent += 'PAYMENT DETAILS\n';
+    csvContent += 'Method,Status,Amount,Transaction Code,Transaction UUID\n';
+    csvContent += `${escapeCSV(order.Payment.paymentMethod)},${escapeCSV(order.Payment.status)},${escapeCSV(order.Payment.amount)},${escapeCSV(order.Payment.transactionCode || '')},${escapeCSV(order.Payment.transactionUuid || '')}\n\n`;
+  }
+  
+  // Order items
+  if (order.OrderItem && order.OrderItem.length > 0) {
+    csvContent += 'ORDER ITEMS\n';
+    csvContent += 'Product ID,Name,Quantity,Size,Unit Price,Total Price\n';
+    
+    order.OrderItem.forEach(item => {
+      csvContent += `${escapeCSV(item.productId)},${escapeCSV(item.name)},${escapeCSV(item.quantity)},${escapeCSV(item.size || '')},${escapeCSV(item.price)},${escapeCSV(Number(item.price) * item.quantity)}\n`;
+    });
+    csvContent += '\n';
+  }
+  
+  // Create download
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = window.URL.createObjectURL(blob);
+  
+  const element = document.createElement('a');
+  element.setAttribute('href', url);
+  element.setAttribute('download', `order-${order.id}-details.csv`);
+  
+  element.style.display = 'none';
+  document.body.appendChild(element);
+  
+  element.click();
+  
+  window.URL.revokeObjectURL(url);
+  document.body.removeChild(element);
+}
+
+export function downloadOrdersCSV(orders: Order[])  {
+  if (!orders || orders.length === 0) return;
+
+  // Helper function to escape CSV fields properly
+  const escapeCSV = (field: any) => {
+    if (field === null || field === undefined) return '';
+    
+    const stringField = String(field);
+    if (stringField.includes('"') || stringField.includes(',') || stringField.includes('\n')) {
+      return `"${stringField.replace(/"/g, '""')}"`;
+    }
+    return stringField;
+  };
+
+  const formatDate = (dateString: string) => {
+    try {
+      return new Date(dateString).toLocaleString();
+    } catch (e) {
+      return dateString;
+    }
+  };
+
+  // Create CSV header
+  const header = 'Order ID,Customer Name,Phone,Email,Status,Total Amount,Items Count,Created Date';
+  
+  // Generate rows with proper escaping
+  const rows = orders.map(order => {
+    return [
+      escapeCSV(order.id),
+      escapeCSV(order.customerName),
+      escapeCSV(order.customerPhone),
+      escapeCSV(order.customerEmail || ''),
+      escapeCSV(order.status),
+      escapeCSV(order.totalAmount),
+      escapeCSV(order.OrderItem?.length || 0),
+      escapeCSV(formatDate(order.createdAt))
+    ].join(',');
+  });
+  
+  // Join header and rows
+  const csvString = `${header}\n${rows.join('\n')}`;
+  
+  // Create the download
+  const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+  const url = window.URL.createObjectURL(blob);
+  
+  const element = document.createElement('a');
+  element.setAttribute('href', url);
+  // Add date to filename for better organization
+  const date = new Date().toISOString().split('T')[0];
+  element.setAttribute('download', `orders-export-${date}.csv`);
+  
+  element.style.display = 'none';
+  document.body.appendChild(element);
+  
+  element.click();
+  
+  // Clean up
+  window.URL.revokeObjectURL(url);
+  document.body.removeChild(element);
+};

@@ -59,6 +59,10 @@ model BlogPost {
   imageUrl    String?
   author      String
   publishedAt DateTime @default(now())
+  createdAt   DateTime @default(now())
+  published   Boolean  @default(false)
+  updatedAt   DateTime @default(now()) @updatedAt
+  isFeatured  Boolean  @default(false)
 }
 
 model Lions {
@@ -71,8 +75,8 @@ model Lions {
   strikerate  Float
   wickets     Int
   runs        Int
-  jersey      Int       @default(0)
   imageId     String?
+  jersey      Int         @default(0)
 }
 
 model Order {
@@ -163,6 +167,26 @@ model Schedule {
   updatedAt       DateTime
 }
 
+model Gallery {
+  id             String   @id
+  imageUrl       String
+  title          String?
+  createdAt      DateTime @default(now())
+  category       String?
+  parentCategory String?
+}
+
+model Team {
+  id     Int    @id @default(autoincrement())
+  name   String
+  played Int
+  won    Int
+  lost   Int
+  nr     Int
+  points Int
+  pos    Int
+}
+
 enum PlayerClass {
   Batsman
   WicketKeeper
@@ -181,6 +205,7 @@ enum OrderStatus {
 enum PaymentStatus {
   COMPLETED
   FAILED
+  PENDING
 }
 
 enum Size {

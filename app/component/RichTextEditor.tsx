@@ -10,12 +10,15 @@ import Link from "next/link";
 
 // Remove this import if you're not using it
 // import { CldUploadButton } from "next-cloudinary";
+interface RichTextEditorProps {
+  isEditing?: boolean;
+  blogToEdit?: any;
+}
 
-const RichTextEditor = () => {
-  const editorRef = useRef<EditorJS | null>(null);
+const RichTextEditor: React.FC<RichTextEditorProps> = ({ isEditing = false, blogToEdit = null }) => {  const editorRef = useRef<EditorJS | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [editorData, setEditorData] = useState<OutputData | null>(null);
-  const [title, setTitle] = useState<string>('');
+  const [title, setTitle] = useState<string>(blogToEdit?.title || '');
   const [editorReady, setEditorReady] = useState(false);
   const [showJson, setShowJson] = useState(false);
   const [isPreviewerOpen, setIsPreviewerOpen] = useState(false);
@@ -70,154 +73,163 @@ const RichTextEditor = () => {
   };
 
   // Initialize editor
-  useEffect(() => {
-    if (!containerRef.current) {
-      return;
+useEffect(() => {
+  if (!containerRef.current) {
+    return;
+  }
+
+  const initEditor = async () => {
+    if (editorRef.current) {
+      await editorRef.current.isReady;
+      editorRef.current.destroy();
+      editorRef.current = null;
     }
 
-    const initEditor = async () => {
-      if (editorRef.current) {
-        await editorRef.current.isReady;
-        editorRef.current.destroy();
-        editorRef.current = null;
+    try {
+      // Parse content if it's a string
+      let initialData = undefined;
+      if (isEditing && blogToEdit?.content) {
+        try {
+          initialData = typeof blogToEdit.content === 'string' 
+            ? JSON.parse(blogToEdit.content)
+            : blogToEdit.content;
+        } catch (err) {
+          console.error('Failed to parse blog content:', err);
+        }
       }
 
-      try {
-        const editor = new EditorJS({
-          holder: containerRef.current,
-          tools: editorTools,
-          placeholder: "Start writing your blog...",
-          onReady: () => {
-            console.log("Editor.js is ready!");
-            setEditorReady(true);
-          },
-          onChange: async (api) => {
-            try {
-              const data = await api.saver.save();
-              setEditorData(data);
-            } catch (err) {
-              console.error('Failed to save editor data', err);
-            }
-          }
-        });
-
-        editorRef.current = editor;
-      } catch (error) {
-        console.error('Editor initialization failed:', error);
-      }
-    };
-
-    initEditor();
-
-    return () => {
-      const cleanupEditor = async () => {
-        if (editorRef.current && editorRef.current.destroy) {
+      const editor = new EditorJS({
+        holder: containerRef.current,
+        tools: editorTools,
+        placeholder: "Start writing your blog...",
+        data: initialData, // Set initial data for editing
+        onReady: () => {
+          console.log("Editor.js is ready!");
+          setEditorReady(true);
+        },
+        onChange: async (api) => {
           try {
-            await editorRef.current.isReady;
-            editorRef.current.destroy();
-            editorRef.current = null;
-          } catch (e) {
-            console.error('Failed to destroy editor', e);
+            const data = await api.saver.save();
+            setEditorData(data);
+          } catch (err) {
+            console.error('Failed to save editor data', err);
           }
         }
-      };
-      
-      cleanupEditor();
-    };
-  }, []);
+      });
 
-  const handleSave = async () => {
-    if (editorRef.current) {
-      try {
-        setIsSaving(true);
-        const output = await editorRef.current.save();
-        const modifiedOutput = { ...output };
-        let hasImagesToUpload = false;
-        
-        for (let i = 0; i < modifiedOutput.blocks.length; i++) {
-          const block = modifiedOutput.blocks[i];
-          if (block.type === 'image' && 
-              block.data.file && 
-              block.data.file.isTemp && 
-              block.data.file.originalFile) {
-            
-            hasImagesToUpload = true;
-            
-            try {
-              console.log(`Uploading image ${i+1}`);
-              
-              // Use a signed upload to avoid CORS issues
-              // Approach 1: Use your backend as a proxy for the upload
-              const formData = new FormData();
-              formData.append('file', block.data.file.originalFile);
-              
-              const uploadResponse = await fetch('/api/upload-image', {
-                method: 'POST',
-                body: formData
-              });
-              
-              if (!uploadResponse.ok) {
-                throw new Error('Failed to upload image through backend');
-              }
-              
-              const data = await uploadResponse.json();
-              
-              if (data.secure_url) {
-                // Replace temp URL with Cloudinary URL
-                modifiedOutput.blocks[i].data.file.url = data.secure_url;
-                
-                // Remove temp markers
-                delete modifiedOutput.blocks[i].data.file.isTemp;
-                delete modifiedOutput.blocks[i].data.file.originalFile;
-              }
-            } catch (uploadError) {
-              console.error('Error uploading image:', uploadError);
-            }
-          }
-        }
-        
-        // Create the blog data with the modified/maybe modified content
-        // Extract the first image URL to use as the blog's thumbnail
-        const firstImageBlock = modifiedOutput.blocks.find(block => 
-          block.type === 'image' && block.data.file && block.data.file.url
-        );
-        
-        // Update the blogData object to include the imageUrl
-        const blogData = {
-          title,
-          content: modifiedOutput, // This should match what your API expects
-          imageUrl: firstImageBlock ? firstImageBlock.data.file.url : null
-        };
-
-        // Send to API
-        const response = await fetch('/api/blogs', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(blogData)
-        });
-        
-        if (!response.ok) {
-          throw new Error(`Failed to save blog post: ${response.status} ${response.statusText}`);
-        }
-        
-        // Show success message
-        alert('Blog post saved successfully! It will appear in your blog list.');  
-      
-        //  Update editor with the Cloudinary URLs if any images were uploaded
-        if (hasImagesToUpload) {
-          // Update editor content with Cloudinary URLs
-          editorRef.current.render(modifiedOutput);
-        }    
-      } catch (error) {
-        console.error('Error saving blog post:', error);
-        alert(`Failed to save content: ${error.message}`);
-      } finally {
-        setIsSaving(false);
-      }
+      editorRef.current = editor;
+    } catch (error) {
+      console.error('Editor initialization failed:', error);
     }
   };
+
+  initEditor();
+
+  // Cleanup function remains the same...
+}, [isEditing, blogToEdit]);
+
+const handleSave = async () => {
+  if (editorRef.current) {
+    try {
+      setIsSaving(true);
+      const output = await editorRef.current.save();
+      const modifiedOutput = { ...output };
+      let hasImagesToUpload = false;
+      
+      // Process images if needed
+      for (let i = 0; i < modifiedOutput.blocks.length; i++) {
+        const block = modifiedOutput.blocks[i];
+        if (block.type === 'image' && 
+            block.data.file && 
+            block.data.file.isTemp && 
+            block.data.file.originalFile) {
+          
+          hasImagesToUpload = true;
+          
+          try {
+            console.log(`Uploading image ${i+1}`);
+            
+            // Use a signed upload to avoid CORS issues
+            // Approach 1: Use your backend as a proxy for the upload
+            const formData = new FormData();
+            formData.append('file', block.data.file.originalFile);
+            
+            const uploadResponse = await fetch('/api/upload-image', {
+              method: 'POST',
+              body: formData
+            });
+            
+            if (!uploadResponse.ok) {
+              throw new Error('Failed to upload image through backend');
+            }
+            
+            const data = await uploadResponse.json();
+            
+            if (data.secure_url) {
+              // Replace temp URL with Cloudinary URL
+              modifiedOutput.blocks[i].data.file.url = data.secure_url;
+              
+              // Remove temp markers
+              delete modifiedOutput.blocks[i].data.file.isTemp;
+              delete modifiedOutput.blocks[i].data.file.originalFile;
+            }
+          } catch (uploadError) {
+            console.error('Error uploading image:', uploadError);
+          }
+        }
+      }
+      
+      // Extract the first image URL to use as the blog's thumbnail
+      const firstImageBlock = modifiedOutput.blocks.find(block => 
+        block.type === 'image' && block.data.file && block.data.file.url
+      );
+      
+      // Create the blog data
+      const blogData = {
+        title,
+        slug: title.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, '-'),
+        content: JSON.stringify(modifiedOutput), // Convert to string for DB storage
+        imageUrl: firstImageBlock ? firstImageBlock.data.file.url : null,
+        author: "Admin", // Or get from user session
+        published: isEditing ? blogToEdit?.published : false // Default to draft mode or keep existing status
+      };
+
+      // Determine endpoint based on edit mode
+      const endpoint = isEditing ? `/api/blogs/${blogToEdit.id}` : '/api/blogs';
+      const method = isEditing ? 'PUT' : 'POST';
+      
+      // Send to API
+      const response = await fetch(endpoint, {
+        method: method,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(blogData)
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Failed to ${isEditing ? 'update' : 'save'} blog post: ${response.status} ${response.statusText}`);
+      }
+      
+      // Show success message
+      alert(`Blog post ${isEditing ? 'updated' : 'saved'} successfully!`);
+      
+      // Redirect to admin dashboard or blogs list
+      window.location.href = '/';
+      
+      // Update editor with the Cloudinary URLs if any images were uploaded
+      if (hasImagesToUpload) {
+        // Update editor content with Cloudinary URLs
+        editorRef.current.render(modifiedOutput);
+      }    
+    } catch (error) {
+      console.error(`Error ${isEditing ? 'updating' : 'saving'} blog post:`, error);
+      alert(`Failed to ${isEditing ? 'update' : 'save'} content: ${error.message}`);
+    } finally {
+      setIsSaving(false);
+    }
+  }
+};
   return (
     <div className="bg-gray-100 min-h-screen p-4">
       <div className="max-w-full mx-auto">

@@ -167,7 +167,11 @@ exports.Prisma.BlogPostScalarFieldEnum = {
   content: 'content',
   imageUrl: 'imageUrl',
   author: 'author',
-  publishedAt: 'publishedAt'
+  publishedAt: 'publishedAt',
+  createdAt: 'createdAt',
+  published: 'published',
+  updatedAt: 'updatedAt',
+  isFeatured: 'isFeatured'
 };
 
 exports.Prisma.LionsScalarFieldEnum = {
@@ -180,8 +184,8 @@ exports.Prisma.LionsScalarFieldEnum = {
   strikerate: 'strikerate',
   wickets: 'wickets',
   runs: 'runs',
-  jersey: 'jersey',
-  imageId: 'imageId'
+  imageId: 'imageId',
+  jersey: 'jersey'
 };
 
 exports.Prisma.OrderScalarFieldEnum = {
@@ -266,6 +270,26 @@ exports.Prisma.ScheduleScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.GalleryScalarFieldEnum = {
+  id: 'id',
+  imageUrl: 'imageUrl',
+  title: 'title',
+  createdAt: 'createdAt',
+  category: 'category',
+  parentCategory: 'parentCategory'
+};
+
+exports.Prisma.TeamScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  played: 'played',
+  won: 'won',
+  lost: 'lost',
+  nr: 'nr',
+  points: 'points',
+  pos: 'pos'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -306,7 +330,8 @@ exports.Size = exports.$Enums.Size = {
 
 exports.PaymentStatus = exports.$Enums.PaymentStatus = {
   COMPLETED: 'COMPLETED',
-  FAILED: 'FAILED'
+  FAILED: 'FAILED',
+  PENDING: 'PENDING'
 };
 
 exports.Prisma.ModelName = {
@@ -322,7 +347,9 @@ exports.Prisma.ModelName = {
   Payment: 'Payment',
   Product: 'Product',
   ShippingAddress: 'ShippingAddress',
-  Schedule: 'Schedule'
+  Schedule: 'Schedule',
+  Gallery: 'Gallery',
+  Team: 'Team'
 };
 
 /**
