@@ -1,33 +1,18 @@
-// app/api/orders/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
-import { v4 as uuidv4 } from 'uuid';
-// import { uploadToCloudinary } from '@/lib/cloudinary'; // Assume you have this utility
-//todo after asking
 
 export async function POST(req: NextRequest) {
   try {
-    const formData = await req.formData();
-    const orderDataStr = formData.get('orderData') as string;
-    const paymentProofFile = formData.get('paymentProof') as File;
+    // Parse JSON directly from request body instead of FormData
+    const orderData = await req.json();
     
-    if (!orderDataStr) {
+    if (!orderData) {
       return NextResponse.json(
         { error: 'No order data provided' },
         { status: 400 }
       );
     }
     
-    // Parse the order data
-    const orderData = JSON.parse(orderDataStr);
-    
-    // If there's a payment proof file, upload it
-    {/*let paymentProofUrl = null;
-    if (paymentProofFile) {
-      paymentProofUrl = await uploadToCloudinary(paymentProofFile);
-    }*/}//todo after asking not doing might be better blanxers system is commendable tho
-    const paymentProofUrl = null;
-    // since dont know what we will want to implement a little later/ todo
     // Create the order in a transaction to ensure all related data is saved together
     const order = await prisma.$transaction(async (tx) => {
       // Create the order
@@ -47,19 +32,19 @@ export async function POST(req: NextRequest) {
               district: orderData.shippingAddress.district || "Not specified",
               streetAddress: orderData.shippingAddress.streetAddress,
               landmark: orderData.shippingAddress.landmark || null, 
-
             }
           },
           
-          // Create payment
+          // Create payment - adjusted for cash on delivery
           payment: {
             create: {
-              status: "COMPLETED",
+              status: "PENDING", // Changed to match frontend
               amount: orderData.payment.amount,
               paymentMethod: orderData.payment.paymentMethod,
+              // These fields are likely empty for COD
               transactionCode: orderData.payment.transactionCode || null,
               transactionUuid: orderData.payment.transactionUuid || null,
-              paymentProof: paymentProofUrl
+              paymentProof: null // No payment proof for COD
             }
           },
           

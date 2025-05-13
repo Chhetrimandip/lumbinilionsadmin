@@ -1,23 +1,26 @@
 import React from "react";
 import "./rootpage.css";
 import Image from "next/image";
-import Secondpage from "../components/secondpage";
-import Thirdpage from "../components/thirdpage";
-import QuizPage from "../quizpage/page";
+// import Secondpage from "../components/secondpage";
+// import Thirdpage from "../components/thirdpage";
+// import QuizPage from "../quizpage/page";
 import ResultsSection from "../components/ResultsSection";
 import ScrollEffects from "../components/scrolleffects";
-import FixturesSection from "../components/FixturesSection";
-import LionPlayers from "../lionplayers/page";
-import NewsPage from "../news/page";
+// import FixturesSection from "../components/FixturesSection";
+// import LionPlayers from "../lionplayers/page";
+// import NewsPage from "../news/page";
 import styles from "../components/navbar.module.css";
 import FeaturedVideos from "../components/featuredVideo";
 import dynamic from 'next/dynamic';
-import LazyLoadSection from '../components/LazyLoadSection';
+// import LazyLoadSection from '../components/LazyLoadSection';
 import { prisma } from "@/lib/db";
-import HeroPlayersWrapper from "../components/HeroPlayersWrapper";
+// import HeroPlayersWrapper from "../components/HeroPlayersWrapper";
 import HeroPlayers from "../components/HeroPlayers";
 import PlayerCardCarousel from "../components/PlayerCardCarousel";
 import NewsContent from "../components/NewsContent";
+import QuizPage from "../quizpage/page";
+
+export const revalidate = 21600; 
 
 export default async function RootPage() {
   let resultArray = [];
@@ -55,7 +58,7 @@ export default async function RootPage() {
               alt="Background"
               fill
               className="object-cover object-center"
-              priority
+              priority ={false}
               quality={75}
             />
           </div>
@@ -132,6 +135,7 @@ export default async function RootPage() {
       <div className="relative overflow-hidden bg-[#06101B] z-[11] pt-[10vh] md:pt-[10vh] md:mt-[0] mt-[-32.5vh]">         
         <ResultsSection results={resultArray} />
         {/* <LionPlayers /> */}
+        <QuizPage/>
         <PlayerCardCarousel/>
         <FeaturedVideos/>
         <NewsContent/>

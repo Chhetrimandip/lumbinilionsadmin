@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 
+// Add revalidation time - 1 hour is good for APIs
+export const revalidate = 3600;
+
 const prisma = new PrismaClient();
 
 export async function GET() {
@@ -12,6 +15,9 @@ export async function GET() {
     return NextResponse.json(images);
   } catch (error) {
     console.error('Error fetching gallery images:', error);
-    return NextResponse.json({ error: 'Failed to fetch gallery images' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Failed to fetch gallery images' },
+      { status: 500 }
+    );
   }
 }

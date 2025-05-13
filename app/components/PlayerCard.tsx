@@ -15,10 +15,10 @@ interface PlayerProps {
 }
 
 const PlayerCard: React.FC<{ player: PlayerProps }> = ({ player }) => {
-  // Use imageId or firstName for the card image filename
-  //todo 
-  const imageName = player.firstName.toLowerCase();
-  // const imgSrc = `/playercards/${imageName}card.png`;
+  // Add a null check before accessing firstName
+  const imageName = player?.firstName ? player.firstName.toLowerCase() : 'default';
+  
+  // Use a consistent variable name (you have two imgSrc declarations)
   const imgSrc = `/playercards/${imageName}card.png`;
   
   // Handle image loading errors
@@ -26,8 +26,24 @@ const PlayerCard: React.FC<{ player: PlayerProps }> = ({ player }) => {
     e.currentTarget.src = '/default-player.png'; // Fallback image
   };
 
+  // Add a safety check to render a fallback if player data is incomplete
+  if (!player || !player.firstName || !player.lastName) {
+    return (
+      <div className={styles.playerCard}>
+        <Image
+          src="/default-player.png"
+          alt="Player data unavailable"
+          width={300}
+          height={400}
+          className={styles.playerImage}
+          priority
+        />
+      </div>
+    );
+  }
+
   return (
-    <Link href={`/players/${player.slug}`} className={styles.playerCardWrapper}>
+    <Link href={`/players/${player.slug || player.id}`} className={styles.playerCardWrapper}>
       {/* Simple card container with just the image */}
       <div className={styles.playerCard}>
         <Image

@@ -61,7 +61,7 @@ model BlogPost {
   createdAt   DateTime @default(now())
   published   Boolean  @default(false)
   updatedAt   DateTime @default(now())
-  isFeatured  Boolean @default(false)
+  isFeatured  Boolean  @default(false)
 }
 
 model Lions {
@@ -167,11 +167,12 @@ model Schedule {
 }
 
 model Gallery {
-  id        String   @id @default(cuid())
-  imageUrl  String
-  title     String?
-  createdAt DateTime @default(now())
-  category String @default("All")
+  id             String   @id @default(cuid())
+  imageUrl       String
+  title          String?
+  createdAt      DateTime @default(now())
+  category       String?
+  parentCategory String?
 }
 
 model Team {
@@ -212,4 +213,5 @@ enum OrderStatus {
 enum PaymentStatus {
   COMPLETED
   FAILED
+  PENDING
 }

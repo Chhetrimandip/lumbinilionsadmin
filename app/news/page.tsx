@@ -9,6 +9,9 @@ import FeaturedNewsClient from '../components/FeaturedNewsClient'
 import NewsTop from '../components/newstop'
 import MergedFeaturedNews from '../components/MergedFeaturedNews'
 
+export const revalidate = 86400; // 24 hours
+
+
 // This must be a Server Component to directly use Prisma
 export default async function NewsContent() {
     // Fetch blog posts from database

@@ -97,7 +97,7 @@ export default async function NewsContent() {
                 {/* Load More Button */}
                 <div className="text-center mt-10">
                     <Link 
-                        href="/news/archive"
+                        href="/news"
                         className="bg-neutral-800 hover:bg-neutral-700 text-white text-xl font-[poppins] px-8 py-3 rounded-lg transition-colors inline-block"
                     >
                         VIEW ALL NEWS
