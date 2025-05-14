@@ -38,7 +38,7 @@ const Thirdpage = () => {
                     <div className="flex items-center gap-6 flex-1">
                     <div className="text-center w-20">
                         <Image 
-                        src="/logo.png"
+                        src="/logo.webp"
                         alt="Lumbini Lions"
                         width={64}
                         height={64}
@@ -51,7 +51,7 @@ const Thirdpage = () => {
                     </div>
                     <div className="text-center w-20">
                         <Image 
-                        src="/kathmandu.png"
+                        src="/kathmandu.webp"
                         alt="Kathmandu Kings"
                         width={64}
                         height={64}
@@ -80,7 +80,7 @@ const Thirdpage = () => {
                     <div className="flex items-center gap-6 flex-1">
                     <div className="text-center w-20">
                         <Image 
-                        src="/pokhara.png"
+                        src="/pokhara.webp"
                         alt="Pokhara Avengers"
                         width={64}
                         height={64}
@@ -93,7 +93,7 @@ const Thirdpage = () => {
                     </div>
                     <div className="text-center w-20">
                         <Image 
-                        src="/logo.png"
+                        src="/logo.webp"
                         alt="Lumbini Lions"
                         width={64}
                         height={64}
@@ -122,7 +122,7 @@ const Thirdpage = () => {
                     <div className="flex items-center gap-6 flex-1">
                     <div className="text-center w-20">
                         <Image 
-                        src="/logo.png"
+                        src="/logo.webp"
                         alt="Lumbini Lions"
                         width={64}
                         height={64}
@@ -135,7 +135,7 @@ const Thirdpage = () => {
                     </div>
                     <div className="text-center w-20">
                         <Image 
-                        src="/chitwan.png"
+                        src="/chitwan.webp"
                         alt="Chitwan Rhinos"
                         width={64}
                         height={64}

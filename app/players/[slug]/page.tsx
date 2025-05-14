@@ -27,7 +27,7 @@ export default async function PlayerDetailPage({ params }: { params: { slug: str
     
     // Fix the image URL path - use imageId with the correct path
     const imageName = firstName.toLowerCase();
-    const imgSrc = `/team/${imageName}card.png`;
+    const imgSrc = `/team/${imageName}card.webp`;
     
     return (
       <div>
@@ -37,7 +37,7 @@ export default async function PlayerDetailPage({ params }: { params: { slug: str
           <div className="absolute inset-0 z-[1]">
             {/* Base background */}
             <Image
-              src="/headerbg2.png"
+              src="/headerbg2.webp"
               alt="Background image"
               fill
               className="object-cover"
@@ -46,7 +46,7 @@ export default async function PlayerDetailPage({ params }: { params: { slug: str
             {/* Overlay Image */}
             <div className="absolute inset-0 z-[2]">
               <Image 
-                src="/rectangle151.png"
+                src="/rectangle151.webp"
                 alt="Overlay"
                 fill
                 className="object-cover"

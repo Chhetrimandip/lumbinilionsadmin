@@ -36,11 +36,11 @@ export const metadata: Metadata = {
   description: "Home of the lions",
   icons: {
     icon: [
-      { url: '/logo.png', sizes: '32x32', type: 'image/png' },
-      { url: '/logo.png', sizes: '16x16', type: 'image/png' }
+      { url: '/logo.webp', sizes: '32x32', type: 'image/webp' },
+      { url: '/logo.webp', sizes: '16x16', type: 'image/webp' }
     ],
-    apple: { url: '/logo.png', sizes: '180x180', type: 'image/png' },
-    shortcut: { url: '/logo.png' }
+    apple: { url: '/logo.webp', sizes: '180x180', type: 'image/webp' },
+    shortcut: { url: '/logo.webp' }
   },
 };
 

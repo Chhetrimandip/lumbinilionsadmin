@@ -109,7 +109,7 @@ export const PlayerCardCarousel = () => {
       {/* Left roar image (decorative) */}
       <div className={styles.roarImageLeft}>
         <Image
-          src="/leftroar.png"
+          src="/leftroar.webp"
           alt="Decorative lion roar"
           width={287}
           height={466}
@@ -120,7 +120,7 @@ export const PlayerCardCarousel = () => {
       {/* Right roar image (decorative) */}
       <div className={styles.roarImageRight}>
         <Image
-          src="/rightroar.png"
+          src="/rightroar.webp"
           alt="Decorative lion roar"
           width={287}
           height={466}
@@ -165,8 +165,8 @@ export const PlayerCardCarousel = () => {
               {players.map((player) => {
                 // Construct the image path
                 const imageName = player.firstName.toLowerCase();
-                const imgSrc = `/playercards/${imageName}card.png`;
-                // const imgSrc = "/playercards/tomcard.png"
+                const imgSrc = `/playercards/${imageName}card.webp`;
+                // const imgSrc = "/playercards/tomcard.webp"
 
                 return (
                   <div className={styles.emblaSlide} key={player.id}>
@@ -181,7 +181,7 @@ export const PlayerCardCarousel = () => {
                             quality={100}
                             className={styles.playerImage}
                             onError={(e) => {
-                              e.currentTarget.src = "/default-player.png";
+                              e.currentTarget.src = "/default-player.webp";
                             }}
                           />
                         </div>

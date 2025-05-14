@@ -101,7 +101,7 @@ const LionPlayersContent = () => {
     description: '',
     matches: 0,
     // Add any needed defaults
-    imageUrl: player.imageId ? `/${player.imageId}.png` : '/default-player.png'
+    imageUrl: player.imageId ? `/${player.imageId}.webp` : '/default-player.webp'
   }));
   
   return (

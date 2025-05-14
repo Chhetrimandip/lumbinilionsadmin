@@ -19,11 +19,11 @@ const PlayerCard: React.FC<{ player: PlayerProps }> = ({ player }) => {
   const imageName = player?.firstName ? player.firstName.toLowerCase() : 'default';
   
   // Use a consistent variable name (you have two imgSrc declarations)
-  const imgSrc = `/playercards/${imageName}card.png`;
+  const imgSrc = `/playercards/${imageName}card.webp`;
   
   // Handle image loading errors
   const handleImageError = (e: any) => {
-    e.currentTarget.src = '/default-player.png'; // Fallback image
+    e.currentTarget.src = '/default-player.webp'; // Fallback image
   };
 
   // Add a safety check to render a fallback if player data is incomplete
@@ -31,7 +31,7 @@ const PlayerCard: React.FC<{ player: PlayerProps }> = ({ player }) => {
     return (
       <div className={styles.playerCard}>
         <Image
-          src="/default-player.png"
+          src="/default-player.webp"
           alt="Player data unavailable"
           width={300}
           height={400}

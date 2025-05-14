@@ -10,23 +10,23 @@ export default function HeroPlayers() {
   
   // Define arrays of images for left and right positions
   const leftPlayers = [
-    { src: "/players/unmuktleftest1.png", alt: "unmukt" },
-    { src: "/players/sundeepleftest.png", alt: "sundeep" },
-    { src: "/players/suryaleftest.png", alt: "surya" },
-    { src: "/players/tilakleftest1.png", alt: "Tilak" },
-    { src: "/players/arjunleftest1.png", alt: "arjun" },
-    { src: "/players/dineshleftest.png", alt: "dinesh" },
-    { src: "/players/arifleftest.png", alt: "arif" },
+    { src: "/players/unmuktleftest1.webp", alt: "unmukt" },
+    { src: "/players/sundeepleftest.webp", alt: "sundeep" },
+    { src: "/players/suryaleftest.webp", alt: "surya" },
+    { src: "/players/tilakleftest1.webp", alt: "Tilak" },
+    { src: "/players/arjunleftest1.webp", alt: "arjun" },
+    { src: "/players/dineshleftest.webp", alt: "dinesh" },
+    { src: "/players/arifleftest.webp", alt: "arif" },
   ];
   
   const rightPlayers = [
-    { src: "/players/saadrightest.png", alt: "saad" },
-    { src: "/players/ramonrightest.png", alt: "Ramon" },
-    { src: "/players/bibekrightest.png", alt: "Bibek" },
-    { src: "/players/abhisheshrightest.png", alt: "Abhishesh" },
-    { src: "/players/bikashrightest.png", alt: "bikash" },
-    { src: "/players/durgeshrightest.png", alt: "durgesh" },
-    { src: "/players/aashutoshrightest.png", alt: "aashutosh" },
+    { src: "/players/saadrightest.webp", alt: "saad" },
+    { src: "/players/ramonrightest.webp", alt: "Ramon" },
+    { src: "/players/bibekrightest.webp", alt: "Bibek" },
+    { src: "/players/abhisheshrightest.webp", alt: "Abhishesh" },
+    { src: "/players/bikashrightest.webp", alt: "bikash" },
+    { src: "/players/durgeshrightest.webp", alt: "durgesh" },
+    { src: "/players/aashutoshrightest.webp", alt: "aashutosh" },
 
   ];
   
@@ -92,7 +92,7 @@ export default function HeroPlayers() {
         <div className={`relative w-full h-full flex items-center justify-center overflow-hidden ${isLoaded ? 'show' : ''}`}>
           <div className="absolute z-[0] left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
             <Image 
-              src="/ellipse.png"
+              src="/ellipse.webp"
               alt="Background ellipse" 
               height={560} 
               width={1200} 
@@ -103,7 +103,7 @@ export default function HeroPlayers() {
           {/* Left player on mobile */}
           <div className="absolute left-0 transform -translate-x-[20vw] scale-125 translate-y-[2vh] z-[2]">
             <Image 
-              src="/players/tomleft.png"
+              src="/players/tomleft.webp"
               alt="Left player" 
               height={520}
               width={260}
@@ -115,7 +115,7 @@ export default function HeroPlayers() {
           {/* Center player on mobile */}
           <div className="absolute z-[5] transform scale-110 translate-x-[15px]">
             <Image 
-              src="/players/rohitcenter.png" 
+              src="/players/rohitcenter.webp" 
               alt="Center player" 
               height={590} 
               width={350} 
@@ -128,7 +128,7 @@ export default function HeroPlayers() {
           {/* Right player on mobile */}
           <div className="absolute right-0 transform translate-y-[1vh] scale-110 translate-x-[25%] z-[2]">
             <Image 
-              src="/players/benright.png"
+              src="/players/benright.webp"
               alt="Right player" 
               height={520}
               width={260}
@@ -147,7 +147,7 @@ export default function HeroPlayers() {
             {/* Background ellipse */}
             <div className="absolute left-1/2 top-1/2 w-full h-[90%] transform -translate-x-1/2 -translate-y-1/2 z-[0]">
               <Image 
-                src="/ellipse.png"
+                src="/ellipse.webp"
                 alt="Background ellipse" 
                 fill
                 className="object-contain" 
@@ -172,7 +172,7 @@ export default function HeroPlayers() {
               {/* Left player */}
               <div className="absolute left-[23%] bottom-0 h-[100%] w-[30%] z-[2]">
                 <Image 
-                  src="/players/tomleft.png"
+                  src="/players/tomleft.webp"
                   alt="Left player" 
                   fill
                   style={{ objectFit: 'contain', objectPosition: 'bottom' }}
@@ -182,7 +182,7 @@ export default function HeroPlayers() {
               {/* Center player */}
               <div className="absolute left-1/2 bottom-0 h-[100%] w-[33%] transform -translate-x-1/2 z-[5]">
                 <Image 
-                  src="/players/rohitcenter.png"
+                  src="/players/rohitcenter.webp"
                   alt="Center player" 
                   fill
                   style={{ objectFit: 'contain', objectPosition: 'bottom' }}
@@ -193,7 +193,7 @@ export default function HeroPlayers() {
               {/* Right player */}
               <div className="absolute  right-[26%] bottom-0 h-[100%] w-[30.5%] z-[2]">
                 <Image 
-                  src="/players/benright.png"
+                  src="/players/benright.webp"
                   alt="Right player"
                   fill
                   style={{ objectFit: 'contain', objectPosition: 'bottom' }}

@@ -36,7 +36,7 @@ function MergedFeaturedNews({
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  w-[335px] opacity-100 z-10">
         <div className="relative w-[335px] h-[344.5px] flex items-center justify-center">
           <Image 
-            src="/lionsshield.png"
+            src="/lionsshield.webp"
             alt="Lion Shield"
             fill
             className="object-contain"

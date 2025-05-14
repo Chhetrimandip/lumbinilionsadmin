@@ -18,7 +18,7 @@ const NewsTop = () => {
             {/* Overlay Image */}
             {/* <div className="absolute inset-0">
                 <Image 
-                    src="/rectangle151.png"
+                    src="/rectangle151.webp"
                     alt="Overlay"
                     fill
                     className="object-cover"
@@ -30,7 +30,7 @@ const NewsTop = () => {
                     {/* Lion Shield positioned behind text */}
                     <div className="absolute w-[335px] h-[344.5px] opacity-100">
                         <Image 
-                            src="/lionsshield.png"
+                            src="/lionsshield.webp"
                             alt="Lion Shield"
                             fill
                             className="object-contain"

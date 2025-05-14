@@ -34,7 +34,7 @@ const MatchCard1: FC<{ match: ScheduleProps['match'] }> = ({ match }) => {
       {/* Logos section - same for both types */}
       <div className="flex flex-row justify-start w-full">
         <div className="flex-shrink-0 mr-[-8px]">
-          <Image src="/logo.png" alt="Lumbini Lions Logo" width={180} height={144} 
+          <Image src="/logo.webp" alt="Lumbini Lions Logo" width={180} height={144} 
             className="w-32 h-22 sm:w-32 sm:h-24 md:scale-120 object-contain drop-shadow-lg" />
         </div>
         <Image src={match.opponentLogo} alt={`${match.opponent} Logo`} width={120} height={120}

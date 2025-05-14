@@ -11,7 +11,6 @@ import MergedFeaturedNews from '../components/MergedFeaturedNews'
 
 export const revalidate = 86400; // 24 hours
 
-
 // This must be a Server Component to directly use Prisma
 export default async function NewsContent1() {
     // Fetch blog posts from database
@@ -78,7 +77,7 @@ export default async function NewsContent1() {
                     <div className="w-full h-[500px] relative">
 
                     {/* <Image
-                        src="/bluetemple.png"
+                        src="/bluetemple.webp"
                         alt="Background"
                         fill
                         className="object-cover"
@@ -101,7 +100,7 @@ export default async function NewsContent1() {
             </div>
 <div className="absolute left-[-300px] top-1/2 transform -translate-y-1/2 w-[700px] h-[800px] z-[10] hidden md:block">
   <Image 
-    src="/lionsshield.png"
+    src="/lionsshield.webp"
     alt="Lion Shield"
     fill
     className="object-contain opacity-30"

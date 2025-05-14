@@ -18,7 +18,7 @@ const FeaturedVideos = () => {
                         <Image src="/buddha.jpg" alt='video1' height={238} width={369} className='object-contain z-[3]'/>
                     </div>
                 </div>
-                <Image alt="fvbg" src="/fv.png" height={536} width={1095} className='h-full w-auto object-cover z-[1]'/>
+                <Image alt="fvbg" src="/fv.webp" height={536} width={1095} className='h-full w-auto object-cover z-[1]'/>
             </div>
         </div>
     );

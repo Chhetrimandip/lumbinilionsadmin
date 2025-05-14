@@ -7,14 +7,14 @@ import MatchCard from '../components/resultcard';
 
 const MatchesPage = async () => {
   // const tournamentlogo = [
-  //   { position: 1, name: "Sudurpaschim Royals", points: 12, matches: 7, wins: 6, losses: 1, logo: "/logos/sudurpaschim.png" },
-  //   { position: 2, name: "Janakpur Bolts", points: 10, matches: 7, wins: 5, losses: 2, logo: "/logos/janakpur.png" },
-  //   { position: 3, name: "Chitwan Rhinos", points: 8, matches: 7, wins: 4, losses: 3, logo: "/logos/chitwan.png" },
-  //   { position: 4, name: "Karnali Yaks", points: 8, matches: 7, wins: 4, losses: 3, logo: "/logos/karnali.png" },
-  //   { position: 5, name: "Kathmandu Gurkhas", points: 8, matches: 7, wins: 4, losses: 3, logo: "/logos/kathmandu.png" },
-  //   { position: 6, name: "Biratnagar Kings", points: 4, matches: 7, wins: 2, losses: 5, logo: "/logos/biratnagar.png" },
-  //   { position: 7, name: "Pokhara Avengers", points: 4, matches: 7, wins: 2, losses: 5, logo: "/logos/pokhara.png" },
-  //   { position: 8, name: "Lumbini Lions", points: 2, matches: 7, wins: 1, losses: 6, logo: "/logos/lumbini.png" }
+  //   { position: 1, name: "Sudurpaschim Royals", points: 12, matches: 7, wins: 6, losses: 1, logo: "/logos/sudurpaschim.webp" },
+  //   { position: 2, name: "Janakpur Bolts", points: 10, matches: 7, wins: 5, losses: 2, logo: "/logos/janakpur.webp" },
+  //   { position: 3, name: "Chitwan Rhinos", points: 8, matches: 7, wins: 4, losses: 3, logo: "/logos/chitwan.webp" },
+  //   { position: 4, name: "Karnali Yaks", points: 8, matches: 7, wins: 4, losses: 3, logo: "/logos/karnali.webp" },
+  //   { position: 5, name: "Kathmandu Gurkhas", points: 8, matches: 7, wins: 4, losses: 3, logo: "/logos/kathmandu.webp" },
+  //   { position: 6, name: "Biratnagar Kings", points: 4, matches: 7, wins: 2, losses: 5, logo: "/logos/biratnagar.webp" },
+  //   { position: 7, name: "Pokhara Avengers", points: 4, matches: 7, wins: 2, losses: 5, logo: "/logos/pokhara.webp" },
+  //   { position: 8, name: "Lumbini Lions", points: 2, matches: 7, wins: 1, losses: 6, logo: "/logos/lumbini.webp" }
   // ];
   let tournamentlogo = [];
   try {
@@ -30,7 +30,7 @@ const MatchesPage = async () => {
       
       return {
         ...team,
-        logo: `/logos/${firstWord}.png`,
+        logo: `/logos/${firstWord}.webp`,
         position: team.pos // Ensure position field is available for display
       };
     });
@@ -59,7 +59,7 @@ const MatchesPage = async () => {
       {/* Background layer with image and gradient - fixed position */}
       <div className="absolute inset-0 z-[1] h-[595px] w-full">
       <Image
-        src="/headerbg2.png"
+        src="/headerbg2.webp"
         alt="Background image"
         fill
         className="object-cover"
@@ -70,7 +70,7 @@ const MatchesPage = async () => {
                                   {/* Lion Shield positioned behind text */}
                                   <div className="absolute w-[335px] h-[344.5px] opacity-100">
                                       <Image 
-                                          src="/lionsshield.png"
+                                          src="/lionsshield.webp"
                                           alt="Lion Shield"
                                           fill
                                           className="object-contain"
@@ -115,7 +115,7 @@ const MatchesPage = async () => {
                 </div>
                 <div className="relative h-28 w-28 md:h-32 md:w-32">
                   <Image 
-                    src="/logos/lumbini.png" 
+                    src="/logos/lumbini.webp" 
                     alt="Lumbini Lions Logo" 
                     fill
                     className="object-contain"
@@ -281,7 +281,7 @@ const MatchesPage = async () => {
                 <div className="flex justify-between items-center">
                   <div className="flex items-center">                     
                      <Image
-                      src="/team/rohitcard.png"
+                      src="/team/rohitcard.webp"
                       alt='Rohit'
                       height={50}
                       width={50}
@@ -296,7 +296,7 @@ const MatchesPage = async () => {
                 <div className="flex justify-between items-center">
                   <div className="flex items-center">
                   <Image
-                      src="/team/tomcard.png"
+                      src="/team/tomcard.webp"
                       alt='Tom'
                       height={50}
                       width={50}
@@ -311,7 +311,7 @@ const MatchesPage = async () => {
                 <div className="flex justify-between items-center">
                   <div className="flex items-center">
                   <Image
-                      src="/team/bibekcard.png"
+                      src="/team/bibekcard.webp"
                       alt='Bibek'
                       height={50}
                       width={50}
@@ -335,7 +335,7 @@ const MatchesPage = async () => {
                 <div className="inline-block h-36 w-55 mb-4 relative">
                 <div className="absolute scale:1.2 inset-0 flex items-center justify-center text-2xl font-bold text-amber-500">
                 <Image
-                      src="/team/saadcard.png"
+                      src="/team/saadcard.webp"
                       alt='Saad'
                       height={200}
                       width={200}

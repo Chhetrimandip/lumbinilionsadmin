@@ -6,7 +6,7 @@
         {
             question: "Which country",
             correctanswer : 1,
-            answerimage : "answer.png",
+            answerimage : "answer.webp",
             answertext : "Dont know",
             options : ["Nepal", "USA", "China","Korea"]
         }

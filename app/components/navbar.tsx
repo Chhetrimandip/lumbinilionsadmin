@@ -89,7 +89,7 @@ const Navbar = () => {
         <Link href="/" className="flex-shrink-0">
           <div className="relative  hover-fix w-20 h-12 transition-transform duration-300 hover:scale-110">
             <Image 
-              src="/logo.png" 
+              src="/logo.webp" 
               alt="Lumbini Lions Logo"
               width={80}
               height={48}
@@ -124,7 +124,7 @@ const Navbar = () => {
               <div className={styles.logoWrapper}>
                 <div className={styles.logoContainer}>
                   <Image 
-                    src="/logo.png" 
+                    src="/logo.webp" 
                     alt="Lumbini Lions Logo"
                     width={130}
                     height={65}
@@ -177,7 +177,7 @@ const Navbar = () => {
             {/* Mobile menu logo */}
             <div className="mt-10 mb-6 flex justify-center">
               <Image 
-                src="/logo.png" 
+                src="/logo.webp" 
                 alt="Lumbini Lions Logo"
                 width={100}
                 height={60}

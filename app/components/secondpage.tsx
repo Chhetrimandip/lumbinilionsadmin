@@ -27,14 +27,14 @@ const Secondpage = () => {
             {/* Side decorative images */}
             <Image
                 className="hidden object-contain lg:block absolute h-auto top-[200px] overflow-hidden left-0 w-44 rotate-0 z-10"
-                src="/lionroar.png"
+                src="/lionroar.webp"
                 alt="Left lion decoration"
                 width={176}
                 height={176}
             />
             <Image
                 className="hidden lg:block object-contain absolute top-[200px] h-auto overflow-hidden right-0 w-44 rotate-0 z-10"
-                src="/lionroarinverted.png"
+                src="/lionroarinverted.webp"
                 alt="Right lion decoration"
                 width={176}
                 height={176}
@@ -53,7 +53,7 @@ const Secondpage = () => {
                     <div className="relative w-60 h-96 hover:scale-110 transition-transform duration-400">
                         <Image 
                             className="absolute top-8 w-full h-80" 
-                            src="/playercardexe.png" 
+                            src="/playercardexe.webp" 
                             alt="Player card 1"
                             width={240}
                             height={320}
@@ -64,7 +64,7 @@ const Secondpage = () => {
                     <div className="relative w-60 h-96 scale-120 hover:scale-125 transition-transform duration-400">
                         <Image 
                             className="absolute top-9 w-full h-80" 
-                            src="/middlecard.png" 
+                            src="/middlecard.webp" 
                             alt="Player card 2"
                             width={240}
                             height={320}
@@ -75,7 +75,7 @@ const Secondpage = () => {
                     <div className="relative w-60 h-96 hover:scale-110 transition-transform duration-400">
                         <Image 
                             className="absolute top-8 w-full h-80" 
-                            src="/playercardexe.png" 
+                            src="/playercardexe.webp" 
                             alt="Player card 3"
                             width={240}
                             height={320}

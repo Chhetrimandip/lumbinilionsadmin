@@ -147,7 +147,7 @@ const QuizCard: React.FC<QuizCardProps> = ({ questions, leaderboard = [] }) => {
     <div className="bg-neutral-800/80 backdrop-blur-sm rounded-lg shadow-lg p-6 md:p-10 text-center animate-fade-in">
       <div className="w-32 h-32 mx-auto mb-6 relative">
         <Image 
-          src="/crickettrophy.png" 
+          src="/crickettrophy.webp" 
           alt="Cricket Trophy" 
           width={128}
           height={128}
@@ -217,7 +217,7 @@ const QuizCard: React.FC<QuizCardProps> = ({ questions, leaderboard = [] }) => {
           <div className="bg-neutral-800/80 backdrop-blur-sm rounded-lg shadow-lg p-6 md:p-10 text-center animate-fade-in">
             <div className="w-32 h-32 mx-auto mb-6 relative">
               <Image 
-                src="/crickettrophy.png" 
+                src="/crickettrophy.webp" 
                 alt="Cricket Trophy" 
                 width={128} 
                 height={128}

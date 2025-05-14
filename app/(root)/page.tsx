@@ -21,7 +21,7 @@ import NewsContent from "../components/NewsContent";
 import QuizPage from "../quizpage/page";
 import NewsContent1 from "../news/page";
 
-export const revalidate = 21600; 
+export const revalidate = 21600; // 6 hours
 
 export default async function RootPage() {
   let resultArray = [];
@@ -42,7 +42,7 @@ export default async function RootPage() {
           {/* Desktop background */}
           <div className="hidden md:block relative h-full w-full">
             <Image
-              src="/headerbg2.png"
+              src="/headerbg2.webp"
               alt="Background"
               fill
               className="object-cover object-top"
@@ -54,7 +54,7 @@ export default async function RootPage() {
           {/* Mobile background - using the same image but with different sizing */}
           <div className="md:hidden relative h-full w-full">
             <Image
-              src="/headerbg2.png"
+              src="/headerbg2.webp"
               alt="Background"
               fill
               className="object-cover object-center"
@@ -73,7 +73,7 @@ export default async function RootPage() {
           {/* Desktop sizing */}
           {/* <div className="hidden md:block relative top-[13.5vh] transform scale-[1.45]">
             <Image 
-              src="/team.png" 
+              src="/team.webp" 
               height={895} 
               width={688} 
               alt="teamimage" 
@@ -86,7 +86,7 @@ export default async function RootPage() {
           {/* <div className="md:hidden relative w-full h-[60vh] flex items-center justify-center">
             <div className="relative w-[90%] max-w-[350px]">
               <Image 
-                src="/team.png" 
+                src="/team.webp" 
                 height={695} 
                 width={488} 
                 alt="teamimage" 
@@ -105,13 +105,13 @@ export default async function RootPage() {
           <div className="container mx-auto px-4 md:px-[150px]">
             <div className="grid grid-cols-4 md:grid-cols-7 gap-4 sm:gap-6 md:gap-8">
               {[
-                { src: "/ncell.png", alt: "Ncell" },
-                { src: "/buddhaair.png", alt: "Buddha Air" },
-                { src: "/hilife.png", alt: "Hi-Life" },
-                { src: "/yeti.png", alt: "Yeti Airlines" },
-                { src: "/fortuna.png", alt: "Fortuna" },
-                { src: "/nidpil.png", alt: "NIDPIL" },
-                { src: "/folliderm.png", alt: "Folliderm" }
+                { src: "/ncell.webp", alt: "Ncell" },
+                { src: "/buddhaair.webp", alt: "Buddha Air" },
+                { src: "/hilife.webp", alt: "Hi-Life" },
+                { src: "/yeti.webp", alt: "Yeti Airlines" },
+                { src: "/fortuna.webp", alt: "Fortuna" },
+                { src: "/nidpil.webp", alt: "NIDPIL" },
+                { src: "/folliderm.webp", alt: "Folliderm" }
               ].map((sponsor, index) => (
                 <div key={index} className={styles.logoWrapper}>
                   <div className={`${styles.logoContainer} flex justify-center items-center`}>

@@ -132,7 +132,7 @@ export default function GalleryClientPage({ initialImages }) {
         {/* Background Image */}
         <div className="w-full h-[300px] md:h-[595px] relative">
           <Image 
-            src="/headerbg2.png"
+            src="/headerbg2.webp"
             alt="Header Background"
             fill
             className="object-cover"
@@ -155,7 +155,7 @@ export default function GalleryClientPage({ initialImages }) {
             {/* Lion Shield positioned behind text */}
             <div className="absolute w-[335px] h-[344.5px] opacity-100">
               <Image 
-                src="/lionsshield.png"
+                src="/lionsshield.webp"
                 alt="Lion Shield"
                 fill
                 className="object-contain"

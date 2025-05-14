@@ -157,7 +157,7 @@ export default function FeaturedVideos() {
         {/* Background image */}
         <Image 
           alt="Featured videos background" 
-          src="/fv.png" 
+          src="/fv.webp" 
           fill
           className="object-cover z-[1] opacity-70"
           priority

@@ -23,7 +23,7 @@ const PartnersPage = () => {
                     <div className="flex flex-wrap justify-center gap-8 items-center">
                         <div className="bg-white/10 hover:bg-white/20 transition-all p-8 rounded-lg flex flex-col items-center">
                             <Image 
-                                src="/sponsor1.png" 
+                                src="/sponsor1.webp" 
                                 alt="GlobeTech Industries" 
                                 width={240}
                                 height={120}
@@ -35,7 +35,7 @@ const PartnersPage = () => {
                         
                         <div className="bg-white/10 hover:bg-white/20 transition-all p-8 rounded-lg flex flex-col items-center">
                             <Image 
-                                src="/sponsor2.png" 
+                                src="/sponsor2.webp" 
                                 alt="Mountain Airways" 
                                 width={240}
                                 height={120}
@@ -56,7 +56,7 @@ const PartnersPage = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                         <div className="bg-white/5 hover:bg-white/10 transition-all p-6 rounded-lg flex flex-col items-center">
                             <Image 
-                                src="/sponsor3.png" 
+                                src="/sponsor3.webp" 
                                 alt="NepBank" 
                                 width={180}
                                 height={90}
@@ -68,7 +68,7 @@ const PartnersPage = () => {
                         
                         <div className="bg-white/5 hover:bg-white/10 transition-all p-6 rounded-lg flex flex-col items-center">
                             <Image 
-                                src="/sponsor4.png" 
+                                src="/sponsor4.webp" 
                                 alt="Mountain Dew" 
                                 width={180}
                                 height={90}
@@ -80,7 +80,7 @@ const PartnersPage = () => {
                         
                         <div className="bg-white/5 hover:bg-white/10 transition-all p-6 rounded-lg flex flex-col items-center">
                             <Image 
-                                src="/sponsor5.png" 
+                                src="/sponsor5.webp" 
                                 alt="TechNep" 
                                 width={180}
                                 height={90}
@@ -102,7 +102,7 @@ const PartnersPage = () => {
                         <div className="flex flex-wrap justify-center gap-y-8 gap-x-12">
                             <div className="flex flex-col items-center">
                                 <Image 
-                                    src="/partner1.png" 
+                                    src="/partner1.webp" 
                                     alt="Lumbini Cricket Academy" 
                                     width={140}
                                     height={70}
@@ -113,7 +113,7 @@ const PartnersPage = () => {
                             
                             <div className="flex flex-col items-center">
                                 <Image 
-                                    src="/partner2.png" 
+                                    src="/partner2.webp" 
                                     alt="Youth Sports Foundation" 
                                     width={140}
                                     height={70}
@@ -124,7 +124,7 @@ const PartnersPage = () => {
                             
                             <div className="flex flex-col items-center">
                                 <Image 
-                                    src="/partner3.png" 
+                                    src="/partner3.webp" 
                                     alt="Community Health Initiative" 
                                     width={140}
                                     height={70}
@@ -135,7 +135,7 @@ const PartnersPage = () => {
                             
                             <div className="flex flex-col items-center">
                                 <Image 
-                                    src="/partner4.png" 
+                                    src="/partner4.webp" 
                                     alt="Tourism Nepal" 
                                     width={140}
                                     height={70}

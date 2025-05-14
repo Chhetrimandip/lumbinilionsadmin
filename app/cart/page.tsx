@@ -157,7 +157,7 @@ const CartPage = () => {
                   <div key={item.id} className="flex flex-col sm:flex-row items-center p-4 sm:p-6 gap-4">
                     <div className="w-24 h-24 bg-neutral-700 rounded flex-shrink-0 relative">
                       <Image 
-                        src={item.image || "/jersey.png"}
+                        src={item.image || "/jersey.webp"}
                         alt={item.name || "Product"}
                         fill
                         className="object-contain p-1"

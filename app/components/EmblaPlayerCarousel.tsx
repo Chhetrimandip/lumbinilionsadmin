@@ -143,7 +143,7 @@ export const EmblaPlayerCarousel = () => {
             aria-label="Previous player"
           >
             <Image
-              src="/leftroar.png"
+              src="/leftroar.webp"
               alt="Previous"
               width={287}
               height={466}
@@ -222,7 +222,7 @@ export const EmblaPlayerCarousel = () => {
             aria-label="Next player"
           >
             <Image
-              src="/rightroar.png"
+              src="/rightroar.webp"
               alt="Next"
               width={287}
               height={466}
@@ -239,7 +239,7 @@ export const EmblaPlayerCarousel = () => {
       {players.map((player, index) => {
         // Use consistent image path construction
         const imageName = player.firstName.toLowerCase();
-        const imgSrc = `/playercards/${imageName}card.png`;
+        const imgSrc = `/playercards/${imageName}card.webp`;
         
         return (
           <button
@@ -257,7 +257,7 @@ export const EmblaPlayerCarousel = () => {
                 height={80}
                 className="object-cover rounded-full"
                 onError={(e) => {
-                  e.currentTarget.src = "/default-player.png";
+                  e.currentTarget.src = "/default-player.webp";
                 }}
               />
               <span className={styles.playerNumber}>{index + 1}</span>

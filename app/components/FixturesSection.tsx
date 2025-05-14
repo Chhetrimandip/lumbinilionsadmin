@@ -36,7 +36,7 @@ export default function FixturesSection({ fixtures }: FixturesSectionProps) {
             <div className="flex items-center mb-4 md:mb-0">
               <div className="mr-4">
                 <Image
-                  src="/logo.png"
+                  src="/logo.webp"
                   alt="Lumbini Lions Logo"
                   width={140}
                   height={140}
@@ -57,7 +57,7 @@ export default function FixturesSection({ fixtures }: FixturesSectionProps) {
             <div className="flex items-center flex-row-reverse md:flex-row">
               <div className="ml-4 md:mr-4 md:ml-0">
                 <Image
-                  src="/janakpur.png"
+                  src="/janakpur.webp"
                   alt="Janakpur Bolts Logo"
                   width={96}
                   height={96}
@@ -81,7 +81,7 @@ export default function FixturesSection({ fixtures }: FixturesSectionProps) {
               {/* Team 1 (Lions) */}
               <div>
               <Image
-                src="/logo.png"
+                src="/logo.webp"
                 alt="Lumbini Lions Logo"
                 width={140}
                 height={140}

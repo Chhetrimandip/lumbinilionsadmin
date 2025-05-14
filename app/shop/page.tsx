@@ -15,7 +15,7 @@ const Shoppage = () => {
             id: 1,
             name: "Lumbini Lions Home Jersey",
             price: "900.99",
-            image: "/shirt.png",
+            image: "/shirt.webp",
             isFeatured: true
         },
         {
@@ -29,14 +29,14 @@ const Shoppage = () => {
             id: 3,
             name: "Lumbini Lions Hoodie",
             price: "4000.99",
-            image: "/hoodie.png",
+            image: "/hoodie.webp",
             isFeatured: false
         },
         {
             id: 4,
             name: "Lumbini Lions T-Shirt",
             price: "500.99",
-            image: "/shirt.png",
+            image: "/shirt.webp",
             isFeatured: false
         },
 
@@ -66,7 +66,7 @@ const Shoppage = () => {
                     <div className="flex flex-col md:flex-row">
                         <div className="md:w-1/2 flex justify-center items-center p-8">
                             <Image 
-                                src="/jersey.png" 
+                                src="/jersey.webp" 
                                 alt="Featured Jersey"
                                 width={400}
                                 height={400}
@@ -82,7 +82,7 @@ const Shoppage = () => {
                                         id: "jersey",
                                         price: 900.99,
                                         name: "Lumbini Lions Official Jersey",
-                                        image: "/jersey.png"
+                                        image: "/jersey.webp"
                                     })} 
                                     className="bg-amber-500 hover:bg-amber-600 text-black text-xl font-['Bebas_Neue'] px-6 py-3 rounded-lg transition-colors"
                                 >
