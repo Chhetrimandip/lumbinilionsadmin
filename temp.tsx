@@ -19,7 +19,6 @@ export default function GalleryPage() {
         const data = await response.json();
         setGalleryImages(data);
       } catch (err) {
-        console.error('Error fetching images:', err);
         setError('Failed to load gallery images. Please try again later.');
       }
     }

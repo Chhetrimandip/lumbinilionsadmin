@@ -11,7 +11,6 @@ export async function GET() {
     });
     return NextResponse.json(response);
   } catch (error) {
-    console.error("Error fetching results:", error);
     // Fix the syntax here
     return NextResponse.json(
       { error: "Couldn't fetch results" },

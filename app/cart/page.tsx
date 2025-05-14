@@ -4,7 +4,6 @@ import { useCartStore } from '@/store/cart-store';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { v4 as uuidv4 } from 'uuid';
 
 const CartPage = () => {
   const { cart, addtocart, removefromcart, decreaseQuantity, totalitem, totalprice, clearcart } = useCartStore();
@@ -103,7 +102,6 @@ const CartPage = () => {
       }
       
       const result = await response.json();
-      console.log('Order submitted successfully', result);
       alert('Your order has been placed successfully! We will contact you shortly to confirm your order.');
       clearcart();
       
@@ -111,7 +109,6 @@ const CartPage = () => {
       router.push('/');
       
     } catch (error) {
-      console.error('Error submitting order:', error);
       alert('There was a problem placing your order. Please try again.');
     }
   };

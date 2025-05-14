@@ -51,7 +51,6 @@ export async function GET() {
 
     return NextResponse.json(formattedPlayers);
   } catch (error) {
-    console.error('Error fetching players:', error);
     return NextResponse.json(
       { error: 'Failed to fetch players' },
       { status: 500 }

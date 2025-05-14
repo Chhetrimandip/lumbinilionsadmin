@@ -20,10 +20,8 @@ const LionPlayersContent = () => {
           throw new Error('Failed to fetch players');
         }
         const data = await response.json();
-        console.log('Players data:', data);
         setPlayers(data);
       } catch (err) {
-        console.error('Error fetching players:', err);
         setError(err.message);
       } finally {
         setLoading(false);

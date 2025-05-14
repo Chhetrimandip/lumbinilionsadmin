@@ -22,7 +22,6 @@ type NewsProp = {
 
 const Newscard: React.FC<NewsProp> = ({ news }) => {
     // Get image from content if not directly provided
-    console.log("the content recieved : " , news)
     const imageUrl = news.image || getFirstImageFromContent(news.content) || '/news.jpg';
     
     // Get excerpt from content if no subtitle

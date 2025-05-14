@@ -37,10 +37,9 @@ export default function AboutPage() {
           <div>
             <h2 className="text-3xl font-bold mb-6 text-amber-500">Our Vision</h2>
             <p className="text-gray-300 mb-4 leading-relaxed">
-              At Lumbini Lions, we strive to be more than just a cricket team. We aim to inspire future generations of cricketers, promote the sport throughout Nepal, and create a lasting legacy of sporting excellence.
-            </p>
+              To build a competitive, entertaining, and inspiring cricket team that contributes to the growth of the sport in Nepal, while fostering a deep connection with our fans and community.             </p>
             <p className="text-gray-300 leading-relaxed">
-              Our vision extends beyond the boundaries of the pitch, as we work to contribute positively to our community and develop cricket infrastructure in the Lumbini region.
+              To become a powerhouse in Nepali cricket, both on and off the field, by promoting sportsmanship, developing emerging talent, and creating unforgettable cricket experiences. 
             </p>
           </div>
         </div>
@@ -76,7 +75,7 @@ export default function AboutPage() {
         </div>
 
         {/* Team Achievements */}
-        <div className="mb-16">
+        {/* <div className="mb-16">
           <h2 className="text-3xl font-bold mb-8 text-amber-500 text-center">Our Achievements</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="bg-[#0F1923] p-6 rounded-lg">
@@ -114,7 +113,7 @@ export default function AboutPage() {
               </ul>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Call to Action */}
         <div className="text-center">

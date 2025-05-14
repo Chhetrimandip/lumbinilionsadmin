@@ -4,9 +4,12 @@ import Image from 'next/image';
 import { Instagram, Facebook, Twitter } from "lucide-react";
 import { EmblaPlayerCarousel } from '@/app/components/EmblaPlayerCarousel';
 
-
+export const metadata = {
+  title: "Player Profile | Lumbini Lions",
+  description: "Player profile and statistics for Lumbini Lions cricket team member",
+};
 export default async function PlayerDetailPage({ params }: { params: { slug: string } }) {
-  const slug = params.slug;
+  const { slug } = await params;
   
   try {
     const player = await prisma.lions.findUnique({
@@ -49,6 +52,10 @@ export default async function PlayerDetailPage({ params }: { params: { slug: str
                 className="object-cover"
               />
             </div>
+             <div className='relative mt-[15vw] ml-[84vw] opacity-60 text-[100px] z-[3]'>
+              NPL
+              </div>
+
           </div>
 
           {/* Trapezium Stat Bars - middle z-index (behind player, above background) */}
@@ -124,7 +131,7 @@ export default async function PlayerDetailPage({ params }: { params: { slug: str
                   </h1>
                 </div>
                 
-                <div className="mt-4 sm:mt-6">
+                <div className="mt-1 sm:mt-6">
                   <span className="text-white text-xl sm:text-3xl font-semibold font-['poppins'] tracking-wider uppercase">
                     {player.class}
                   </span>
@@ -195,7 +202,6 @@ export default async function PlayerDetailPage({ params }: { params: { slug: str
       </div>
     );
   } catch (error) {
-    console.error("Error rendering player detail page:", error);
     notFound();
   }
 }

@@ -18,7 +18,6 @@ export default async function NewsContent() {
         },
         take: 6,
     });
-    console.log("Blogposts: ", blogPosts)
     // Transform database posts to match the news format expected by Newscard
     const newsItems = blogPosts.map(post => ({
         id: post.id,
@@ -74,7 +73,7 @@ export default async function NewsContent() {
                     <div className="w-full h-[500px] relative">
 
                     <Image
-                        src="/bluetemple.png"
+                        src="/unnamed.jpg"
                         alt="Background"
                         fill
                         className="object-cover"
@@ -89,7 +88,8 @@ export default async function NewsContent() {
             {/* News grid positioned to overlay the background */}
             <div className="relative z-20 mx-auto max-w-6xl mt-[194px]">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
-                    {displayNews.slice(1).map(news => (
+                    {/* {displayNews.slice(1).map(news => ( */}
+                    {displayNews.map(news => (
                         <Newscard key={news.id} news={news} />
                     ))}
                 </div>

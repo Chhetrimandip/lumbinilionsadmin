@@ -40,7 +40,6 @@ const ContactPage = () => {
             });
 
             const data = await response.json();
-            console.log('Response:', data);
 
             if (response.ok) {
                 setSubmitStatus({
@@ -52,7 +51,6 @@ const ContactPage = () => {
                 throw new Error(data.message || 'Something went wrong');
             }
         } catch (error) {
-            console.error('Error:', error);
             setSubmitStatus({
                 message: error instanceof Error ? error.message : 'Failed to send message. Please try again.',
                 type: 'error'

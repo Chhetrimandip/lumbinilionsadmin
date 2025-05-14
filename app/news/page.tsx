@@ -13,7 +13,7 @@ export const revalidate = 86400; // 24 hours
 
 
 // This must be a Server Component to directly use Prisma
-export default async function NewsContent() {
+export default async function NewsContent1() {
     // Fetch blog posts from database
     const blogPosts = await prisma.blogPost.findMany({
         orderBy: {
@@ -21,7 +21,6 @@ export default async function NewsContent() {
         },
         take: 6,
     });
-    console.log("Blogposts: ", blogPosts)
     // Transform database posts to match the news format expected by Newscard
     const newsItems = blogPosts.map(post => ({
         id: post.id,
@@ -93,8 +92,9 @@ export default async function NewsContent() {
             
             {/* News grid positioned to overlay the background */}
             <div className="relative z-20 mx-auto max-w-6xl mt-[194px] md:mt-[4vh]">
-                <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3 ">
-                    {displayNews.slice(1).map(news => (
+                <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols- ">
+                    {/* {displayNews.slice(1).map(news => ( */}
+                    {displayNews.map(news => (
                         <Newscard1 key={news.id} news={news} />
                     ))}
                 </div>

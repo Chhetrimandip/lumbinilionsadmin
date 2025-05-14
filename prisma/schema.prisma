@@ -7,16 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Quiz {
-  id            String   @id @default(cuid())
-  question      String
-  options       String[]
-  correctanswer Int
-  answerimage   String
-  answertext    String
-  points        Int      @default(1)
-}
-
 model Fan {
   id    String @id @default(cuid())
   name  String

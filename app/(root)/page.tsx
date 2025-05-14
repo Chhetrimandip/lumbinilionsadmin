@@ -11,7 +11,7 @@ import ScrollEffects from "../components/scrolleffects";
 // import NewsPage from "../news/page";
 import styles from "../components/navbar.module.css";
 import FeaturedVideos from "../components/featuredVideo";
-import dynamic from 'next/dynamic';
+// import dynamic from 'next/dynamic';
 // import LazyLoadSection from '../components/LazyLoadSection';
 import { prisma } from "@/lib/db";
 // import HeroPlayersWrapper from "../components/HeroPlayersWrapper";
@@ -19,6 +19,7 @@ import HeroPlayers from "../components/HeroPlayers";
 import PlayerCardCarousel from "../components/PlayerCardCarousel";
 import NewsContent from "../components/NewsContent";
 import QuizPage from "../quizpage/page";
+import NewsContent1 from "../news/page";
 
 export const revalidate = 21600; 
 
@@ -30,7 +31,6 @@ export default async function RootPage() {
       take: 5
     });
   } catch (error) {
-    console.error("Error fetching schedule data:", error);
   }
   
   return (
@@ -139,6 +139,7 @@ export default async function RootPage() {
         <PlayerCardCarousel/>
         <FeaturedVideos/>
         <NewsContent/>
+        {/* <NewsContent/> */}
       </div>
     </div>
   );

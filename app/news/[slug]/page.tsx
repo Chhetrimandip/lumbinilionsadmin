@@ -49,7 +49,6 @@ export default async function BlogPostPage({ params }: Props) {
   
   // Parse the EditorJS content
   const contentElements = parseEditorJSContent(post.content);
-  console.log("the content recieved : " , post)
 
   
   return (
@@ -66,7 +65,7 @@ export default async function BlogPostPage({ params }: Props) {
           </h1>
           
           <div className="flex items-center text-gray-400 mb-8">
-            <span>By {post.author}</span>
+            <span>By Lumbini Lions</span>
             <span className="mx-2">•</span>
             <span>{publishDate}</span>
           </div>

@@ -10,7 +10,6 @@ import PlayerCard from "./PlayerCard"; // Import the PlayerCard component
 export const EmblaPlayerCarousel = () => {
   const { players, loading, error } = usePlayerData();
   const [selectedIndex, setSelectedIndex] = useState(0);
-  console.log(players);
   
   // Add state to track auto-play
   const [autoPlayEnabled, setAutoPlayEnabled] = useState(true);

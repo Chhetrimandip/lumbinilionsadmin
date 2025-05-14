@@ -17,13 +17,11 @@ async function main() {
             await prisma.quizzy.create({
                 data: element,
             })
-            console.log(`Data created succesfully ${JSON.stringify(element)}`)
         } catch(error: unknown){
             if(error instanceof Prisma.PrismaClientKnownRequestError && error.code==='P2002'){
                 console.log("The values need to be unique.")
             }
         };
         }
-    console.log("Seeding finished !")
 }
 export default main()

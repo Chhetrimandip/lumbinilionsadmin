@@ -27,35 +27,24 @@ const QuizPage = async () => {
   ];
   
   try {
-    console.log("Starting to fetch quiz questions");
     
-    // Use quiz (lowercase) instead of quizzy
 
     const dbQuestions = await prisma.quizzy.findMany();
 
     const shuffledQuestions = dbQuestions
     .sort(() => Math.random() - 0.5)
     .slice(0, 10);
-    console.log(`Found ${dbQuestions.length} questions in database`);
     
     if (dbQuestions && dbQuestions.length > 0) {
       // No mapping needed if your schema and component both use lowercase
       quizQuestions = shuffledQuestions;
-      console.log("Got database questions successfully");
     } else {
-      console.log("No database questions found, using fallback");
       quizQuestions = fallbackQuestions;
     }
   } catch (error) {
-    console.log("Error fetching quiz questions:", error);
-    console.log("Using fallback questions due to error");
     quizQuestions = fallbackQuestions;
   }
   
-  console.log(`Final quiz questions array length: ${quizQuestions.length}`);
-  if (quizQuestions.length > 0) {
-    console.log(`First question: ${quizQuestions[0].question}`);
-  }
   
   return (
     <QuizCard questions={quizQuestions} leaderboard = {leaderboard} />

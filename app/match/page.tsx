@@ -35,7 +35,6 @@ const MatchesPage = async () => {
       };
     });
     
-    console.log("Tournament teams loaded:", tournamentlogo.length);
   } catch(error) {
     console.error("Error getting league details", error)
   }
