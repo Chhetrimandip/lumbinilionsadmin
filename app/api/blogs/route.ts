@@ -47,7 +47,7 @@ export async function POST(request: Request) {
 
 export async function GET() {
     try {
-        // Fix: Use BlogPost instead of blog
+        // Fix: Use BlogPost instead of blog just for committing
         const blogs = await prisma.blogPost.findMany({
             orderBy: {
                 publishedAt: 'desc'
