@@ -9,6 +9,7 @@ import { QuizquestionsView } from './QuizquestionsView';
 import { FanView } from './FanView';
 import { OrdersView } from './OrdersView';
 import LeagueView from './leagueview';
+import { useAuth } from '../context/AuthContext';
 
 // Define the QuizzyType interface based on Prisma's QuizzyCreateInput
 interface QuizzyType {
@@ -238,10 +239,10 @@ fetchData();
   };
 
   // Handle logout
+  const { logout } = useAuth();
+
   const handleLogout = () => {
-    // In a real app, this would clear auth state and redirect
-    console.log('Logging out...');
-    // Navigate to login page or clear auth tokens
+    logout();
   };
 
   return (

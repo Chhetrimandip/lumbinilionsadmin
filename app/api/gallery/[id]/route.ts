@@ -69,3 +69,53 @@ export async function DELETE(
         );
     }
 }
+
+// Add this PUT handler to your existing route.ts file
+export async function PUT(
+    request: Request,
+    { params }: { params: { id: string } }
+) {
+    try {
+        const id = params.id;
+        const body = await request.json();
+        
+        // Validate required fields
+        if (!body.title || !body.imageUrl) {
+            return NextResponse.json(
+                { error: "Missing required fields" },
+                { status: 400 }
+            );
+        }
+        
+        // Check if the image exists
+        const existingImage = await prisma.gallery.findUnique({
+            where: { id }
+        });
+        
+        if (!existingImage) {
+            return NextResponse.json(
+                { error: "Image not found" },
+                { status: 404 }
+            );
+        }
+        
+        // Update the image record
+        const updatedImage = await prisma.gallery.update({
+            where: { id },
+            data: {
+                title: body.title,
+                imageUrl: body.imageUrl,
+                category: body.category || null,
+                parentCategory: body.parentCategory || null
+            }
+        });
+        
+        return NextResponse.json(updatedImage);
+    } catch (error) {
+        console.error('Error updating image:', error);
+        return NextResponse.json(
+            { error: "Failed to update image" },
+            { status: 500 }
+        );
+    }
+}

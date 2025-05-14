@@ -140,16 +140,6 @@ exports.Prisma.PostScalarFieldEnum = {
   createdat: 'createdat'
 };
 
-exports.Prisma.QuizScalarFieldEnum = {
-  id: 'id',
-  question: 'question',
-  options: 'options',
-  correctanswer: 'correctanswer',
-  answerimage: 'answerimage',
-  answertext: 'answertext',
-  points: 'points'
-};
-
 exports.Prisma.QuizzyScalarFieldEnum = {
   id: 'id',
   question: 'question',
@@ -338,7 +328,6 @@ exports.Prisma.ModelName = {
   Asset: 'Asset',
   Fan: 'Fan',
   Post: 'Post',
-  Quiz: 'Quiz',
   Quizzy: 'Quizzy',
   BlogPost: 'BlogPost',
   Lions: 'Lions',

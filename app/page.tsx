@@ -1,20 +1,19 @@
+"use client";
+
 import React from 'react'
 import Navbar from './component/Navbar';
 import Dashboard from './component/dashboard';
-import { PrismaClient } from './generated/prisma'
-import { BlogsType } from '../lib/types'; // Import your BlogsType
+import ProtectedRoute from './components/ProtectedRoute';
 
-//create a single instance of prismaclient
-const prisma = new PrismaClient()
-
-const adminpage = async () => {
-
-    return ( 
-        <div>
-            <Navbar />
-            <Dashboard/>
-        </div>
-     );
+const AdminPage = () => {
+    return (
+        <ProtectedRoute>
+            <div>
+                <Navbar />
+                <Dashboard />
+            </div>
+        </ProtectedRoute>
+    );
 }
  
-export default adminpage;
+export default AdminPage;

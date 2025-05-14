@@ -31,16 +31,6 @@ model Post {
   createdat DateTime @default(now())
 }
 
-model Quiz {
-  id            String   @id
-  question      String
-  options       String[]
-  correctanswer Int
-  answerimage   String
-  answertext    String
-  points        Int      @default(1)
-}
-
 model Quizzy {
   id            String   @id
   question      String

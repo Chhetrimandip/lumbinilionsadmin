@@ -24,6 +24,127 @@ export const QuizquestionsView = ({quizData = []}) => {
   const [formAnswerImage, setFormAnswerImage] = useState('');
   const [formAnswerText, setFormAnswerText] = useState('');
   const [formPoints, setFormPoints] = useState(1);
+  //quiz creation part
+  const [addModalOpen, setAddModalOpen] = useState(false);
+  const [bulkQuestions, setBulkQuestions] = useState<string>('');
+  const [isAdding, setIsAdding] = useState(false);
+
+
+  //quiz creation modal logic
+  // Add these handler functions after your existing handler functions
+
+// Open and close the add modal
+const openAddModal = () => {
+  setBulkQuestions('');
+  setAddModalOpen(true);
+};
+
+const closeAddModal = () => {
+  setAddModalOpen(false);
+  setBulkQuestions('');
+};
+
+// Handle the bulk creation of questions
+const handleBulkCreate = async (e: React.FormEvent) => {
+  e.preventDefault();
+  
+  if (!bulkQuestions.trim()) {
+    alert('Please enter at least one question.');
+    return;
+  }
+  
+  try {
+    setIsAdding(true);
+    
+    // Split by double newlines to separate questions
+    const questionBlocks = bulkQuestions.trim().split('\n\n');
+    const createdQuestions = [];
+    
+    for (const block of questionBlocks) {
+      const lines = block.trim().split('\n');
+      
+      if (lines.length < 3) {
+        // Skip if there aren't enough lines for question + options
+        continue;
+      }
+      
+      const question = lines[0].trim();
+      const options = lines.slice(1, 5).map(line => line.trim());
+      
+      // Find the correct answer (marked with *)
+      let correctAnswer = 0;
+      for (let i = 0; i < options.length; i++) {
+        if (options[i].endsWith('*')) {
+          correctAnswer = i;
+          options[i] = options[i].substring(0, options[i].length - 1).trim();
+          break;
+        }
+      }
+      
+      // Get answer text (anything after Options)
+      const answerTextLine = lines.findIndex(line => line.toLowerCase().includes('explanation:'));
+      const answerText = answerTextLine > 0 
+        ? lines.slice(answerTextLine).join('\n').replace(/^explanation:/i, '').trim()
+        : '';
+      
+      // Look for image URL
+      const imageUrlLine = lines.findIndex(line => line.toLowerCase().includes('image:'));
+      const answerImage = imageUrlLine > 0
+        ? lines[imageUrlLine].replace(/^image:/i, '').trim()
+        : '';
+      
+      // Look for points
+      const pointsLine = lines.findIndex(line => line.toLowerCase().includes('points:'));
+      const points = pointsLine > 0
+        ? parseInt(lines[pointsLine].replace(/^points:/i, '').trim()) || 1
+        : 1;
+      
+      // Only proceed if we have a question and at least 2 options
+      if (question && options.length >= 2) {
+        // Create the quiz question
+        const newQuestion = {
+          question,
+          options,
+          correctanswer: correctAnswer,
+          answertext: answerText,
+          answerimage: answerImage,
+          points
+        };
+        
+        const response = await fetch('/api/quiz', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(newQuestion)
+        });
+        
+        if (!response.ok) {
+          throw new Error(`Failed to create question: ${question}`);
+        }
+        
+        const createdQuestion = await response.json();
+        createdQuestions.push(createdQuestion);
+      }
+    }
+    
+    // Update local state with new questions
+    if (createdQuestions.length > 0) {
+      setQuizzes([...quizzes, ...createdQuestions]);
+      alert(`Successfully created ${createdQuestions.length} questions!`);
+      closeAddModal();
+    } else {
+      alert('No valid questions found. Please check the format.');
+    }
+  } catch (error) {
+    console.error('Error creating bulk questions:', error);
+    alert('Failed to create questions. Check the console for details.');
+  } finally {
+    setIsAdding(false);
+  }
+};
+
+
 
   //helper to check if it's a valid url
   const isValidImageUrl = (url: string): boolean => {
@@ -158,9 +279,12 @@ export const QuizquestionsView = ({quizData = []}) => {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <button className="bg-neutral-500/25 rounded-2xl p-2 px-4 text-center">
-          Add New Question
-        </button>
+      <button 
+        onClick={openAddModal}
+        className="bg-neutral-500/25 rounded-2xl p-2 px-4 text-center"
+      >
+        Add New Question
+      </button>
       </div>
 
       <table className="w-full border-collapse">
@@ -348,6 +472,49 @@ export const QuizquestionsView = ({quizData = []}) => {
           </div>
         </div>
       )}
+      {/* Bulk Add Questions Modal */}
+{addModalOpen && (
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="bg-white rounded-lg p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+      <h2 className="text-2xl font-bold mb-6">Add Quiz Questions in Bulk</h2>
+      
+      <form onSubmit={handleBulkCreate}>
+        <div className="mb-4">
+          <label className="block text-sm font-medium mb-2">Enter Multiple Questions</label>
+          <textarea
+            value={bulkQuestions}
+            onChange={(e) => setBulkQuestions(e.target.value)}
+            className="w-full p-4 border rounded h-72 font-mono text-sm"
+            placeholder={`Question 1?\nOption A\nOption B*\nOption C\nOption D\nExplanation: This is why B is correct\nPoints: 2\n\nQuestion 2?\nOption A\nOption B\nOption C*\nOption D\nExplanation: This is why C is correct`}
+            required
+          />
+          <p className="text-sm text-gray-500 mt-2">
+            Format each question as shown in the example. Mark the correct option with an asterisk (*).
+            Separate questions with blank lines. You can optionally include explanation, image URL, and points.
+          </p>
+        </div>
+        
+        <div className="flex justify-end space-x-4">
+          <button
+            type="button"
+            onClick={closeAddModal}
+            className="px-4 py-2 border border-gray-300 rounded"
+            disabled={isAdding}
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            className="px-4 py-2 bg-blue-600 text-white rounded"
+            disabled={isAdding}
+          >
+            {isAdding ? 'Adding...' : 'Add Questions'}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+)}
     </div>
   );
 };
